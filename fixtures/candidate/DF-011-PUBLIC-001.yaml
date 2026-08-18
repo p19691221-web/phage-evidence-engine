@@ -1,0 +1,85 @@
+fixture_id: DF-011-PUBLIC-001
+domain: PUBLIC_INFRASTRUCTURE
+fixture_basis: CASE_SHAPED_SYNTHETIC
+maturity_status: HYPOTHESIZED
+
+description: >
+  Tests whether PHAGE identifies unresolved expectation provenance
+  when the governed execution actor proposes the expectation set
+  used to assess its own workflow, without independently supported
+  authority or scope provenance.
+
+claims_boundary:
+  establishes_expectation_capture: false
+  establishes_improper_motive: false
+  establishes_invalid_expectation: false
+  establishes_real_world_misconduct: false
+  authorizes_execution: false
+
+context:
+  action: CONSTRUCTION_ACCEPTANCE
+  object: PIPELINE_CULVERT_INTERSECTION
+
+  governed_actor:
+    role: CONSTRUCTION_EXECUTION_AGENT
+    id: AGENT-ENG-01
+
+declared_expectations:
+  - expectation_id: E1
+    requirement: ACCEPTANCE_FORM_EXISTS
+    observation_type: REVIEW_RECORD
+
+observations:
+  - evidence_id: O1
+    satisfies: E1
+    source: INTERNAL_EXECUTION_LOG
+
+expectation_provenance:
+  expectation_set_id: ES-PUBLIC-001
+
+  proposed_by: AGENT-ENG-01
+  governed_actor: AGENT-ENG-01
+
+  proposal_relationship: SELF_PROPOSED
+
+  approved_by: null
+  authority_source_refs: []
+
+  authority_status: UNRESOLVED
+  scope_status: UNRESOLVED
+
+expected_engine_behavior:
+  overall_state: UNRESOLVED
+
+  open_dependencies:
+    - type: EXPECTATION_AUTHORITY_UNRESOLVED
+      expectation_set_id: ES-PUBLIC-001
+      reason: >
+        The expectation set is self-proposed by the governed actor,
+        and the supplied provenance does not establish independent
+        authority or scope for using that expectation set in this
+        assessment.
+
+  delta_computation: SKIPPED
+
+prohibited_inferences:
+  - SELF_PROPOSED_DOES_NOT_IMPLY_MALICIOUS_CAPTURE
+  - THIRD_PARTY_PROPOSAL_DOES_NOT_IMPLY_LEGITIMATE_AUTHORITY
+  - AUTHORITY_UNRESOLVED_DOES_NOT_IMPLY_EXPECTATION_INVALID
+  - UNRESOLVED_DOES_NOT_IMPLY_GAP
+  - FIXTURE_WRITTEN_DOES_NOT_IMPLY_DEATH_FIXTURE_VALIDATED
+
+validation_requirements:
+  promotion_target: FIXTURE_SUPPORTED
+
+  requires:
+    - DIFFERENTIAL_EXECUTION
+    - REPRODUCIBLE_ENGINE_OUTPUT
+    - CONTROL_FIXTURE_WITH_SUPPORTED_PROVENANCE
+
+  current_status: NOT_YET_EXECUTED
+
+notes: >
+  This candidate fixture tests a provenance boundary only.
+  It does not determine whether E1 is substantively correct,
+  sufficient, lawful, safe, or legitimate.
