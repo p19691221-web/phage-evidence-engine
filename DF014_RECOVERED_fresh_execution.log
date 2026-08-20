@@ -1,0 +1,16 @@
+PASS: test_df014_windrelay_attribution_flags_both_diagnostics
+PASS: test_df014_control_contemporaneous_attribution_is_clean
+
+2/2 tests PASSED
+
+=== DF-014-A actual diagnostics ===
+  [STATE_TRANSITION_UNRESOLVED]
+    State claim crosses a later narrowing/classification boundary; the earlier state is not promoted without contemporaneous support.
+  [INTENT_INFERENCE_UNRESOLVED]
+    Intent claim is supported by hindsight rather than a contemporaneous artifact.
+
+=== Explicit non-claims ===
+This fixture does NOT claim Group-IB's actual WindRelay attribution
+was hindsight-contaminated. No primary Group-IB report was obtained.
+It only demonstrates that the temporal_validator correctly flags
+this GENERAL shape of claim when constructed with these properties.
