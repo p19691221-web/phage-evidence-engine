@@ -1,0 +1,31 @@
+PHAGE Fixture Validator
+version: v0.1-research-preview
+
+fixture_id: WHP-001-AUTH-SCOPED-001
+maturity_status: EVIDENCE_SUPPORTED_FIXTURE_NOT_EXECUTED
+
+[1/2] Negative Control
+relation_ref: ACTOR_A_PIPE_A_OWNER_SCOPE
+expected_tuple_state: ACCEPTED_FOR_SCOPE
+actual_tuple_state: ACCEPTED_FOR_SCOPE
+result: PASS
+
+[2/2] Unsupported Cross-Tuple Inference
+relation_ref: ACTOR_B_PIPE_A_MAINTENANCE_INFERENCE
+expected_tuple_state: UNRESOLVED
+expected_open_dependency: AUTHORITY_SCOPE_UNRESOLVED
+
+actual_tuple_state: UNRESOLVED
+actual_open_dependency: AUTHORITY_SCOPE_UNRESOLVED
+result: PASS
+
+Differential Result: PASS
+
+Claims:
+- Supported tuple accepted only for declared scope.
+- Unsupported cross-tuple inference remained unresolved.
+- No legal liability determination was made.
+- No non-composable-authority claim was established.
+
+Promotion Eligible: YES
+Target Maturity: FIXTURE_SUPPORTED

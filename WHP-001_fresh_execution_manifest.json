@@ -1,0 +1,24 @@
+{
+  "WHP-001-AUTH-SCOPED-001.yaml": {
+    "sha256": "53fc2019ed716d58dddb9137fdad6a52d10b808bd009a22285e86e782f0e9b51",
+    "bytes": 3327
+  },
+  "phage_validate_fixture.py": {
+    "sha256": "9af713fd30b05097d1f97542001f577656452070951743dbfe0147f29bec8ff8",
+    "bytes": 5925
+  },
+  "WHP-001_fresh_execution.stdout.log": {
+    "sha256": "ef398573947e685c934e177e22322aef8c726bdd80351a1e6f484a02fe254f02",
+    "bytes": 884
+  },
+  "WHP-001_fresh_execution.stderr.log": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "execution": {
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "differential_result": "PASS",
+    "known_contract_drift": "FAIL-path stdout ordering only; this run exercised PASS path"
+  }
+}

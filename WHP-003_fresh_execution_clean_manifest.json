@@ -1,0 +1,20 @@
+{
+  "fixture": {
+    "file": "WHP-003-HIPAA-SCOPE-001.yaml",
+    "sha256": "eeb73e7a9e5012657d722d38e1b7a0a4837abaa4fd7d4d9c5b09d07f7a81d3c2",
+    "bytes": 4457
+  },
+  "validator": {
+    "file": "phage_validate_fixture.py",
+    "sha256": "9af713fd30b05097d1f97542001f577656452070951743dbfe0147f29bec8ff8",
+    "bytes": 5925
+  },
+  "execution": {
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "stdout_sha256": "555b1dd73ca4d50a9497501787d52d51993077d140ad41fc993a6f6fd2d7bc86",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "differential_result": "PASS"
+  },
+  "known_contract_note": "Frozen validate-fixture v0.1 FAIL-path log ordering differs from the surviving validator implementation. This execution exercised the PASS path."
+}
