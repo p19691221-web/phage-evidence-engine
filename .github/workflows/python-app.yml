@@ -1,0 +1,37 @@
+name: DF-015 causal restraint
+
+on:
+  push:
+    branches:
+      - "df015-因果約束"
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  df015:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile DF-015 modules
+        run: |
+          python -m py_compile causal_validator.py
+          python -m py_compile test_df015_causal_compression.py
+          python -m py_compile test_aiid10_pilot.py
+
+      - name: Run DF-015 A/B/C regression
+        run: python test_df015_causal_compression.py
+
+      - name: Run AIID-10 Pilot-01
+        run: python test_aiid10_pilot.py
