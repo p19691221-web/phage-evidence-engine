@@ -1,0 +1,85 @@
+{
+  "case_id": "AIID-10-PILOT-01",
+  "fixture_basis": "CASE_SHAPED_SYNTHETIC_FROM_REVIEW",
+  "verdict": "B_REPRESENTATION_GAP",
+  "non_claims": [
+    "Does not claim AIID #10 is false.",
+    "Does not establish or refute Kronos-specific causation.",
+    "Does not infer malicious or intentional harm.",
+    "Uses the reviewed incident only to motivate a multi-parent socio-technical causal structure."
+  ],
+  "assessments": [
+    {
+      "parent": "unstable_schedule",
+      "child": "employee_hardship",
+      "status": "ESTABLISHED",
+      "support_refs": [
+        "NYT-2014",
+        "CBS-2015"
+      ]
+    },
+    {
+      "parent": "workforce_software",
+      "child": "unstable_schedule",
+      "status": "ATTRIBUTED",
+      "support_refs": [
+        "TECHTARGET-2015"
+      ],
+      "counterevidence_refs": [
+        "KRONOS-RESPONSE"
+      ]
+    },
+    {
+      "parent": "management_policy",
+      "child": "unstable_schedule",
+      "status": "SUPPORTED",
+      "support_refs": [
+        "CNN-2015",
+        "CBS-2014"
+      ]
+    },
+    {
+      "parent": "store_implementation",
+      "child": "unstable_schedule",
+      "status": "SUPPORTED",
+      "support_refs": [
+        "SEATTLE-TIMES-2016"
+      ]
+    },
+    {
+      "parent": "optimization_configuration",
+      "child": "unstable_schedule",
+      "status": "UNRESOLVED",
+      "support_refs": [
+        "BUZZFEED-2015",
+        "QUINYX-2016"
+      ]
+    },
+    {
+      "parent": "intentional_harm",
+      "child": "employee_hardship",
+      "status": "NOT_ESTABLISHED",
+      "support_refs": []
+    }
+  ],
+  "incident_level_representation_probe": [
+    {
+      "parent": "workforce_software",
+      "child": "unstable_schedule",
+      "asserted_status": "ESTABLISHED",
+      "sole_cause": true
+    },
+    {
+      "parent": "unstable_schedule",
+      "child": "employee_hardship",
+      "asserted_status": "ESTABLISHED",
+      "sole_cause": false
+    }
+  ],
+  "expected": {
+    "state": "UNRESOLVED",
+    "required_diagnostics": [
+      "CAUSAL_OVERLINK"
+    ]
+  }
+}
