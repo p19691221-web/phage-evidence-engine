@@ -1,0 +1,64 @@
+{
+  "schema": "phage.df017.external-fixture.v1",
+  "fixture_id": "DF017-AIID-74",
+  "validation_id": "DF-017",
+  "source": {
+    "dataset": "AI Incident Database",
+    "incident_id": 74,
+    "source_type": "public_external_incident_record",
+    "retrieved_for_independent_validation": true
+  },
+  "case": {
+    "subject": "facial recognition false match associated with wrongful arrest",
+    "location": "Detroit, Michigan, United States",
+    "reported_year": 2020,
+    "incident_summary": "Public reports associated with AIID incident 74 describe a facial-recognition false match connected to the wrongful arrest of Robert Williams by Detroit police.",
+    "claim_under_test": "The PHAGE Evidence Engine can evaluate the supplied evidence relationships without treating the existence of an AIID incident record or any individual news report as proof of the claim."
+  },
+  "evidence_policy": {
+    "aiid_record_is_ground_truth": false,
+    "single_report_is_ground_truth": false,
+    "preserve_source_disagreement": true,
+    "record_provenance": true,
+    "allow_unresolved_result": true
+  },
+  "sources_observed": [
+    {
+      "publisher": "The Conversation",
+      "year": 2020
+    },
+    {
+      "publisher": "NPR",
+      "year": 2020
+    },
+    {
+      "publisher": "TechRepublic",
+      "year": 2020
+    },
+    {
+      "publisher": "Vice",
+      "year": 2020
+    },
+    {
+      "publisher": "Silicon",
+      "year": 2020
+    },
+    {
+      "publisher": "Wired",
+      "year": 2022
+    },
+    {
+      "publisher": "The New York Times",
+      "year": 2024
+    }
+  ],
+  "expected_phage_result": null,
+  "expected_pass_fail": null,
+  "selection_status": "selected_before_phage_evaluation",
+  "notes": [
+    "No expected PHAGE result is encoded in this fixture.",
+    "The external incident record is an input source, not PHAGE validation.",
+    "Independent validation may produce PASS, FAIL, UNRESOLVED, or expose an implementation or specification problem.",
+    "Exact source URLs, retrieval timestamps, and cryptographic hashes should be frozen before the independent validation run."
+  ]
+}
