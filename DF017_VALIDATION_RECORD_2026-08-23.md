@@ -9,10 +9,9 @@
 - Branch: main
 - Workflow: `.github/workflows/df017-independent-validation.yml`
 - Trigger: `workflow_dispatch`
-- Run: DF-017 Independent Validation #3
+- Run: DF-017 Independent Validation #4
 - Validation date: 2026-08-23
-- Commit SHA: - Commit SHA: 115bcfd4b0abdf81f76435e054ff4baf6c177e52
-
+- Commit SHA: 5b1f7550ac8523edb0ad52551ccfa0ba5e4f2bbd
 ## Validation inputs
 
 - `DF017_AIID_74_FIXTURE.json`
@@ -48,7 +47,7 @@ not as ground truth.
 
 The GitHub Actions run produced a DF-017 validation evidence artifact.
 
-Exact commit SHA and any cryptographic identifiers must be recorded
+- Commit SHA: 5b1f7550ac8523edb0ad52551ccfa0ba5e4f2bbd
 from the execution metadata rather than inferred.
 
 ## Final status
