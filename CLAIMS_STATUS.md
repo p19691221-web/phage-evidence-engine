@@ -11,7 +11,7 @@ Maturity labels:
 | Evidence/Gap structural assessment (G1/G2/G3 family) | FIXTURE_SUPPORTED | Limited to tested failure shapes and current prototype semantics |
 | PHAGE as foundational AI trust infrastructure | PRODUCT THESIS / NOT VALIDATED | May be described only as an ambition or design direction |
 | Expectation provenance gate | HYPOTHESIZED | Awaiting DF-011 differential execution |
-| Expectation Capture resistance | HYPOTHESIZED | Do not infer from provenance-gate support |
+| Expectation Capture resistance | HYPOTHESIZED | DF-017 independent validation: UNRESOLVED; do not infer substantive support from workflow PASS |
 | Correctness of Expected Observation (E) | OPEN / OUT OF CURRENT CAPABILITY | PHAGE does not determine correct E |
 | Authority Source / Scope / Freshness / Legitimacy | OPEN | No Authority Engine claim |
 | Context correctness / decomposition | OPEN | CorrectAssessment(C) != CorrectContext(C) |
