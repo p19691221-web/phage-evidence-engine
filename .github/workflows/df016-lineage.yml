@@ -1,0 +1,33 @@
+name: DF-016 lineage integrity
+
+on:
+  push:
+    branches:
+      - "df016-證據完整性"
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  df016:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile DF-016 modules
+        run: |
+          python -m py_compile phage_lineage_contract_v0_1.py
+          python -m py_compile test_phage_lineage_contract_v0_1.py
+
+      - name: Run DF-016 lineage contract tests
+        run: python test_phage_lineage_contract_v0_1.py
