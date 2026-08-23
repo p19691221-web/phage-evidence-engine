@@ -1,0 +1,124 @@
+name: DF-017 Independent Validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - df017-獨立驗證
+    paths:
+      - "DF017_AIID_74_FIXTURE.json"
+      - "DF017_AIID_74_SOURCES.json"
+      - "DF017_FIXTURE_MANIFEST.json"
+      - "DF017_獨立驗證.md"
+      - "DF017_VALIDATION_RECORD_TEMPLATE.md"
+      - "df017_independent_validator.py"
+      - ".github/workflows/df017-independent-validation.yml"
+  pull_request:
+    paths:
+      - "DF017_AIID_74_FIXTURE.json"
+      - "DF017_AIID_74_SOURCES.json"
+      - "DF017_FIXTURE_MANIFEST.json"
+      - "DF017_獨立驗證.md"
+      - "DF017_VALIDATION_RECORD_TEMPLATE.md"
+      - "df017_independent_validator.py"
+      - ".github/workflows/df017-independent-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-df017:
+    name: Validate DF-017 frozen package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile validator
+        run: python -m py_compile df017_independent_validator.py
+
+      - name: Run independent validator
+        id: validator
+        shell: bash
+        run: |
+          set +e
+          python df017_independent_validator.py > df017_validation_output.json
+          EXIT_CODE=$?
+          set -e
+
+          cat df017_validation_output.json
+
+          echo "exit_code=$EXIT_CODE" >> "$GITHUB_OUTPUT"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("df017_validation_output.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+
+          result = data.get("result")
+
+          if result not in {"PASS", "FAIL", "UNRESOLVED"}:
+              raise SystemExit(
+                  f"Invalid DF-017 result: {result!r}"
+              )
+
+          print(f"DF-017 result: {result}")
+
+          with open("df017_result.txt", "w", encoding="utf-8") as f:
+              f.write(result + "\n")
+          PY
+
+      - name: Publish validation summary
+        if: always()
+        shell: bash
+        run: |
+          echo "## DF-017 Independent Validation" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -f df017_result.txt ]; then
+            RESULT="$(cat df017_result.txt)"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "**Result: $RESULT**" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "**Result: execution error**" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "This workflow checks the frozen DF-017 validation package." >> "$GITHUB_STEP_SUMMARY"
+          echo "A PASS does not by itself prove a substantive PHAGE claim." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: df017-validation-evidence
+          path: |
+            df017_validation_output.json
+            df017_result.txt
+          if-no-files-found: warn
+
+      - name: Enforce validator execution
+        if: always()
+        shell: bash
+        run: |
+          EXIT_CODE="${{ steps.validator.outputs.exit_code }}"
+
+          if [ -z "$EXIT_CODE" ]; then
+            echo "Validator did not complete correctly."
+            exit 1
+          fi
+
+          if [ "$EXIT_CODE" -ne 0 ]; then
+            echo "DF-017 validator execution failed."
+            exit "$EXIT_CODE"
+          fi
+
+          echo "DF-017 validator completed."
