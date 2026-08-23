@@ -1,0 +1,36 @@
+{
+  "schema": "phage.df017.fixture-manifest.v1",
+  "validation_id": "DF-017",
+  "purpose": "Independent reproducibility and external-evidence validation",
+  "status": "DRAFT",
+  "frozen_target": {
+    "repository": "p19691221-web/phage-evidence-engine",
+    "commit_sha": null,
+    "python_version": "3.11"
+  },
+  "fixtures": [],
+  "validation_contract": {
+    "allowed_results": [
+      "PASS",
+      "FAIL",
+      "UNRESOLVED"
+    ],
+    "negative_results_must_be_preserved": true,
+    "unresolved_is_not_pass": true,
+    "post_result_target_modification_requires_new_run": true
+  },
+  "external_fixture_requirements": {
+    "source_required": true,
+    "stable_identifier_required": true,
+    "retrieval_date_required": true,
+    "source_reference_required": true,
+    "local_representation_required": true,
+    "sha256_required": true,
+    "transformation_history_required": true
+  },
+  "notes": [
+    "This manifest does not contain a validation result.",
+    "External evidence sources are inputs, not endorsements of PHAGE.",
+    "Fixture entries must be frozen before an independent validation run."
+  ]
+}
