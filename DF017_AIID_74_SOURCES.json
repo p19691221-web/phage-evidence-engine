@@ -1,0 +1,119 @@
+{
+  "schema": "phage.df017.source-manifest.v1",
+  "fixture_id": "DF017-AIID-74",
+  "validation_id": "DF-017",
+  "incident": {
+    "database": "AI Incident Database",
+    "incident_id": 74,
+    "incident_date": "2020-01-30",
+    "title": "Detroit Police Wrongfully Arrested Black Man Due To Faulty FRT",
+    "canonical_url": "https://incidentdatabase.ai/cite/74/",
+    "report_count_observed": 11
+  },
+  "provenance_policy": {
+    "aiid_is_ground_truth": false,
+    "single_source_is_ground_truth": false,
+    "sources_are_external_inputs": true,
+    "expected_phage_result_encoded": false,
+    "negative_or_unresolved_results_allowed": true,
+    "source_content_hashes_verified": false
+  },
+  "sources": [
+    {
+      "source_id": "AIID-74",
+      "publisher": "AI Incident Database",
+      "type": "incident_index",
+      "title": "Incident 74: Detroit Police Wrongfully Arrested Black Man Due To Faulty FRT",
+      "publication_date": null,
+      "url": "https://incidentdatabase.ai/cite/74/",
+      "supports": [
+        "incident identity",
+        "incident date",
+        "AIID report aggregation",
+        "AIID taxonomy metadata"
+      ],
+      "ground_truth": false,
+      "sha256": null
+    },
+    {
+      "source_id": "NPR-2020-06-24",
+      "publisher": "NPR",
+      "type": "news_report",
+      "title": "'The Computer Got It Wrong': How Facial Recognition Led To False Arrest Of Black Man",
+      "publication_date": "2020-06-24",
+      "url": "https://www.npr.org/2020/06/24/882683463/the-computer-got-it-wrong-how-facial-recognition-led-to-a-false-arrest-in-michig",
+      "supports": [
+        "false facial-recognition match",
+        "Robert Williams arrest",
+        "approximately 30-hour detention",
+        "charges dropped for insufficient evidence",
+        "law-enforcement use of facial recognition"
+      ],
+      "ground_truth": false,
+      "sha256": null
+    },
+    {
+      "source_id": "ACLU-2020-06-24-PRESS",
+      "publisher": "American Civil Liberties Union",
+      "type": "civil_rights_record",
+      "title": "Man Wrongfully Arrested Because Face Recognition Can't Tell Black People Apart",
+      "publication_date": "2020-06-24",
+      "url": "https://www.aclu.org/press-releases/man-wrongfully-arrested-because-face-recognition-cant-tell-black-people-apart",
+      "supports": [
+        "Robert Williams identity",
+        "wrongful arrest allegation",
+        "false face-recognition match",
+        "ACLU complaint",
+        "Detroit Police Department context"
+      ],
+      "ground_truth": false,
+      "sha256": null
+    },
+    {
+      "source_id": "ACLU-2020-06-24-ARTICLE",
+      "publisher": "American Civil Liberties Union",
+      "type": "case_background",
+      "title": "Wrongfully Arrested Because Face Recognition Can't Tell Black People Apart",
+      "publication_date": "2020-06-24",
+      "url": "https://www.aclu.org/news/privacy-technology/wrongfully-arrested-because-face-recognition-cant-tell-black-people-apart",
+      "supports": [
+        "arrest circumstances",
+        "facial-recognition role",
+        "detention circumstances",
+        "case background"
+      ],
+      "ground_truth": false,
+      "sha256": null
+    },
+    {
+      "source_id": "WIRED-2020",
+      "publisher": "WIRED",
+      "type": "news_report",
+      "title": "A Flawed Facial-Recognition System Sent This Man to Jail",
+      "publication_date": "2020-06-24",
+      "url": "https://www.wired.com/story/flawed-facial-recognition-system-sent-man-jail",
+      "supports": [
+        "facial-recognition failure",
+        "wrongful arrest",
+        "Robert Williams case",
+        "broader facial-recognition reliability concerns"
+      ],
+      "ground_truth": false,
+      "sha256": null
+    }
+  ],
+  "freeze_status": {
+    "metadata_frozen": true,
+    "remote_content_archived": false,
+    "content_hashes_computed": false,
+    "complete_reproducible_snapshot": false
+  },
+  "notes": [
+    "AIID is treated as an incident index and aggregation source, not as ground truth.",
+    "No external source is treated as PHAGE ground truth.",
+    "No expected PHAGE PASS, FAIL, or UNRESOLVED result is encoded in this manifest.",
+    "sha256 fields remain null until exact source artifacts are locally frozen and hashed.",
+    "A later source update must not silently replace the version used in a completed DF-017 validation run.",
+    "External-source disagreement must be preserved rather than reconciled to obtain an expected result."
+  ]
+}
