@@ -1,0 +1,253 @@
+{
+  "schema": "phage.df018.fixture.v1",
+  "fixture_id": "DF018-UBER-BEITOU",
+  "validation_id": "DF-018",
+  "status": "PARTIALLY_RESOLVED_FIXTURE",
+  "evidence_collection": "CLOSED_FOR_VALIDATOR_V1",
+
+  "case": {
+    "subject": "Uber Beitou motorcycle passenger-service regulatory dispute",
+    "jurisdiction": "Taipei, Taiwan",
+    "event_date": "2026-07-01",
+    "disposition_date": null
+  },
+
+  "claims": {
+    "CLAIM_1_CLASSIFICATION_AUTHORITY": {
+      "status": "PENDING",
+      "result": "UNRESOLVED",
+      "claim": "The competent authority for the DF-018 regulatory classification and enforcement can be established from the applicable authority-selection chain.",
+      "must_not_be_phrased_as": [
+        "The service was finally determined unlawful.",
+        "The existence of an authority architecture proves that the authority exercised in DF-018 was valid.",
+        "A Taipei principal office alone establishes the applicable regulatory classification."
+      ],
+      "open_dependencies": [
+        "S5_REGULATED_CATEGORY_IN_ACTUAL_DISPOSITION",
+        "S5_PRIMARY_DISPOSITION"
+      ]
+    },
+
+    "CLAIM_2_FINAL_LEGALITY": {
+      "status": "PENDING",
+      "result": "UNRESOLVED",
+      "claim": "The final legality of the challenged DF-018 service and dispositions.",
+      "must_not_be_phrased_as": [
+        "Workflow or validator success proves the service unlawful.",
+        "Registration scope proves the service unlawful.",
+        "An enforcement action proves final legality while administrative review remains unresolved."
+      ],
+      "open_dependencies": [
+        "S5_PRIMARY_DISPOSITION",
+        "FINAL_ADMINISTRATIVE_OR_JUDICIAL_RESOLUTION"
+      ]
+    }
+  },
+
+  "evidence_nodes": {
+    "STATUTORY_TRANSPORT_CLASSIFICATION": {
+      "status": "FOUND_VERSION_REVALIDATION_REQUIRED",
+      "source_slot": "S1_STATUTE_34",
+      "supports": [
+        "A statutory transport-classification structure exists."
+      ],
+      "does_not_establish": [
+        "The exact classification adopted in DF-018.",
+        "Final legality of DF-018.",
+        "The exact statutory text applicable without temporal-version validation."
+      ]
+    },
+
+    "COMPETENT_AUTHORITY_ASSIGNMENT": {
+      "status": "FOUND_VERSION_REVALIDATION_REQUIRED",
+      "source_slot": "S2_STATUTE_3_37",
+      "supports": [
+        "A statutory authority-allocation structure exists."
+      ],
+      "does_not_establish": [
+        "That a particular section-37 category applies to DF-018.",
+        "Final legality of DF-018."
+      ]
+    },
+
+    "ENFORCEMENT_AUTHORITY_ASSIGNMENT": {
+      "status": "FOUND_VERSION_REVALIDATION_REQUIRED",
+      "source_slot": "S3_STATUTE_77_78",
+      "supports": [
+        "A statutory enforcement-authority structure exists."
+      ],
+      "does_not_establish": [
+        "The exact classification used in the DF-018 disposition.",
+        "Validity of the challenged DF-018 dispositions."
+      ]
+    },
+
+    "INTERPRETIVE_PRECEDENT": {
+      "status": "VERIFIED_FOR_ARCHITECTURE_ONLY",
+      "source_slot": "S4_GC_109_DA_2",
+      "identifier": "最高行政法院109年度大字第2號行政裁定",
+      "source_role": "INTERPRETIVE_PRECEDENT",
+      "supports": [
+        "Authority-selection architecture linking statutory classification and enforcement jurisdiction."
+      ],
+      "does_not_establish": [
+        "Final legality of DF-018.",
+        "Exact statutory version applicable to DF-018.",
+        "Exact classification adopted in DF-018.",
+        "Validity of the challenged DF-018 dispositions."
+      ],
+      "scope_limit": "The precedent concerns a different historical factual and statutory setting and must not be converted into a general rule that location alone always determines enforcement authority."
+    },
+
+    "DF018_COMPANY_CONNECTING_FACTOR": {
+      "status": "VERIFIED",
+      "entity_name": "優行福爾摩沙股份有限公司",
+      "company_id": "60542264",
+      "principal_office": "臺北市信義區基隆路1段206號18樓",
+      "established_date": "2025-10-31",
+      "supports": [
+        "The identified company's principal office is in Taipei.",
+        "The company existed before the DF-018 event date."
+      ],
+      "does_not_establish": [
+        "Which statutory transport category applies.",
+        "That section 37's taxi-specific selection rule applies.",
+        "Final legality.",
+        "Validity of any disposition."
+      ],
+      "provenance_caveat": "Based on mutually consistent secondary aggregators described as deriving from public government registration data; primary registry retrieval remains desirable."
+    },
+
+    "REGISTERED_BUSINESS_SCOPE": {
+      "status": "OBSERVED_SECONDARY_SOURCES",
+      "entity_name": "優行福爾摩沙股份有限公司",
+      "observed_scope": [
+        "管理顧問業",
+        "資料處理服務業",
+        "電子資訊供應服務業",
+        "其他工商服務業",
+        "其他顧問服務業",
+        "市場研究及民意調查業",
+        "仲介服務業"
+      ],
+      "transport_business_category_observed": false,
+      "supports": [
+        "The reviewed registration sources did not list a transport-business category."
+      ],
+      "does_not_establish": [
+        "Illegality.",
+        "Regulatory classification in DF-018.",
+        "Enforcement jurisdiction.",
+        "Validity of the challenged dispositions."
+      ]
+    },
+
+    "S5_PRIMARY_DISPOSITION": {
+      "status": "OPEN",
+      "primary_document_obtained": false,
+      "regulated_category_established": false,
+      "exact_statutory_citations_established": false,
+      "disposition_date_established": false,
+      "note": "Secondary reporting is insufficient to close the case-specific classification and disposition provenance gap."
+    },
+
+    "PROMULGATION_2026_08_17": {
+      "status": "REVALIDATION_REQUIRED",
+      "asserted_date": "2026-08-17",
+      "primary_source_independently_reproduced": false,
+      "bounded_use": "Do not use this node as verified governing-law evidence until the promulgation record and effective-date rule are independently revalidated.",
+      "does_not_establish": [
+        "Final legality of DF-018.",
+        "The governing statutory text at the event date.",
+        "The governing statutory text at the disposition date."
+      ]
+    }
+  },
+
+  "selection_authority_rule": {
+    "id": "SELECTION_AUTHORITY_RULE",
+    "status": "PARTIALLY_RESOLVED",
+    "authority_chain_established": true,
+    "architecture": [
+      "STATUTORY_TRANSPORT_CLASSIFICATION",
+      "COMPETENT_AUTHORITY_ASSIGNMENT",
+      "ENFORCEMENT_AUTHORITY_ASSIGNMENT",
+      "INTERPRETIVE_PRECEDENT"
+    ],
+    "connecting_factor": "DF018_COMPANY_CONNECTING_FACTOR",
+    "must_still_establish": [
+      "S5_REGULATED_CATEGORY_IN_ACTUAL_DISPOSITION",
+      "S5_PRIMARY_DISPOSITION",
+      "APPLICABLE_STATUTORY_VERSION_AS_NEEDED"
+    ],
+    "bounded_conclusion": "The authority-selection architecture and company connecting factor may be evaluated, but CLAIM_1 must remain UNRESOLVED until the missing case-specific classification edge is established."
+  },
+
+  "entity_distinction": {
+    "distinct_entity_flag": true,
+    "entities": [
+      {
+        "name": "優行福爾摩沙股份有限公司",
+        "company_id": "60542264"
+      },
+      {
+        "name": "優步福爾摩沙股份有限公司",
+        "company_id": "83118125"
+      }
+    ],
+    "rule": "The two legal entities must not be substituted for or collapsed into one another."
+  },
+
+  "failure_conditions": {
+    "CURRENT_LAW_LEAKAGE": {
+      "claim_id": "CLAIM_1_CLASSIFICATION_AUTHORITY",
+      "trigger_when": "A statutory version not established as applicable to the relevant event or disposition is used as governing text.",
+      "control_when": "Temporal applicability remains explicit or unresolved rather than silently importing current text."
+    },
+
+    "SECTION_IDENTITY_COLLISION": {
+      "claim_id": "CLAIM_1_CLASSIFICATION_AUTHORITY",
+      "trigger_when": "A section number is treated as legally identical across amendments without verifying the applicable text and effective date.",
+      "control_when": "Section identity is version-sensitive and unresolved versions are not collapsed."
+    },
+
+    "ENTITY_IDENTITY_COLLISION": {
+      "claim_id": "CLAIM_1_CLASSIFICATION_AUTHORITY",
+      "trigger_when": "優行福爾摩沙股份有限公司 and 優步福爾摩沙股份有限公司 are treated as the same legal entity.",
+      "control_when": "The two companies remain separately identified by name and company ID."
+    },
+
+    "AUTHORITY_CHAIN_PREMATURE_CLOSURE": {
+      "claim_id": "CLAIM_1_CLASSIFICATION_AUTHORITY",
+      "trigger_when": "CLAIM_1 is resolved SATISFIED while the regulated category or primary disposition remains unestablished.",
+      "control_when": "CLAIM_1 remains PENDING and UNRESOLVED while S5 remains open.",
+      "invariant": "Other verified nodes are not sufficient to replace the missing case-specific classification edge."
+    }
+  },
+
+  "regression_expectation": {
+    "leakage_cases_expected_triggered": 4,
+    "control_cases_expected_triggered": 0,
+    "require_both_sides": true
+  },
+
+  "open_gaps": [
+    {
+      "id": "S5_REGULATED_CATEGORY_IN_ACTUAL_DISPOSITION",
+      "status": "OPEN"
+    },
+    {
+      "id": "S5_PRIMARY_DISPOSITION",
+      "status": "OPEN"
+    },
+    {
+      "id": "DISPOSITION_DATE",
+      "status": "OPEN",
+      "note": "Not required to manufacture a conclusion; remains required for primary-disposition provenance and any temporal question that depends on the disposition date."
+    },
+    {
+      "id": "PROMULGATION_2026_08_17_PRIMARY_REVALIDATION",
+      "status": "OPEN"
+    }
+  ]
+}
