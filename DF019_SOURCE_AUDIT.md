@@ -40,7 +40,7 @@ It is not yet a fixture invariant or PHAGE taxonomy value.
 **Status: VERIFIED — SECONDARY-SOURCE CROSS-CONFIRMED**
 
 Multiple independent reports consistently state that:
-- multiple incidents involving the same institution != common causal mechanism;
+
 - IBK formally disclosed the financial incident on 2026-07-15.
 - The initially disclosed scale was approximately KRW 83.376 billion.
 - As of the 2026-08-24 reporting based on material obtained by
@@ -340,7 +340,7 @@ fixture construction:
 - preliminary incident amount != final loss;
 - incident disclosure != final fraud determination;
 - multiple secondary reports != primary evidence.
-
+- multiple incidents involving the same institution != common causal mechanism;
 Cross-source agreement increases confidence in the existence of the
 reported facts but does not convert secondary reporting into a primary
 source.
