@@ -40,7 +40,7 @@ It is not yet a fixture invariant or PHAGE taxonomy value.
 **Status: VERIFIED — SECONDARY-SOURCE CROSS-CONFIRMED**
 
 Multiple independent reports consistently state that:
-
+- multiple incidents involving the same institution != common causal mechanism;
 - IBK formally disclosed the financial incident on 2026-07-15.
 - The initially disclosed scale was approximately KRW 83.376 billion.
 - As of the 2026-08-24 reporting based on material obtained by
@@ -381,3 +381,5 @@ No DF-019 fixture has been created.
 No validator has been created.
 
 No substantive PHAGE conclusion has been produced.
+## Scope clarification — unrelated IBK financial incidents
+...
