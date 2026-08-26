@@ -25,7 +25,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run PHAGE Gateway regression
+       - name: Run PHAGE Gateway regression
         run: python3 test_phage_gateway.py
-- name: Run PHAGE execution-boundary regression
-  run: python3 test_phage_executor.py
+
+      - name: Run PHAGE execution-boundary regression
+        run: python3 test_phage_executor.py     
