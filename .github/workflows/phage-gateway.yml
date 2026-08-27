@@ -7,6 +7,7 @@ on:
       - main
       - phage-gateway-mvp
       - phage-gateway-execution
+      - phage-tool-adapter
   workflow_dispatch:
 
 permissions:
@@ -31,3 +32,5 @@ jobs:
 
       - name: Run PHAGE execution-boundary regression
         run: python3 test_phage_executor.py
+      - name: Run PHAGE tool-adapter regression
+        run: python3 test_phage_tool_adapter.py
