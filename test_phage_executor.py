@@ -107,5 +107,19 @@ def main() -> int:
             "provenance BLOCK prevents tool invocation",
             test_unverified_instruction_does_not_invoke_tool,
         ),
-        (
-            "scope BLOCK prevents
+                (
+            "scope BLOCK prevents tool invocation",
+            test_scope_mismatch_does_not_invoke_tool,
+        ),
+    )
+
+    for name, test in tests:
+        test()
+        print(f"PASS: {name}")
+
+    print("PHAGE execution-boundary regression PASS: 3 / 3.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
