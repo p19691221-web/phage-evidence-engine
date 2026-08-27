@@ -16,6 +16,7 @@ from phage_tool_adapter import SandboxToolAdapter
 def make_envelope(
     instruction_source: str,
     target: str,
+    instruction_principal: str = "user_123",
 ) -> ActionEnvelope:
     return ActionEnvelope(
         principal="user_123",
@@ -48,9 +49,10 @@ def test_allow_produces_effect() -> None:
 def test_unverified_provenance_produces_no_effect() -> None:
     adapter = SandboxToolAdapter()
     envelope = make_envelope(
-        "external_content",
-        "record_456",
-    )
+    "external_content",
+    "record_456",
+    instruction_principal="external_actor",
+)
 
     result = execute_governed(envelope, adapter.invoke)
 
