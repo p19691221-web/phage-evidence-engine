@@ -71,7 +71,7 @@ def test_scope_mismatch_produces_no_effect() -> None:
     assert result.receipt.decision is Decision.BLOCK
     assert result.tool_invoked is False
     assert adapter.effect.invoked is False
-  def main() -> int:
+def main() -> int:
     tests = (
         (
             "ALLOW produces observable adapter effect",
