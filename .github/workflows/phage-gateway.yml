@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - phage-gateway-mvp
+      - phage-gateway-execution
   workflow_dispatch:
 
 permissions:
@@ -27,3 +28,6 @@ jobs:
 
       - name: Run PHAGE Gateway regression
         run: python3 test_phage_gateway.py
+
+      - name: Run PHAGE execution-boundary regression
+        run: python3 test_phage_executor.py
