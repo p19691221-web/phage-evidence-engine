@@ -24,7 +24,7 @@ def make_envelope(
         action="delete_record",
         target=target,
         instruction_source=instruction_source,
-        instruction_principal="user_123",
+        instruction_principal=instruction_principal,
         authorized_actions=("delete_record",),
         authorized_targets=("record_456",),
     )
