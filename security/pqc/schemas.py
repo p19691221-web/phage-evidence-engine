@@ -84,7 +84,7 @@ class AgentIdentityClaim(BaseModel):
     attestation_signature: Optional[str] = None
 
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    class PQCHandshake(BaseModel):
+class PQCHandshake(BaseModel):
     """
     Result of a PQC identity handshake between PHAGE and an agent.
     Non-repudiable proof that the agent was authenticated.
@@ -111,7 +111,7 @@ class AgentIdentityClaim(BaseModel):
     session_expires_at: Optional[datetime] = None
 
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    class ActionSignature(BaseModel):
+class ActionSignature(BaseModel):
     """
     Every agent action is signed with ML-DSA.
     Non-repudiation: the agent cannot deny having taken this action.
@@ -138,7 +138,7 @@ class AgentIdentityClaim(BaseModel):
     verified_at: Optional[datetime] = None
 
     metadata: Dict[str, Any] = Field(default_factory=dict)
-    class PQCSessionToken(BaseModel):
+class PQCSessionToken(BaseModel):
     """
     Session token established after successful PQC handshake.
     Used for all subsequent action authorizations in the session.
