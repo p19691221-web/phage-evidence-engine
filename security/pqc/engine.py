@@ -172,7 +172,7 @@ class PQCEngine:
             self._issue_session_token(identity, handshake, shared_secret)
 
         return handshake
-          def _issue_session_token(
+    def _issue_session_token(
         self,
         identity: AgentIdentityClaim,
         handshake: PQCHandshake,
