@@ -41,7 +41,7 @@ class HardwareOrigin(str, Enum):
     EDGE_DEVICE = "edge_device"    # Industrial edge (Moxa, etc.)
     SECURE_ENCLAVE = "secure_enclave"  # TEE/HSM-backed
     PUF_BOUND  = "puf_bound"       # Physically Unclonable Function
-  class AgentIdentityClaim(BaseModel):
+class AgentIdentityClaim(BaseModel):
     """
     Cryptographically bound agent identity.
     Not just a username/password — a verifiable attribute set.
