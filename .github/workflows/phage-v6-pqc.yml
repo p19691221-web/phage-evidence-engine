@@ -1,0 +1,40 @@
+name: PHAGE v6 PQC Prototype
+
+on:
+  push:
+    branches:
+      - phage-v6-integration
+    paths:
+      - "security/pqc/**"
+      - ".github/workflows/phage-v6-pqc.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "security/pqc/**"
+      - ".github/workflows/phage-v6-pqc.yml"
+
+  workflow_dispatch:
+
+jobs:
+  pqc-prototype-smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install prototype dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pydantic
+
+      - name: Run PHAGE v6 PQC prototype smoke test
+        run: |
+          python -m security.pqc.test_phage_v6_pqc
