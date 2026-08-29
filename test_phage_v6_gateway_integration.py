@@ -101,7 +101,7 @@ def invoke_through_phage(engine, identity, action):
         adapter,
         result.failure_condition,
     )
-  def test_valid_v6_session_reaches_effect():
+def test_valid_v6_session_reaches_effect():
     engine, identity = establish_session()
 
     decision, adapter, _ = invoke_through_phage(
