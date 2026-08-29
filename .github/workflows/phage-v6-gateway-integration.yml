@@ -2,8 +2,9 @@ name: PHAGE v6 Gateway Integration
 
 on:
   push:
-    branches:
-      - phage-v6-integration
+  branches:
+    - main
+    - phage-v6-integration
     paths:
       - "security/pqc/**"
       - "phage_gateway.py"
