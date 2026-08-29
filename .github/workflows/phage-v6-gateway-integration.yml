@@ -1,0 +1,46 @@
+name: PHAGE v6 Gateway Integration
+
+on:
+  push:
+    branches:
+      - phage-v6-integration
+    paths:
+      - "security/pqc/**"
+      - "phage_gateway.py"
+      - "phage_tool_adapter.py"
+      - "test_phage_v6_gateway_integration.py"
+      - ".github/workflows/phage-v6-gateway-integration.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "security/pqc/**"
+      - "phage_gateway.py"
+      - "phage_tool_adapter.py"
+      - "test_phage_v6_gateway_integration.py"
+      - ".github/workflows/phage-v6-gateway-integration.yml"
+
+  workflow_dispatch:
+
+jobs:
+  gateway-integration-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pydantic
+
+      - name: Run PHAGE v6 Gateway integration regression
+        run: |
+          python3 test_phage_v6_gateway_integration.py
