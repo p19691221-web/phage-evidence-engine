@@ -3,6 +3,7 @@ name: PHAGE v6 PQC Prototype
 on:
   push:
     branches:
+      - main
       - phage-v6-integration
     paths:
       - "security/pqc/**"
@@ -16,7 +17,6 @@ on:
       - ".github/workflows/phage-v6-pqc.yml"
 
   workflow_dispatch:
-
 jobs:
   pqc-prototype-smoke-test:
     runs-on: ubuntu-latest
