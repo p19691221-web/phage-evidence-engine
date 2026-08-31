@@ -367,8 +367,26 @@ class PQCEngine:
 
         token.use_count += 1
         return True, "Session valid"
+              
 
-    # ── AGENT CHALLENGE RESPONSE ──
+    def revoke_session(self, agent_id: str) -> bool:
+        """
+        Explicitly revoke an existing PHAGE v6 session.
+
+        Returns True when a session exists and is revoked.
+        Returns False when no session exists for the agent.
+        """
+        token = self._session_store.get(agent_id)
+
+        if not token:
+            return False
+
+        token.is_active = False
+        return True
+
+    # —— AGENT CHALLENGE RESPONSE ——
+
+    
 
     @staticmethod
     def create_agent_response(challenge: str, agent_id: str) -> str:
