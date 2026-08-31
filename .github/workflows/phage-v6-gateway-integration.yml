@@ -10,6 +10,7 @@ on:
       - "phage_gateway.py"
       - "phage_tool_adapter.py"
       - "test_phage_v6_gateway_integration.py"
+      - "test_phage_v6_revocation_enforcement.py"
       - ".github/workflows/phage-v6-gateway-integration.yml"
 
   pull_request:
@@ -20,6 +21,7 @@ on:
       - "phage_gateway.py"
       - "phage_tool_adapter.py"
       - "test_phage_v6_gateway_integration.py"
+      - "test_phage_v6_revocation_enforcement.py"
       - ".github/workflows/phage-v6-gateway-integration.yml"
 
   workflow_dispatch:
@@ -45,3 +47,6 @@ jobs:
       - name: Run PHAGE v6 Gateway integration regression
         run: |
           python3 test_phage_v6_gateway_integration.py
+      - name: Run PHAGE v6 revocation enforcement regression
+        run: |
+          python3 test_phage_v6_revocation_enforcement.py
