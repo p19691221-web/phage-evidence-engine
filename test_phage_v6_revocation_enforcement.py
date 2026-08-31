@@ -93,8 +93,12 @@ def test_revocation_after_allow_blocks_effect():
 
     assert revoked is True
 
-    adapter = SandboxToolAdapter()
-
+    adapter = SandboxToolAdapter(
+    pre_effect_guard=lambda envelope: engine.validate_session(
+        envelope.agent,
+        envelope.action,
+    )
+    )
     # This represents an already-authorized action reaching the
     # downstream execution boundary after its session was revoked.
     adapter.invoke(envelope)
