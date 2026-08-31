@@ -38,3 +38,6 @@ jobs:
       - name: Run PHAGE v6 PQC prototype smoke test
         run: |
           python -m security.pqc.test_phage_v6_pqc
+      - name: Run PHAGE v6 session lifecycle regression
+        run: |
+          python -m security.pqc.test_phage_v6_session_lifecycle
