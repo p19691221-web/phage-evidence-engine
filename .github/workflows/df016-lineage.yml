@@ -28,6 +28,14 @@ jobs:
         run: |
           python -m py_compile phage_lineage_contract_v0_1.py
           python -m py_compile test_phage_lineage_contract_v0_1.py
-
+          
+      - name: Compile DF-016 Digital Custody regression
+        run: |
+          python -m py_compile test_phage_digital_custody_v0_1.py
       - name: Run DF-016 lineage contract tests
-        run: python test_phage_lineage_contract_v0_1.py
+        run: 
+          python test_phage_lineage_contract_v0_1.py
+      - name: Run DF-016 Digital Custody regression
+        run: 
+          python test_phage_digital_custody_v0_1.py
+ 
