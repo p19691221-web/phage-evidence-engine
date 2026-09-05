@@ -1,0 +1,36 @@
+name: Authority-to-Tool-Adapter Effect Boundary regression
+
+on:
+  push:
+    paths:
+      - "test_phage_authority_tool_adapter_effect_boundary_v0_1.py"
+      - "phage_authority_tool_adapter_effect_boundary_v0_1.py"
+      - "phage_authority_execution_integration_v0_1.py"
+      - "phage_authority_execution_binding_v0_1.py"
+      - "phage_authority_engine_v0_1.py"
+      - ".github/workflows/authority-tool-adapter-effect-boundary.yml"
+
+  pull_request:
+    paths:
+      - "test_phage_authority_tool_adapter_effect_boundary_v0_1.py"
+      - "phage_authority_tool_adapter_effect_boundary_v0_1.py"
+      - "phage_authority_execution_integration_v0_1.py"
+      - "phage_authority_execution_binding_v0_1.py"
+      - "phage_authority_engine_v0_1.py"
+      - ".github/workflows/authority-tool-adapter-effect-boundary.yml"
+
+jobs:
+  authority-tool-adapter-effect-boundary-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Authority-to-Tool-Adapter Effect Boundary regression A-F
+        run: python test_phage_authority_tool_adapter_effect_boundary_v0_1.py
