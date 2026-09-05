@@ -1,0 +1,34 @@
+name: Authority-to-Execution Integration regression
+
+on:
+  push:
+    paths:
+      - "test_phage_authority_execution_integration_v0_1.py"
+      - "phage_authority_execution_integration_v0_1.py"
+      - "phage_authority_execution_binding_v0_1.py"
+      - "phage_authority_engine_v0_1.py"
+      - ".github/workflows/authority-execution-integration.yml"
+
+  pull_request:
+    paths:
+      - "test_phage_authority_execution_integration_v0_1.py"
+      - "phage_authority_execution_integration_v0_1.py"
+      - "phage_authority_execution_binding_v0_1.py"
+      - "phage_authority_engine_v0_1.py"
+      - ".github/workflows/authority-execution-integration.yml"
+
+jobs:
+  authority-execution-integration-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Authority-to-Execution Integration regression A-E
+        run: python test_phage_authority_execution_integration_v0_1.py
