@@ -7,13 +7,18 @@ This regression intentionally depends on a bridge implementation that does not
 exist yet. The first expected CI result is RED due to the missing bridge
 module.
 
-No Python bridge API beyond the module boundary is frozen by this scaffold.
+Only the bridge module boundary and the callable evaluate_bridge entry point
+are frozen by this scaffold.
+
+The evaluate_bridge parameter signature and implementation API are not yet
+frozen.
 """
 
 import importlib
 
 
 BRIDGE_MODULE = "phage_authority_action_envelope_bridge_v0_1"
+BRIDGE_ENTRY_POINT = "evaluate_bridge"
 FROZEN_FIXTURES = (
     {
         "id": "A",
@@ -72,10 +77,26 @@ FROZEN_FIXTURES = (
 def test_frozen_fixture_manifest_is_complete() -> None:
     assert tuple(fixture["id"] for fixture in FROZEN_FIXTURES) == tuple("ABCDEFG")
 
-def test_bridge_implementation_exists() -> None:
-    importlib.import_module(BRIDGE_MODULE)
+def load_bridge_entry_point():
+    module = importlib.import_module(BRIDGE_MODULE)
+
+    assert hasattr(module, BRIDGE_ENTRY_POINT), (
+        f"{BRIDGE_MODULE} must expose {BRIDGE_ENTRY_POINT}"
+    )
+
+    entry_point = getattr(module, BRIDGE_ENTRY_POINT)
+
+    assert callable(entry_point), (
+        f"{BRIDGE_MODULE}.{BRIDGE_ENTRY_POINT} must be callable"
+    )
+
+    return entry_point
+
+
+def test_minimal_executable_bridge_contract_exists() -> None:
+    load_bridge_entry_point()
 
 
 if __name__ == "__main__":
     test_frozen_fixture_manifest_is_complete()
-    test_bridge_implementation_exists()
+    test_minimal_executable_bridge_contract_exists()
