@@ -1,0 +1,30 @@
+name: Principle 0 Emergency Override regression
+
+on:
+  push:
+    paths:
+      - "test_phage_principle0_emergency_override_v0_1.py"
+      - "phage_principle0_emergency_override_v0_1.py"
+      - ".github/workflows/principle0-emergency-override.yml"
+
+  pull_request:
+    paths:
+      - "test_phage_principle0_emergency_override_v0_1.py"
+      - "phage_principle0_emergency_override_v0_1.py"
+      - ".github/workflows/principle0-emergency-override.yml"
+
+jobs:
+  principle0-emergency-override-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Principle 0 Emergency Override regression scaffold A-F
+        run: python test_phage_principle0_emergency_override_v0_1.py
