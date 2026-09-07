@@ -207,22 +207,22 @@ def assert_fixture_result(fixture, result) -> None:
         f"{required_keys - set(result)}"
     )
 
-    if "expected_binding_status" in fixture:
-    assert (
-        result["binding_status"]
-        is BindingStatus[fixture["expected_binding_status"]]
-    )
+        if "expected_binding_status" in fixture:
+        assert (
+            result["binding_status"]
+            is BindingStatus[fixture["expected_binding_status"]]
+        )
 
     if "expected_authority_status" in fixture:
-    expected_authority = fixture["expected_authority_status"]
+        expected_authority = fixture["expected_authority_status"]
 
-    if expected_authority is None:
-        assert result["authority_status"] is None
-    else:
-        assert (
-            result["authority_status"]
-            is AuthorityStatus[expected_authority]
-        )
+        if expected_authority is None:
+            assert result["authority_status"] is None
+        else:
+            assert (
+                result["authority_status"]
+                is AuthorityStatus[expected_authority]
+            )
 
     expected_disposition = fixture["expected_effect_disposition"]
 
