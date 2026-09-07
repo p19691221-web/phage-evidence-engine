@@ -87,7 +87,7 @@ def status_name(value) -> str:
         return value.name
 
     return str(value)
-    def load_override_entry_point():
+def load_override_entry_point():
     module = importlib.import_module(OVERRIDE_MODULE)
 
     assert hasattr(module, OVERRIDE_ENTRY_POINT), (
