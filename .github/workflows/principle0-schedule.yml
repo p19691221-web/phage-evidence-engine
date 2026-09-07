@@ -1,0 +1,30 @@
+name: Principle 0 Schedule regression
+
+on:
+  push:
+    paths:
+      - "test_phage_principle0_schedule_v0_1.py"
+      - "phage_principle0_schedule_v0_1.py"
+      - ".github/workflows/principle0-schedule.yml"
+
+  pull_request:
+    paths:
+      - "test_phage_principle0_schedule_v0_1.py"
+      - "phage_principle0_schedule_v0_1.py"
+      - ".github/workflows/principle0-schedule.yml"
+
+jobs:
+  principle0-schedule-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Principle 0 Schedule regression scaffold A-F
+        run: python test_phage_principle0_schedule_v0_1.py
