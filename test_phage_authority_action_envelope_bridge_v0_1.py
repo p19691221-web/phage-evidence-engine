@@ -207,7 +207,7 @@ def assert_fixture_result(fixture, result) -> None:
         f"{required_keys - set(result)}"
     )
 
-        if "expected_binding_status" in fixture:
+    if "expected_binding_status" in fixture:
         assert (
             result["binding_status"]
             is BindingStatus[fixture["expected_binding_status"]]
@@ -251,7 +251,6 @@ def assert_fixture_result(fixture, result) -> None:
         assert result["effect_invocation"] is None
 
     assert result["principal"] == "user-123"
-
 
 def test_fixtures_a_through_g() -> None:
     evaluate_bridge = load_bridge_entry_point()
