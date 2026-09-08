@@ -217,7 +217,7 @@ def run_fixture_b(evaluate_override) -> None:
 
     assert result["schedule_status"] == "SCHEDULE_NO_MATCH"
     assert status_name(result["override_status"]) == "OVERRIDE_NOT_APPLICABLE"
-    def run_fixture_c(evaluate_override) -> None:
+def run_fixture_c(evaluate_override) -> None:
     result = evaluate_override(
         request=make_request(
             schedule_status="SCHEDULE_UNRESOLVED",
@@ -254,7 +254,7 @@ def run_fixture_d(evaluate_override) -> None:
         ) != "OVERRIDE_APPLICABLE"
 
         assert result["effect_path"] == "BLOCKED"
-        def run_fixture_e(evaluate_override) -> None:
+def run_fixture_e(evaluate_override) -> None:
     result = evaluate_override(
         request=make_request(
             ordinary_authority_status=AuthorityStatus.AUTHORITY_REVOKED,
@@ -321,7 +321,9 @@ def run_fixture_f(evaluate_override) -> None:
     ) == "AUTHORITY_EXPIRED"
 
     assert f2["effect_path"] == "BLOCKED"
-    if __name__ == "__main__":
+    
+if __name__ == "__main__":
+        
     test_frozen_fixture_manifest_is_complete()
     test_minimal_executable_override_contract_exists()
 
