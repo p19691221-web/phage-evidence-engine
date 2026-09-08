@@ -43,7 +43,7 @@ def _result(
         "authority_status": authority_status,
         "effect_path": effect_path,
     }
-  def evaluate_override(
+def evaluate_override(
     *,
     request: dict,
     override_grant: dict | None,
