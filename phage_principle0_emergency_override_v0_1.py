@@ -88,9 +88,9 @@ def evaluate_override(
             authority_status=AuthorityStatus.AUTHORITY_UNRESOLVED,
             effect_path=BLOCKED,
         )
-          ordinary_authority_name = _status_name(
+    ordinary_authority_name = _status_name(
         ordinary_authority_status
-    )
+        )            
 
     if ordinary_authority_name != "CLEAN":
         return _result(
@@ -125,7 +125,7 @@ def evaluate_override(
             authority_status=AuthorityStatus.AUTHORITY_EXPIRED,
             effect_path=BLOCKED,
   )
-          required_scope_fields = (
+    required_scope_fields = (
         "subject_id",
         "authorized_action",
         "authorized_target",
@@ -196,7 +196,7 @@ def evaluate_override(
             effect_path=BLOCKED,
         )
 
-    return _result(
+        return _result(
         schedule_status=schedule_status,
         override_status=OVERRIDE_APPLICABLE,
         authority_status=ordinary_authority_status,
