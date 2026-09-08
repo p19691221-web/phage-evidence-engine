@@ -133,7 +133,8 @@ def make_override_grant(
         "revoked_at": revoked_at,
         "source_ref": source_ref,
     }
-    def make_request(
+    
+def make_request(
     *,
     schedule_status="SCHEDULE_NO_MATCH",
     mismatch_dimension="TIME",
@@ -170,7 +171,7 @@ def assert_result_shape(result) -> None:
         f"evaluate_override result missing keys: "
         f"{required_keys - set(result)}"
     )
-    def test_frozen_fixture_manifest_is_complete() -> None:
+def test_frozen_fixture_manifest_is_complete() -> None:
     assert tuple(
         fixture["id"] for fixture in FROZEN_FIXTURES
     ) == tuple("ABCDEF")
