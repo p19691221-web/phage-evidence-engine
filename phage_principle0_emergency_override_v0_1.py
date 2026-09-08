@@ -197,8 +197,8 @@ def evaluate_override(
         )
 
         return _result(
-        schedule_status=schedule_status,
-        override_status=OVERRIDE_APPLICABLE,
-        authority_status=ordinary_authority_status,
-        effect_path=NOT_DETERMINED,
-    )
+            schedule_status=schedule_status,
+            override_status=OVERRIDE_APPLICABLE,
+            authority_status=ordinary_authority_status,
+            effect_path=NOT_DETERMINED,
+        )
