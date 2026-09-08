@@ -1,0 +1,21 @@
+name: PHAGE Trust Evidence Origin regression
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  trust-evidence-origin-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run G1 G2 evidence origin regression
+        run: python test_phage_trust_evidence_origin_v0_1.py
