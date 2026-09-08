@@ -196,7 +196,7 @@ def evaluate_override(
             effect_path=BLOCKED,
         )
 
-        return _result(
+    return _result(
             schedule_status=schedule_status,
             override_status=OVERRIDE_APPLICABLE,
             authority_status=ordinary_authority_status,
