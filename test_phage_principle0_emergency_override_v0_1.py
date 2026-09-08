@@ -198,8 +198,7 @@ def run_fixture_a(evaluate_override) -> None:
             override_dimensions=("TIME",),
         ),
     )
-    print("DEBUG Fixture A result:", type(result), repr(result))
-
+    
     assert_result_shape(result)
 
     assert result["schedule_status"] == "SCHEDULE_NO_MATCH"
