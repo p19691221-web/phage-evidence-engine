@@ -108,6 +108,62 @@ def run_fixture_g2(module):
     assert result["effect_path"] == BLOCKED
 
 
+def run_fixture_g3(module):
+    assert module is not None, (
+        "G3 contract RED: phage_trust_evidence_origin_v0_1 "
+        "is not implemented"
+    )
+
+    public_entry = getattr(
+        module,
+        "evaluate_evidence_origin",
+        None,
+    )
+    assert callable(public_entry), (
+        "G3 contract RED: public evidence-origin entry is not implemented"
+    )
+
+    original_seam = getattr(
+        module,
+        "_evaluate_evidence_origin_with_verifier",
+        None,
+    )
+    assert callable(original_seam), (
+        "G3 contract RED: verifier enforcement seam is not implemented"
+    )
+
+    captured = {}
+    sentinel_result = {
+        "origin_status": "G3_SENTINEL",
+        "effect_path": "G3_SENTINEL",
+    }
+
+    def spy(*, candidate, verifier):
+        captured["candidate"] = candidate
+        captured["verifier"] = verifier
+        return sentinel_result
+
+    candidate = _forged_evidence()
+
+    module._evaluate_evidence_origin_with_verifier = spy
+    try:
+        result = public_entry(candidate=candidate)
+    finally:
+        module._evaluate_evidence_origin_with_verifier = original_seam
+
+    assert captured.get("candidate") is candidate, (
+        "G3 contract RED: public entry did not delegate the original "
+        "candidate through verifier seam"
+    )
+    assert callable(captured.get("verifier")), (
+        "G3 contract RED: public entry did not supply a callable "
+        "default verifier"
+    )
+    assert result is sentinel_result, (
+        "G3 contract RED: public entry must be a thin wrapper over "
+        "the verifier seam"
+    )
+
 def run():
     module = _load_module()
 
@@ -121,6 +177,11 @@ def run():
             "G2",
             "verifier_internal_failure",
             lambda: run_fixture_g2(module),
+        ),
+                (
+            "G3",
+            "public_entry_uses_verifier_seam",
+            lambda: run_fixture_g3(module),
         ),
     )
 
