@@ -199,10 +199,10 @@ def run_fixture_g3(module):
 
         assert result["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
         assert result["effect_path"] == NOT_DETERMINED           
-def run():
-module = _load_module()
+    def run():
+    module = _load_module()
 
-fixtures = (
+    fixtures = (
         (
             "G1",
             "forged_evidence_origin",
@@ -248,7 +248,7 @@ if failures:
 print(
         "PHAGE Trust Evidence Origin regression PASS: "
         f"{len(fixtures)} / {len(fixtures)}"
-)
+    )
 
 
 if __name__ == "__main__":
