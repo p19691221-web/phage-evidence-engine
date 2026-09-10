@@ -198,11 +198,11 @@ def run_fixture_g3(module):
         _assert_result_shape(result)
 
         assert result["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
-        assert result["effect_path"] == NOT_DETERMINED
-    def run():
-        module = _load_module()
+        assert result["effect_path"] == NOT_DETERMINED           
+def run():
+module = _load_module()
 
-        fixtures = (
+fixtures = (
         (
             "G1",
             "forged_evidence_origin",
@@ -225,9 +225,9 @@ def run_fixture_g3(module):
         ),
     )
 
-        failures = []
+failures = []
 
-    for fixture_id, name, fixture in fixtures:
+for fixture_id, name, fixture in fixtures:
         try:
             fixture()
         except Exception as exc:
@@ -239,16 +239,16 @@ def run_fixture_g3(module):
         else:
             print(f"PASS: fixture_{fixture_id}_{name}")
 
-    if failures:
+if failures:
         raise AssertionError(
             f"PHAGE Trust Evidence Origin regression RED: "
             f"{len(failures)} / {len(fixtures)} failing"
         )
 
-    print(
+print(
         "PHAGE Trust Evidence Origin regression PASS: "
         f"{len(fixtures)} / {len(fixtures)}"
-    )
+)
 
 
 if __name__ == "__main__":
