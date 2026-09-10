@@ -12,9 +12,12 @@ import importlib
 
 MODULE = "phage_trust_evidence_origin_v0_1"
 
+EVIDENCE_ORIGIN_VERIFIED = "EVIDENCE_ORIGIN_VERIFIED"
 EVIDENCE_ORIGIN_UNVERIFIED = "EVIDENCE_ORIGIN_UNVERIFIED"
 EVIDENCE_VERIFICATION_ERROR = "EVIDENCE_VERIFICATION_ERROR"
+
 BLOCKED = "BLOCKED"
+NOT_DETERMINED = "NOT_DETERMINED"
 
 
 
@@ -163,6 +166,39 @@ def run_fixture_g3(module):
         "G3 contract RED: public entry must be a thin wrapper over "
         "the verifier seam"
     )
+    def run_fixture_g4(module):
+    producer = getattr(
+        module,
+        "_produce_trusted_evidence",
+        None,
+    )
+    assert callable(producer), (
+        "G4 characterization: trusted producer path is not implemented"
+    )
+
+    evaluate = getattr(
+        module,
+        "evaluate_evidence_origin",
+        None,
+    )
+    assert callable(evaluate), (
+        "G4 characterization: public evidence-origin entry is not implemented"
+    )
+
+    candidate = producer(
+        value="SCHEDULE_NO_MATCH",
+        source="schedule_engine",
+        schedule_ref="schedule-OR-7",
+        policy_version="v17",
+        observed_at="2026-09-09T00:00:00Z",
+    )
+
+    result = evaluate(candidate=candidate)
+
+    _assert_result_shape(result)
+
+    assert result["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
+    assert result["effect_path"] == NOT_DETERMINED
 
 def run():
     module = _load_module()
@@ -182,6 +218,11 @@ def run():
             "G3",
             "public_entry_uses_verifier_seam",
             lambda: run_fixture_g3(module),
+        ),
+                (
+            "G4",
+            "trusted_producer_positive_origin",
+            lambda: run_fixture_g4(module),
         ),
     )
 
