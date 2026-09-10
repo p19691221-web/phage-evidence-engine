@@ -167,25 +167,25 @@ def run_fixture_g3(module):
         "the verifier seam"
     )
     def run_fixture_g4(module):
-    producer = getattr(
+        producer = getattr(
         module,
         "_produce_trusted_evidence",
         None,
     )
-    assert callable(producer), (
+        assert callable(producer), (
         "G4 characterization: trusted producer path is not implemented"
     )
 
-    evaluate = getattr(
+        evaluate = getattr(
         module,
         "evaluate_evidence_origin",
         None,
     )
-    assert callable(evaluate), (
+        assert callable(evaluate), (
         "G4 characterization: public evidence-origin entry is not implemented"
     )
 
-    candidate = producer(
+        candidate = producer(
         value="SCHEDULE_NO_MATCH",
         source="schedule_engine",
         schedule_ref="schedule-OR-7",
@@ -193,14 +193,13 @@ def run_fixture_g3(module):
         observed_at="2026-09-09T00:00:00Z",
     )
 
-    result = evaluate(candidate=candidate)
+        result = evaluate(candidate=candidate)
 
-    _assert_result_shape(result)
+        _assert_result_shape(result)
 
-    assert result["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
-    assert result["effect_path"] == NOT_DETERMINED
-
-def run():
+        assert result["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
+        assert result["effect_path"] == NOT_DETERMINED
+    def run():
     module = _load_module()
 
     fixtures = (
