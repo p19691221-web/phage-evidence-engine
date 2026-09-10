@@ -200,9 +200,9 @@ def run_fixture_g3(module):
         assert result["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
         assert result["effect_path"] == NOT_DETERMINED
     def run():
-    module = _load_module()
+        module = _load_module()
 
-    fixtures = (
+        fixtures = (
         (
             "G1",
             "forged_evidence_origin",
@@ -225,7 +225,7 @@ def run_fixture_g3(module):
         ),
     )
 
-    failures = []
+        failures = []
 
     for fixture_id, name, fixture in fixtures:
         try:
