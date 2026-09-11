@@ -240,10 +240,10 @@ def run():
                 print(f"PASS: fixture_{fixture_id}_{name}")
 
         if failures:
-        raise AssertionError(
-            f"PHAGE Trust Evidence Origin regression RED: "
-            f"{len(failures)} / {len(fixtures)} failing"
-        )
+            raise AssertionError(
+                f"PHAGE Trust Evidence Origin regression RED: "
+                f"{len(failures)} / {len(fixtures)} failing"
+            )
 
         print(
         "PHAGE Trust Evidence Origin regression PASS: "
