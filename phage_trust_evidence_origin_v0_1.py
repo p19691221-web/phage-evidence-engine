@@ -57,13 +57,15 @@ candidate = {
     "value": value,
     "source": source,
     "schedule_ref": schedule_ref,
-    "policy_version": policy_version,
+    "policy_version":
+policy_version,   
     "observed_at": observed_at,
     _TRUST_MARKER_KEY: token,
- }
+   }
 
-    _TRUSTED_ORIGIN_BINDINGS[token] = _content_snapshot(candidate)
-
+    _TRUSTED_ORIGIN_BINDINGS[token] = (
+_content_snapshot(candidate)
+    )
     return candidate
 
 
