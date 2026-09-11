@@ -228,15 +228,15 @@ def run():
         failures = []
 
         for fixture_id, name, fixture in fixtures:
-        try:
+            try:
             fixture()
-        except Exception as exc:
+            except Exception as exc:
             failures.append((fixture_id, name, exc))
             print(
                 f"FAIL: fixture_{fixture_id}_{name}: "
                 f"{type(exc).__name__}: {exc}"
             )
-        else:
+            else:
             print(f"PASS: fixture_{fixture_id}_{name}")
 
         if failures:
