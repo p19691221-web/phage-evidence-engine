@@ -165,8 +165,7 @@ def run_fixture_g3(module):
     assert result is sentinel_result, (
         "G3 contract RED: public entry must be a thin wrapper over "
         "the verifier seam"
-    )
-    def run_fixture_g4(module):
+def run_fixture_g4(module):
         producer = getattr(
         module,
         "_produce_trusted_evidence",
