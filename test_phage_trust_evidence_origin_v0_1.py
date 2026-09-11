@@ -229,7 +229,7 @@ def run():
 
         for fixture_id, name, fixture in fixtures:
             try:
-            fixture()
+                fixture()
             except Exception as exc:
             failures.append((fixture_id, name, exc))
             print(
