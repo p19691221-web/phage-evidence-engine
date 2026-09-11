@@ -231,11 +231,11 @@ def run():
             try:
                 fixture()
             except Exception as exc:
-            failures.append((fixture_id, name, exc))
-            print(
-                f"FAIL: fixture_{fixture_id}_{name}: "
-                f"{type(exc).__name__}: {exc}"
-            )
+                failures.append((fixture_id, name, exc))
+                print(
+                    f"FAIL: fixture_{fixture_id}_{name}: "
+                    f"{type(exc).__name__}: {exc}"
+                )
             else:
             print(f"PASS: fixture_{fixture_id}_{name}")
 
