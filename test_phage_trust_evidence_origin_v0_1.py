@@ -237,7 +237,7 @@ def run():
                     f"{type(exc).__name__}: {exc}"
                 )
             else:
-            print(f"PASS: fixture_{fixture_id}_{name}")
+                print(f"PASS: fixture_{fixture_id}_{name}")
 
         if failures:
         raise AssertionError(
