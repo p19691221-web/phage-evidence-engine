@@ -18,8 +18,8 @@ BLOCKED = "BLOCKED"
 NOT_DETERMINED = "NOT_DETERMINED"
 
 
-_TRUSTED_ORIGIN_TOKEN = object()
 _TRUST_MARKER_KEY = "_phage_trusted_origin_token"
+_TRUSTED_ORIGIN_BINDINGS = {}
 
 
 def _result(*, origin_status, effect_path):
@@ -28,7 +28,14 @@ def _result(*, origin_status, effect_path):
         "effect_path": effect_path,
     }
 
-
+def _content_snapshot(candidate):
+    return (
+        candidate.get("value"),
+        candidate.get("source"),
+        candidate.get("schedule_ref"),
+        candidate.get("policy_version"),
+        candidate.get("observed_at"),
+    )
 def _produce_trusted_evidence(
     *,
     value,
@@ -43,20 +50,34 @@ def _produce_trusted_evidence(
     Current G1-G3 regression does not independently validate
     positive trusted-origin acceptance.
     """
-    return {
+        token = object()
+
+    candidate = {
         "value": value,
         "source": source,
         "schedule_ref": schedule_ref,
         "policy_version": policy_version,
         "observed_at": observed_at,
-        _TRUST_MARKER_KEY: _TRUSTED_ORIGIN_TOKEN,
+        _TRUST_MARKER_KEY: token,
     }
+
+    _TRUSTED_ORIGIN_BINDINGS[token] = _content_snapshot(candidate)
+
+    return candidate
 
 
 def _default_verifier(candidate):
+    if not isinstance(candidate, dict):
+        return False
+
+    token = candidate.get(_TRUST_MARKER_KEY)
+
+    if token not in _TRUSTED_ORIGIN_BINDINGS:
+        return False
+
     return (
-        isinstance(candidate, dict)
-        and candidate.get(_TRUST_MARKER_KEY) is _TRUSTED_ORIGIN_TOKEN
+        _TRUSTED_ORIGIN_BINDINGS[token]
+        == _content_snapshot(candidate)
     )
 
 
