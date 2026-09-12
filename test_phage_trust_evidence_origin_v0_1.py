@@ -199,6 +199,45 @@ def run_fixture_g4(module):
 
         assert result["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
         assert result["effect_path"] == NOT_DETERMINED           
+def run_fixture_g5(module):
+    producer = getattr(
+        module,
+        "_produce_trusted_evidence",
+        None,
+    )
+    assert callable(producer), (
+        "G5 contract RED: trusted producer path is not implemented"
+    )
+
+    evaluate = getattr(
+        module,
+        "evaluate_evidence_origin",
+        None,
+    )
+    assert callable(evaluate), (
+        "G5 contract RED: public evidence-origin entry is not implemented"
+    )
+
+    trusted = producer(
+        value="SCHEDULE_NO_MATCH",
+        source="schedule_engine",
+        schedule_ref="schedule-OR-7",
+        policy_version="v17",
+        observed_at="2026-09-09T00:00:00Z",
+    )
+
+    tampered = dict(trusted)
+    tampered["value"] = "SCHEDULE_MATCH"
+
+    result = evaluate(candidate=tampered)
+
+    _assert_result_shape(result)
+
+    assert result["origin_status"] == EVIDENCE_ORIGIN_UNVERIFIED, (
+        "G5 contract RED: post-production content mutation retained "
+        "verified origin"
+    )
+    assert result["effect_path"] == BLOCKED    
 def run():
         module = _load_module()
 
@@ -223,8 +262,15 @@ def run():
             "trusted_producer_positive_origin",
             lambda: run_fixture_g4(module),
         ),
+    
+    
+                (
+            "G5",
+            "post_production_evidence_tamper",
+            lambda: run_fixture_g5(module),
+        ),
     )
-
+            
         failures = []
 
         for fixture_id, name, fixture in fixtures:
