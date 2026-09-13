@@ -8,8 +8,7 @@ Implementation maturity: NOT STARTED
 Production assurance: NOT ESTABLISHED  
 Independent external review: NOT PERFORMED
 
-Design status as of: 2026-09-13 / commit ref: <freeze commit>
-
+Design status as of: 2026-09-13 / commit ref: b435cd9
 Re-issue required upon: first freshness-policy representation frozen,
 first trusted-time boundary implemented, or first executable fixture named.
 
