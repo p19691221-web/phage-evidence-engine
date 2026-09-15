@@ -2,14 +2,13 @@
 
 ## Artifact status
 
-Specification maturity: DESIGN DRAFT  
+Specification maturity: DESIGN FROZEN  
 Executable validation: NOT STARTED  
 Implementation maturity: NOT STARTED  
 Production assurance: NOT ESTABLISHED  
 Independent external review: NOT PERFORMED
 
-Design status as of: 2026-09-14 / commit ref: <freeze commit>
-
+Design status as of: 2026-09-15 / commit ref: `<freeze commit>`
 Re-issue required upon: first trusted-time provider implementation,
 first executable freshness fixture named, or material change to the
 trusted-current-time acquisition boundary.
@@ -264,9 +263,13 @@ Therefore:
 
 `TRUSTED_TIME_SOURCE_UNAVAILABLE → TRUSTED_TIME_UNRESOLVED`
 
-unless a later governed specification explicitly authorizes a fallback
-source and its selection semantics.
+and the frozen invariant is:
 
+`NO_SILENT_TIME_SOURCE_FALLBACK`
+
+A later governed specification may explicitly authorize a fallback
+source and its selection semantics; absent such a specification,
+no fallback is allowed.
 ---
 
 ## Trusted-time dispositions
@@ -472,9 +475,8 @@ This document does not freeze a production discontinuity taxonomy.
 
 ## Source integrity and source authority remain separate
 
-A verifier-controlled acquisition path can prevent the caller from
-choosing `now`.
-
+A verifier-controlled acquisition boundary is intended to prevent
+the caller from choosing the authoritative value of `now`.
 It does not by itself prove that the underlying time source is honest,
 secure, or institutionally legitimate.
 
