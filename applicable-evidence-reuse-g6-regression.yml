@@ -1,0 +1,21 @@
+name: PHAGE Applicable Evidence Reuse G6 regression
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  applicable-evidence-reuse-g6-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run G6 applicable evidence reuse regression
+        run: python test_phage_applicable_evidence_reuse_g6_v0_1.py
