@@ -8,11 +8,16 @@ Phase 1 freezes only:
 - allowed reuse status vocabulary;
 - the meaningful RED baseline.
 
-The G6A-G6H3 executable fixtures are added only after this harness
-surface is reviewed. No reuse enforcement implementation belongs here.
+G6A is the first executable semantic fixture added after the
+contract-surface baseline was reviewed.
+
+G6B-G6H3 remain outside this phase.
+No reuse enforcement implementation belongs here.
 """
 
 import importlib
+from datetime import datetime, timedelta, timezone
+AT = datetime(2026, 9, 16, 8, 0, tzinfo=timezone.utc)
 
 MODULE = "phage_applicable_evidence_reuse_v0_1"
 ENTRY_POINT = "evaluate_applicable_evidence_reuse"
@@ -100,7 +105,12 @@ def run():
         "loader_and_entrypoint",
         lambda: run_contract_surface(module),
     ),
-    )
+    (
+        "G6A",
+        "valid_exact_bundle_reuse",
+        lambda: run_fixture_g6a(module),
+    ),
+)
     failures = []
 
     for fixture_id, name, fixture in fixtures:
