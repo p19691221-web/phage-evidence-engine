@@ -95,13 +95,12 @@ def run():
     module = _load_module()
 
     fixtures = (
-        (
-            "G6_CONTRACT_SURFACE",
-            "loader_entrypoint_result_schema",
-            lambda: run_contract_surface(module),
-        ),
+    (
+        "G6_CONTRACT_SURFACE",
+        "loader_and_entrypoint",
+        lambda: run_contract_surface(module),
+    ),
     )
-
     failures = []
 
     for fixture_id, name, fixture in fixtures:
