@@ -80,6 +80,65 @@ def _assert_result_shape(result):
     assert result["reason_code"], (
         "G6 reason_code must not be empty"
     )
+    def _g6a_verified_facts():
+    original_context = {
+        "subject": "agent-A",
+        "action": "READ",
+        "target": "record-123",
+        "scope": "TIME",
+    }
+
+    dependency_closure = (
+        "policy:v17",
+        "schedule:v8",
+        "grant:g1",
+    )
+
+    return {
+        "prior_result": "APPLICABLE",
+        "original_evidence_bundle_id": "bundle-A",
+        "candidate_evidence_bundle_id": "bundle-A",
+        "original_context": original_context,
+        "current_context": dict(original_context),
+        "original_dependency_closure": dependency_closure,
+        "current_dependency_closure": dependency_closure,
+        "dependency_closure_complete": True,
+        "original_authority_derivation_id": "authority-path-A",
+        "current_authority_derivation_id": "authority-path-A",
+        "origin_integrity_reverified": True,
+        "authoritative_current_state_resolved": True,
+        "all_relevant_dependencies_unchanged": True,
+        "original_observed_at": AT,
+        "original_evidence_valid_until": AT + timedelta(minutes=10),
+        "trusted_current_time": AT + timedelta(minutes=1),
+        "max_evidence_reuse_window": timedelta(minutes=5),
+    }
+
+
+def run_fixture_g6a(module):
+    assert module is not None, (
+        "G6A contract RED: phage_applicable_evidence_reuse_v0_1 "
+        "is not implemented"
+    )
+
+    evaluate_verified = getattr(
+        module,
+        "_evaluate_applicable_evidence_reuse_from_verified_facts",
+        None,
+    )
+
+    assert callable(evaluate_verified), (
+        "G6A contract RED: verified-facts reuse seam is not implemented"
+    )
+
+    result = evaluate_verified(
+        verified_facts=_g6a_verified_facts(),
+    )
+
+    _assert_result_shape(result)
+
+    assert result["reuse_status"] == REUSE_ALLOWED
+    assert result["reason_code"] == "ALL_REUSE_CONDITIONS_VERIFIED"
 
 
 def run_contract_surface(module):
