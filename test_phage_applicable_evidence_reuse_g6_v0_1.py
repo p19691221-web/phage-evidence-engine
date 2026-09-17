@@ -11,7 +11,7 @@ Phase 1 freezes only:
 G6A is the first executable semantic fixture added after the
 contract-surface baseline was reviewed.
 
-G6B-G6H3 remain outside this phase.
+G6C-G6H3 remain outside this phase.
 No reuse enforcement implementation belongs here.
 """
 
@@ -140,9 +140,15 @@ def run_fixture_g6a(module):
     assert result["reuse_status"] == REUSE_ALLOWED
     assert result["reason_code"] == "ALL_REUSE_CONDITIONS_VERIFIED"    
 
-def run_fixture_g6a(module):
+def _g6b_verified_facts():
+    facts = _g6a_verified_facts()
+    facts["candidate_evidence_bundle_id"] = "bundle-B"
+    return facts
+
+
+def run_fixture_g6b(module):
     assert module is not None, (
-        "G6A contract RED: phage_applicable_evidence_reuse_v0_1 "
+        "G6B contract RED: phage_applicable_evidence_reuse_v0_1 "
         "is not implemented"
     )
 
@@ -153,18 +159,17 @@ def run_fixture_g6a(module):
     )
 
     assert callable(evaluate_verified), (
-        "G6A contract RED: verified-facts reuse seam is not implemented"
+        "G6B contract RED: verified-facts reuse seam is not implemented"
     )
 
     result = evaluate_verified(
-        verified_facts=_g6a_verified_facts(),
+        verified_facts=_g6b_verified_facts(),
     )
 
     _assert_result_shape(result)
 
-    assert result["reuse_status"] == REUSE_ALLOWED
-    assert result["reason_code"] == "ALL_REUSE_CONDITIONS_VERIFIED"
-
+    assert result["reuse_status"] == REUSE_INVALIDATED
+    assert result["reason_code"] == "EVIDENCE_BUNDLE_SUBSTITUTION"
 
 def run_contract_surface(module):
     assert module is not None, (
@@ -194,7 +199,12 @@ def run():
         "valid_exact_bundle_reuse",
         lambda: run_fixture_g6a(module),
     ),
-)
+    (
+        "G6B",
+        "evidence_bundle_substitution",
+        lambda: run_fixture_g6b(module),
+    ),
+    )
     failures = []
 
     for fixture_id, name, fixture in fixtures:
