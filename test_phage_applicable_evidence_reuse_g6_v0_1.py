@@ -80,7 +80,7 @@ def _assert_result_shape(result):
     assert result["reason_code"], (
         "G6 reason_code must not be empty"
     )
-    def _g6a_verified_facts():
+def _g6a_verified_facts():
     original_context = {
         "subject": "agent-A",
         "action": "READ",
@@ -114,6 +114,31 @@ def _assert_result_shape(result):
         "max_evidence_reuse_window": timedelta(minutes=5),
     }
 
+
+def run_fixture_g6a(module):
+    assert module is not None, (
+        "G6A contract RED: phage_applicable_evidence_reuse_v0_1 "
+        "is not implemented"
+    )
+
+    evaluate_verified = getattr(
+        module,
+        "_evaluate_applicable_evidence_reuse_from_verified_facts",
+        None,
+    )
+
+    assert callable(evaluate_verified), (
+        "G6A contract RED: verified-facts reuse seam is not implemented"
+    )
+
+    result = evaluate_verified(
+        verified_facts=_g6a_verified_facts(),
+    )
+
+    _assert_result_shape(result)
+
+    assert result["reuse_status"] == REUSE_ALLOWED
+    assert result["reason_code"] == "ALL_REUSE_CONDITIONS_VERIFIED"    
 
 def run_fixture_g6a(module):
     assert module is not None, (
