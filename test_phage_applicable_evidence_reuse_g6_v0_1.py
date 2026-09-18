@@ -208,6 +208,11 @@ def run():
         "G6C",
         "dependency_closure_incomplete",
         lambda: run_fixture_g6c(module),
+    ),
+    (
+        "G6D",
+        "relevant_authoritative_dependency_changed",
+        lambda: run_fixture_g6d(module),
     ),   
     )
     failures = []
@@ -259,6 +264,30 @@ def run_fixture_g6c(module):
 
     assert result["reuse_status"] == REUSE_UNRESOLVED
     assert result["reason_code"] == "DEPENDENCY_CLOSURE_INCOMPLETE"
+def _g6d_verified_facts():
+    facts = _g6a_verified_facts()
+    facts["all_relevant_dependencies_unchanged"] = False
+    return facts
 
+
+def run_fixture_g6d(module):
+    evaluate_verified = getattr(
+        module,
+        "_evaluate_applicable_evidence_reuse_from_verified_facts",
+        None,
+    )
+
+    assert callable(evaluate_verified), (
+        "G6D contract RED: verified-facts reuse seam is not implemented"
+    )
+
+    result = evaluate_verified(
+        verified_facts=_g6d_verified_facts(),
+    )
+
+    _assert_result_shape(result)
+
+    assert result["reuse_status"] == REUSE_INVALIDATED
+    assert result["reason_code"] == "RELEVANT_DEPENDENCY_CHANGED"
 if __name__ == "__main__":
     run()
