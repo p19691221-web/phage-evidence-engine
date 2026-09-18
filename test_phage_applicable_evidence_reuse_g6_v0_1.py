@@ -204,6 +204,11 @@ def run():
         "evidence_bundle_substitution",
         lambda: run_fixture_g6b(module),
     ),
+    (
+        "G6C",
+        "dependency_closure_incomplete",
+        lambda: run_fixture_g6c(module),
+    ),   
     )
     failures = []
 
@@ -229,7 +234,31 @@ def run():
         "PHAGE Applicable Evidence Reuse G6 regression harness PASS: "
         f"{len(fixtures)} / {len(fixtures)}"
     )
+def _g6c_verified_facts():
+    facts = _g6a_verified_facts()
+    facts["dependency_closure_complete"] = False
+    return facts
 
+
+def run_fixture_g6c(module):
+    evaluate_verified = getattr(
+        module,
+        "_evaluate_applicable_evidence_reuse_from_verified_facts",
+        None,
+    )
+
+    assert callable(evaluate_verified), (
+        "G6C contract RED: verified-facts reuse seam is not implemented"
+    )
+
+    result = evaluate_verified(
+        verified_facts=_g6c_verified_facts(),
+    )
+
+    _assert_result_shape(result)
+
+    assert result["reuse_status"] == REUSE_UNRESOLVED
+    assert result["reason_code"] == "DEPENDENCY_CLOSURE_INCOMPLETE"
 
 if __name__ == "__main__":
     run()

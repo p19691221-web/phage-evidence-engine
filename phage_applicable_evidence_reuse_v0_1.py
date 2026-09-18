@@ -1,7 +1,7 @@
 """
 PHAGE Applicable Evidence Reuse v0.1.
 
-Minimal G6A/G6B enforcement only.
+Minimal G6A/G6B/G6C enforcement only.
 """
 
 REUSE_ALLOWED = "REUSE_ALLOWED"
@@ -17,9 +17,11 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
     *,
     verified_facts,
 ):
+        
     original_bundle_id = verified_facts.get(
         "original_evidence_bundle_id"
     )
+
     candidate_bundle_id = verified_facts.get(
         "candidate_evidence_bundle_id"
     )
@@ -33,6 +35,17 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
             "reuse_status": "REUSE_INVALIDATED",
             "reason_code": "EVIDENCE_BUNDLE_SUBSTITUTION",
         }
+
+    dependency_closure_complete = verified_facts.get(
+        "dependency_closure_complete"
+    )
+
+    if dependency_closure_complete is False:
+        return {
+            "reuse_status": "REUSE_UNRESOLVED",
+            "reason_code": "DEPENDENCY_CLOSURE_INCOMPLETE",
+        }
+
     required_g6a_conditions = (
         verified_facts.get("prior_result") == "APPLICABLE",
         verified_facts.get("original_evidence_bundle_id")
