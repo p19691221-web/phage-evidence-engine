@@ -26,7 +26,7 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
         "candidate_evidence_bundle_id"
     )
 
-    if (
+        if (
         original_bundle_id is not None
         and candidate_bundle_id is not None
         and original_bundle_id != candidate_bundle_id
@@ -35,7 +35,8 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
             "reuse_status": "REUSE_INVALIDATED",
             "reason_code": "EVIDENCE_BUNDLE_SUBSTITUTION",
         }
-        all_relevant_dependencies_unchanged = verified_facts.get(
+
+    all_relevant_dependencies_unchanged = verified_facts.get(
         "all_relevant_dependencies_unchanged"
     )
 
@@ -44,6 +45,7 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
             "reuse_status": "REUSE_INVALIDATED",
             "reason_code": "RELEVANT_DEPENDENCY_CHANGED",
         }
+
     dependency_closure_complete = verified_facts.get(
         "dependency_closure_complete"
     )
