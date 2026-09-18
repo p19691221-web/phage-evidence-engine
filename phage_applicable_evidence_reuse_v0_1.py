@@ -26,7 +26,7 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
         "candidate_evidence_bundle_id"
     )
 
-        if (
+    if (
         original_bundle_id is not None
         and candidate_bundle_id is not None
         and original_bundle_id != candidate_bundle_id
@@ -56,7 +56,7 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
             "reason_code": "DEPENDENCY_CLOSURE_INCOMPLETE",
         }
 
-    required_g6a_conditions = (
+    required_g6a_conditions = ( 
         verified_facts.get("prior_result") == "APPLICABLE",
         verified_facts.get("original_evidence_bundle_id")
         == verified_facts.get("candidate_evidence_bundle_id"),
