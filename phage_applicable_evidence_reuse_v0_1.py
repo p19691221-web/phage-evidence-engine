@@ -17,7 +17,6 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
     *,
     verified_facts,
 ):
-    original_bundle_id = verified_facts.get(
         original_bundle_id = verified_facts.get(
         "original_evidence_bundle_id"
     )
