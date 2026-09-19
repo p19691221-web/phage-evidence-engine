@@ -214,6 +214,12 @@ def run():
         "relevant_authoritative_dependency_changed",
         lambda: run_fixture_g6d(module),
     ),   
+    
+    (
+         "G6E",
+         "authoritative_current_state_unavailable",
+         lambda: run_fixture_g6e(module),
+    ),
     )
     failures = []
 
