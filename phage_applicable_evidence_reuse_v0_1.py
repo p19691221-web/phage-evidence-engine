@@ -104,6 +104,15 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
         )
     else:
         freshness_holds = False
+    authoritative_current_state_resolved = verified_facts.get(
+    "authoritative_current_state_resolved"
+    )
+
+    if authoritative_current_state_resolved is False:
+        return {
+            "reuse_status": "REUSE_UNRESOLVED",
+            "reason_code": "AUTHORITATIVE_CURRENT_STATE_UNAVAILABLE",
+        }
     
     if all(required_g6a_conditions) and freshness_holds:
         return {
