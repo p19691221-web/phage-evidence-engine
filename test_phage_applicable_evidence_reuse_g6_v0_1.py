@@ -214,6 +214,12 @@ def run():
         "relevant_authoritative_dependency_changed",
         lambda: run_fixture_g6d(module),
     ),   
+    
+    (
+         "G6E",
+         "authoritative_current_state_unavailable",
+         lambda: run_fixture_g6e(module),
+    ),
     )
     failures = []
 
@@ -289,5 +295,30 @@ def run_fixture_g6d(module):
 
     assert result["reuse_status"] == REUSE_INVALIDATED
     assert result["reason_code"] == "RELEVANT_DEPENDENCY_CHANGED"
+def _g6e_verified_facts():
+    facts = _g6a_verified_facts()
+    facts["authoritative_current_state_resolved"] = False
+    return facts
+
+
+def run_fixture_g6e(module):
+    evaluate_verified = getattr(
+        module,
+        "_evaluate_applicable_evidence_reuse_from_verified_facts",
+        None,
+    )
+
+    assert callable(evaluate_verified), (
+        "G6E contract RED: verified-facts reuse seam is not implemented"
+    )
+
+    result = evaluate_verified(
+        verified_facts=_g6e_verified_facts(),
+    )
+
+    _assert_result_shape(result)
+
+    assert result["reuse_status"] == REUSE_UNRESOLVED
+    assert result["reason_code"] == "AUTHORITATIVE_CURRENT_STATE_UNAVAILABLE"   
 if __name__ == "__main__":
     run()
