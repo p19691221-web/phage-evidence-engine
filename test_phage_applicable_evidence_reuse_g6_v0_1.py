@@ -349,5 +349,6 @@ def run_fixture_g6f(module):
     _assert_result_shape(result)
 
     assert result["reuse_status"] == REUSE_INVALIDATED    
+    assert result["reason_code"] == "FRESHNESS_DEADLINE_REACHED_OR_EXCEEDED"
 if __name__ == "__main__":
     run()
