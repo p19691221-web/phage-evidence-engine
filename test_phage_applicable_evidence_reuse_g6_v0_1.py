@@ -239,6 +239,11 @@ def run():
          "fresh_evaluation_isolation_surface",
          lambda: run_fixture_g6h1(module),
     ),    
+    (
+         "G6H2",
+         "fresh_evaluation_not_permitted",
+         lambda: run_fixture_g6h2(module),
+    ),    
     )
     failures = []
 
@@ -435,5 +440,29 @@ def run_fixture_g6h1(module):
 
     assert result["fallback_allowed"] is False
     assert result["reason_code"] == "FRESH_EVALUATION_NOT_ISOLATED"
+def run_fixture_g6h2(module):
+    fallback_entry_point = getattr(
+        module,
+        FALLBACK_ENTRY_POINT,
+        None,
+    )
+
+    assert callable(fallback_entry_point), (
+        "G6H2 contract RED: reuse fallback/fresh-evaluation "
+        "governance seam is not implemented"
+    )
+
+    result = fallback_entry_point(
+        verified_facts={
+        "prior_reuse_status": REUSE_INVALIDATED,
+        "fresh_evaluation_policy_permitted": False,
+        "fresh_evidence_is_independent": True,
+        "fallback_cycle_detected": False,
+    },
+    )
+
+    _assert_fallback_result_shape(result)
+
+    assert result["fallback_allowed"] is False    
 if __name__ == "__main__":
     run()
