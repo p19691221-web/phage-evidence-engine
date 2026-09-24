@@ -45,7 +45,7 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
             "reuse_status": "REUSE_INVALIDATED",
             "reason_code": "RELEVANT_DEPENDENCY_CHANGED",
         }
-            original_authority_derivation_id = verified_facts.get(
+        original_authority_derivation_id = verified_facts.get(
         "original_authority_derivation_id"
     )
     current_authority_derivation_id = verified_facts.get(
