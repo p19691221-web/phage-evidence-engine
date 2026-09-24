@@ -21,7 +21,11 @@ AT = datetime(2026, 9, 16, 8, 0, tzinfo=timezone.utc)
 
 MODULE = "phage_applicable_evidence_reuse_v0_1"
 ENTRY_POINT = "evaluate_applicable_evidence_reuse"
-
+FALLBACK_ENTRY_POINT = "_evaluate_reuse_fallback_from_verified_facts"
+FALLBACK_REQUIRED_RESULT_KEYS = {
+    "fallback_allowed",
+    "reason_code",
+}
 REUSE_ALLOWED = "REUSE_ALLOWED"
 REUSE_UNRESOLVED = "REUSE_UNRESOLVED"
 REUSE_INVALIDATED = "REUSE_INVALIDATED"
@@ -230,6 +234,11 @@ def run():
          "authority_derivation_replaced",
          lambda: run_fixture_g6g(module),
     ),    
+    (
+         "G6H1",
+         "fresh_evaluation_isolation_surface",
+         lambda: run_fixture_g6h1(module),
+    ),    
     )
     failures = []
 
@@ -380,5 +389,51 @@ def run_fixture_g6g(module):
 
     assert result["reuse_status"] == REUSE_INVALIDATED    
     assert result["reason_code"] == "AUTHORITY_DERIVATION_REPLACED"
+def _assert_fallback_result_shape(result):
+    assert isinstance(result, dict), (
+        "G6 fallback evaluation must return a dict regression observation"
+    )
+
+    assert FALLBACK_REQUIRED_RESULT_KEYS.issubset(result), (
+        "G6 fallback result missing keys: "
+        f"{FALLBACK_REQUIRED_RESULT_KEYS - set(result)}"
+    )
+
+    assert isinstance(result["fallback_allowed"], bool), (
+        "G6 fallback_allowed must be boolean"
+    )
+
+    assert isinstance(result["reason_code"], str), (
+        "G6 fallback reason_code must use a canonical string representation"
+    )
+
+    assert result["reason_code"], (
+        "G6 fallback reason_code must not be empty"
+    )    
+def run_fixture_g6h1(module):
+    fallback_entry_point = getattr(
+        module,
+        FALLBACK_ENTRY_POINT,
+        None,
+    )
+
+    assert callable(fallback_entry_point), (
+        "G6H1 contract RED: reuse fallback/fresh-evaluation "
+        "isolation seam is not implemented"
+    )   
+    result = fallback_entry_point(
+    verified_facts={
+            
+        "prior_reuse_status": REUSE_INVALIDATED,
+        "fresh_evaluation_policy_permitted": True,
+        "fresh_evidence_is_independent": False,
+        "fallback_cycle_detected": False,
+    },
+    )
+
+    _assert_fallback_result_shape(result)
+
+    assert result["fallback_allowed"] is False
+    assert result["reason_code"] == "FRESH_EVALUATION_NOT_ISOLATED"
 if __name__ == "__main__":
     run()
