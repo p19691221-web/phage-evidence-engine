@@ -225,6 +225,11 @@ def run():
          "reuse_freshness_deadline_reached_or_exceeded",
          lambda: run_fixture_g6f(module),
     ),    
+    (
+         "G6G",
+         "authority_derivation_replaced",
+         lambda: run_fixture_g6g(module),
+    ),    
     )
     failures = []
 
@@ -350,5 +355,29 @@ def run_fixture_g6f(module):
 
     assert result["reuse_status"] == REUSE_INVALIDATED    
     assert result["reason_code"] == "FRESHNESS_DEADLINE_REACHED_OR_EXCEEDED"
+def _g6g_verified_facts():
+    facts = _g6a_verified_facts()
+    facts["current_authority_derivation_id"] = "authority-path-B"
+    return facts
+
+
+def run_fixture_g6g(module):
+    evaluate_verified = getattr(
+        module,
+        "_evaluate_applicable_evidence_reuse_from_verified_facts",
+        None,
+    )
+
+    assert callable(evaluate_verified), (
+        "G6G contract RED: verified-facts reuse seam is not implemented"
+    )
+
+    result = evaluate_verified(
+        verified_facts=_g6g_verified_facts(),
+    )
+
+    _assert_result_shape(result)
+
+    assert result["reuse_status"] == REUSE_INVALIDATED    
 if __name__ == "__main__":
     run()
