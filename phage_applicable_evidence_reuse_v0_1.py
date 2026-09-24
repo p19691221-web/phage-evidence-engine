@@ -12,7 +12,38 @@ def evaluate_applicable_evidence_reuse(*args, **kwargs):
         "public applicable-evidence-reuse orchestration is not implemented"
     )
 
+def _evaluate_reuse_fallback_from_verified_facts(
+    *,
+    verified_facts,
+):
+    prior_reuse_status = verified_facts.get("prior_reuse_status")
+    fresh_evaluation_policy_permitted = verified_facts.get(
+        "fresh_evaluation_policy_permitted"
+    )
+    fresh_evidence_is_independent = verified_facts.get(
+        "fresh_evidence_is_independent"
+    )
+    fallback_cycle_detected = verified_facts.get(
+        "fallback_cycle_detected"
+    )
 
+    if (
+        prior_reuse_status in {
+            "REUSE_UNRESOLVED",
+            "REUSE_INVALIDATED",
+        }
+        and fresh_evaluation_policy_permitted is True
+        and fresh_evidence_is_independent is False
+        and fallback_cycle_detected is False
+    ):
+        return {
+            "fallback_allowed": False,
+            "reason_code": "FRESH_EVALUATION_NOT_ISOLATED",
+        }
+
+    raise NotImplementedError(
+        "non-G6H1 reuse-fallback classification is not implemented"
+    )
 def _evaluate_applicable_evidence_reuse_from_verified_facts(
     *,
     verified_facts,
