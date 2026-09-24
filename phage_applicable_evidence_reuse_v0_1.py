@@ -104,6 +104,15 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
         )
     else:
         freshness_holds = False
+    if (
+        temporal_inputs_present
+        and all(required_g6a_conditions)
+        and trusted_current_time >= effective_reuse_deadline
+    ):
+        return {
+            "reuse_status": "REUSE_INVALIDATED",
+            "reason_code": "FRESHNESS_DEADLINE_REACHED_OR_EXCEEDED",
+        }    
     authoritative_current_state_resolved = verified_facts.get(
     "authoritative_current_state_resolved"
     )
