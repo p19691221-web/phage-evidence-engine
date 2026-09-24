@@ -220,6 +220,11 @@ def run():
          "authoritative_current_state_unavailable",
          lambda: run_fixture_g6e(module),
     ),
+    (
+         "G6F",
+         "reuse_freshness_deadline_reached_or_exceeded",
+         lambda: run_fixture_g6f(module),
+    ),    
     )
     failures = []
 
@@ -320,5 +325,29 @@ def run_fixture_g6e(module):
 
     assert result["reuse_status"] == REUSE_UNRESOLVED
     assert result["reason_code"] == "AUTHORITATIVE_CURRENT_STATE_UNAVAILABLE"   
+def _g6f_verified_facts():
+    facts = _g6a_verified_facts()
+    facts["trusted_current_time"] = AT + timedelta(minutes=5)
+    return facts
+
+
+def run_fixture_g6f(module):
+    evaluate_verified = getattr(
+        module,
+        "_evaluate_applicable_evidence_reuse_from_verified_facts",
+        None,
+    )
+
+    assert callable(evaluate_verified), (
+        "G6F contract RED: verified-facts reuse seam is not implemented"
+    )
+
+    result = evaluate_verified(
+        verified_facts=_g6f_verified_facts(),
+    )
+
+    _assert_result_shape(result)
+
+    assert result["reuse_status"] == REUSE_INVALIDATED    
 if __name__ == "__main__":
     run()
