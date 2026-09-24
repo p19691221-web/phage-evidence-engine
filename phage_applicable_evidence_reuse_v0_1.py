@@ -45,6 +45,23 @@ def _evaluate_applicable_evidence_reuse_from_verified_facts(
             "reuse_status": "REUSE_INVALIDATED",
             "reason_code": "RELEVANT_DEPENDENCY_CHANGED",
         }
+            original_authority_derivation_id = verified_facts.get(
+        "original_authority_derivation_id"
+    )
+    current_authority_derivation_id = verified_facts.get(
+        "current_authority_derivation_id"
+    )
+
+    if (
+        original_authority_derivation_id is not None
+        and current_authority_derivation_id is not None
+        and original_authority_derivation_id
+        != current_authority_derivation_id
+    ):
+        return {
+            "reuse_status": "REUSE_INVALIDATED",
+            "reason_code": "AUTHORITY_DERIVATION_REPLACED",
+        }
 
     dependency_closure_complete = verified_facts.get(
         "dependency_closure_complete"
