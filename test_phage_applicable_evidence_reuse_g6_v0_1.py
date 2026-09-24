@@ -21,6 +21,7 @@ AT = datetime(2026, 9, 16, 8, 0, tzinfo=timezone.utc)
 
 MODULE = "phage_applicable_evidence_reuse_v0_1"
 ENTRY_POINT = "evaluate_applicable_evidence_reuse"
+FALLBACK_ENTRY_POINT = "_evaluate_reuse_fallback_from_verified_facts"
 
 REUSE_ALLOWED = "REUSE_ALLOWED"
 REUSE_UNRESOLVED = "REUSE_UNRESOLVED"
@@ -230,6 +231,11 @@ def run():
          "authority_derivation_replaced",
          lambda: run_fixture_g6g(module),
     ),    
+    (
+         "G6H1",
+         "fresh_evaluation_isolation_surface",
+         lambda: run_fixture_g6h1(module),
+    ),    
     )
     failures = []
 
@@ -380,5 +386,16 @@ def run_fixture_g6g(module):
 
     assert result["reuse_status"] == REUSE_INVALIDATED    
     assert result["reason_code"] == "AUTHORITY_DERIVATION_REPLACED"
+def run_fixture_g6h1(module):
+    fallback_entry_point = getattr(
+        module,
+        FALLBACK_ENTRY_POINT,
+        None,
+    )
+
+    assert callable(fallback_entry_point), (
+        "G6H1 contract RED: reuse fallback/fresh-evaluation "
+        "isolation seam is not implemented"
+    )   
 if __name__ == "__main__":
     run()
