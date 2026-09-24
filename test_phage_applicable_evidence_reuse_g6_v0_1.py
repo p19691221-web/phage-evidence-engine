@@ -434,5 +434,6 @@ def run_fixture_g6h1(module):
     _assert_fallback_result_shape(result)
 
     assert result["fallback_allowed"] is False
+    assert result["reason_code"] == "FRESH_EVALUATION_NOT_ISOLATED"
 if __name__ == "__main__":
     run()
