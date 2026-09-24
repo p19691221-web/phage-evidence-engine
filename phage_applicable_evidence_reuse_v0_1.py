@@ -41,6 +41,19 @@ def _evaluate_reuse_fallback_from_verified_facts(
             "reason_code": "FRESH_EVALUATION_NOT_ISOLATED",
         }
 
+    if (
+        prior_reuse_status in {
+            "REUSE_UNRESOLVED",
+            "REUSE_INVALIDATED",
+        }
+        and fresh_evaluation_policy_permitted is False
+        and fresh_evidence_is_independent is True
+        and fallback_cycle_detected is False
+    ):
+        return {
+            "fallback_allowed": False,
+            "reason_code": "FRESH_EVALUATION_NOT_PERMITTED",
+        }
     raise NotImplementedError(
         "non-G6H1 reuse-fallback classification is not implemented"
     )
