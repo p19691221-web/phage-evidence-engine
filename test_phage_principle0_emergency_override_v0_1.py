@@ -326,6 +326,20 @@ def run_fixture_f(evaluate_override) -> None:
     ) == "AUTHORITY_EXPIRED"
 
     assert f2["effect_path"] == "BLOCKED"
+def run_authority_status_string_normalization(evaluate_override) -> None:
+    result = evaluate_override(
+        request=make_request(
+            ordinary_authority_status="AUTHORITY_REVOKED",
+        ),
+        override_grant=make_override_grant(),
+    )
+
+    assert_result_shape(result)
+
+    assert result["authority_status"] is AuthorityStatus.AUTHORITY_REVOKED, (
+        "canonical ordinary_authority_status string must normalize to "
+        "AuthorityStatus.AUTHORITY_REVOKED"
+    )    
     
 if __name__ == "__main__":
         
@@ -378,3 +392,4 @@ if __name__ == "__main__":
         "Principle 0 Emergency Override regression PASS: 6 / 6 "
         "(F includes F1 revocation + F2 expiration)"
     )
+    run_authority_status_string_normalization(evaluate_override)
