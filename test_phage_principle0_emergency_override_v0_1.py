@@ -171,9 +171,11 @@ def assert_result_shape(result) -> None:
         f"evaluate_override result missing keys: "
         f"{required_keys - set(result)}"
     )
-    assert isinstance(result["authority_status"], str), (
-        "authority_status must use a canonical string representation"
-        )
+    assert isinstance(result["authority_status"], AuthorityStatus), (
+        "authority_status must be AuthorityStatus; "
+        f"got {type(result['authority_status']).__name__}: "
+        f"{result['authority_status']!r}"
+    )
 def test_frozen_fixture_manifest_is_complete() -> None:
     assert tuple(
         fixture["id"] for fixture in FROZEN_FIXTURES
@@ -324,7 +326,43 @@ def run_fixture_f(evaluate_override) -> None:
     ) == "AUTHORITY_EXPIRED"
 
     assert f2["effect_path"] == "BLOCKED"
-    
+def run_authority_status_string_normalization(evaluate_override) -> None:
+    result = evaluate_override(
+        request=make_request(
+            ordinary_authority_status="AUTHORITY_REVOKED",
+        ),
+        override_grant=make_override_grant(),
+    )
+
+    assert_result_shape(result)
+
+    assert result["authority_status"] is AuthorityStatus.AUTHORITY_REVOKED, (
+        "canonical ordinary_authority_status string must normalize to "
+        "AuthorityStatus.AUTHORITY_REVOKED"
+    )    
+def run_unknown_authority_status_fail_closed(evaluate_override) -> None:
+    try:
+        evaluate_override(
+        request=make_request(
+            ordinary_authority_status="NOT_A_REAL_AUTHORITY_STATUS",
+        ),
+        override_grant=make_override_grant(),
+    )
+    except Exception as exc:
+        assert isinstance(exc, ValueError), (
+        "unknown ordinary_authority_status must fail closed with "
+        f"ValueError; got {type(exc).__name__}: {exc}"
+    )
+
+       
+        assert str(exc) == (
+        "unknown ordinary_authority_status: "
+            "NOT_A_REAL_AUTHORITY_STATUS"
+    )
+    else:
+        raise AssertionError(
+        "unknown ordinary_authority_status must fail closed"
+    )    
 if __name__ == "__main__":
         
     test_frozen_fixture_manifest_is_complete()
@@ -376,3 +414,5 @@ if __name__ == "__main__":
         "Principle 0 Emergency Override regression PASS: 6 / 6 "
         "(F includes F1 revocation + F2 expiration)"
     )
+    run_authority_status_string_normalization(evaluate_override)
+    run_unknown_authority_status_fail_closed(evaluate_override)

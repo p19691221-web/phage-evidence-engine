@@ -50,8 +50,19 @@ def evaluate_override(
 ) -> dict:
     schedule_status = request.get("schedule_status")
     ordinary_authority_status = request.get(
-        "ordinary_authority_status"
-    )
+    "ordinary_authority_status"
+)
+
+    if isinstance(ordinary_authority_status, str):
+        try:
+            ordinary_authority_status = AuthorityStatus[
+            ordinary_authority_status
+        ]
+        except KeyError:
+            raise ValueError(
+            "unknown ordinary_authority_status: "
+            f"{ordinary_authority_status}"
+        ) from None
     at = request.get("at")
 
     if schedule_status == "SCHEDULE_UNRESOLVED":
