@@ -171,9 +171,11 @@ def assert_result_shape(result) -> None:
         f"evaluate_override result missing keys: "
         f"{required_keys - set(result)}"
     )
-    assert isinstance(result["authority_status"], str), (
-        "authority_status must use a canonical string representation"
-        )
+    assert isinstance(result["authority_status"], AuthorityStatus), (
+        "authority_status must be AuthorityStatus; "
+        f"got {type(result['authority_status']).__name__}: "
+        f"{result['authority_status']!r}"
+    )
 def test_frozen_fixture_manifest_is_complete() -> None:
     assert tuple(
         fixture["id"] for fixture in FROZEN_FIXTURES
