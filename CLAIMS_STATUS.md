@@ -42,3 +42,54 @@ PHAGE Research Preview does not claim to:
 - `HistoricalReferencePresence != ContinuityEvidence`
 - `Projection != Invention`
 - `UserSubmittedFixture != ValidatedDeathFixture`
+  
+## Regression closures
+
+### G6 Applicable Evidence Reuse — CLOSED
+
+main commit:a717664489be2008c71f8c985fba1b7d3ace0a13
+final PR: #52
+regression: PASS 11 / 11
+
+fixture mapping:
+
+- contract / surface
+  - G6_CONTRACT_SURFACE
+
+- behavioral
+  - G6A — valid_exact_bundle_reuse
+    - positive control
+  - G6B — evidence_bundle_substitution
+  - G6C — dependency_closure_incomplete
+  - G6D — relevant_authoritative_dependency_changed
+  - G6E — authoritative_current_state_unavailable
+  - G6F — reuse_freshness_deadline_reached_or_exceeded
+  - G6G — authority_derivation_replaced
+  - G6H1 — fresh_evaluation_isolation_surface
+    - fallback_allowed = False
+    - reason_code = FRESH_EVALUATION_NOT_ISOLATED
+  - G6H2 — fresh_evaluation_not_permitted
+    - fallback_allowed = False
+    - reason_code = FRESH_EVALUATION_NOT_PERMITTED
+  - G6H3 — fallback_cycle_attempt
+    - fallback_allowed = False
+    - reason_code = FALLBACK_CYCLE_DETECTED
+
+closure scope:
+
+- executable regression closure for G6
+- applicable-evidence reuse semantics frozen through G6G
+- fallback isolation, governance, and termination semantics frozen through G6H3
+
+not claimed:
+
+- runtime enforcement closure
+- authorization semantics
+- effect semantics
+- DF-016 C compatibility
+- reuse of G6H3 cycle machinery by authority-lineage resolution
+
+series status:
+
+- closed unit
+- no G6I
