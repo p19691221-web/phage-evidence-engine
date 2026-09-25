@@ -415,3 +415,4 @@ if __name__ == "__main__":
         "(F includes F1 revocation + F2 expiration)"
     )
     run_authority_status_string_normalization(evaluate_override)
+    run_unknown_authority_status_fail_closed(evaluate_override)
