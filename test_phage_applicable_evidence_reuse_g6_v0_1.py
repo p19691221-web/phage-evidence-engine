@@ -244,6 +244,11 @@ def run():
          "fresh_evaluation_not_permitted",
          lambda: run_fixture_g6h2(module),
     ),    
+    (
+         "G6H3",
+         "fallback_cycle_attempt",
+         lambda: run_fixture_g6h3(module),
+    ),    
     )
     failures = []
 
@@ -465,5 +470,30 @@ def run_fixture_g6h2(module):
 
     assert result["fallback_allowed"] is False    
     assert result["reason_code"] == "FRESH_EVALUATION_NOT_PERMITTED"
+def run_fixture_g6h3(module):
+    fallback_entry_point = getattr(
+        module,
+        FALLBACK_ENTRY_POINT,
+        None,
+    )
+
+    assert callable(fallback_entry_point), (
+        "G6H3 contract RED: reuse fallback termination "
+        "seam is not implemented"
+    )
+
+    result = fallback_entry_point(
+        verified_facts={
+            "prior_reuse_status": REUSE_INVALIDATED,
+            "fresh_evaluation_policy_permitted": True,
+            "fresh_evidence_is_independent": True,
+            "fallback_cycle_detected": True,
+    },
+    )
+
+    _assert_fallback_result_shape(result)
+
+    assert result["fallback_allowed"] is False    
+    assert result["reason_code"] == "FALLBACK_CYCLE_DETECTED"
 if __name__ == "__main__":
     run()
