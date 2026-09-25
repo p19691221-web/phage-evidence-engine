@@ -54,12 +54,12 @@ def evaluate_override(
 )
 
     if isinstance(ordinary_authority_status, str):
-    try:
-        ordinary_authority_status = AuthorityStatus[
+        try:
+            ordinary_authority_status = AuthorityStatus[
             ordinary_authority_status
         ]
-    except KeyError:
-        raise ValueError(
+        except KeyError:
+            raise ValueError(
             "unknown ordinary_authority_status: "
             f"{ordinary_authority_status}"
         ) from None
