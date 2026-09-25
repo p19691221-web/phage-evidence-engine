@@ -494,5 +494,6 @@ def run_fixture_g6h3(module):
     _assert_fallback_result_shape(result)
 
     assert result["fallback_allowed"] is False    
+    assert result["reason_code"] == "FALLBACK_CYCLE_DETECTED"
 if __name__ == "__main__":
     run()
