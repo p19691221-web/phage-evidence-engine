@@ -54,9 +54,15 @@ def evaluate_override(
 )
 
     if isinstance(ordinary_authority_status, str):
+    try:
         ordinary_authority_status = AuthorityStatus[
-        ordinary_authority_status
-       ]
+            ordinary_authority_status
+        ]
+    except KeyError:
+        raise ValueError(
+            "unknown ordinary_authority_status: "
+            f"{ordinary_authority_status}"
+        ) from None
     at = request.get("at")
 
     if schedule_status == "SCHEDULE_UNRESOLVED":
