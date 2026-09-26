@@ -23,14 +23,19 @@ Expected outputs:
 
 ## Current-main reproduction
 
-Status: PENDING CI
+Status: PASS
+PR: #54
+Workflow: DF-015 causal restraint
+Workflow run: #63
+Tested commit: a2e9981e1ab5a3ebdf508729f26f27e2caecc502
 
-Branch:
-df015-abc-regression-outputs-v0_1
+PASS: DF-015-A over-linking detected
+PASS: DF-015-B under-linking detected
+PASS: DF-015-C multi-parent restraint preserved
 
-Regression command:
-
-python test_df015_causal_compression.py
+3/3 DF-015 tests PASSED
+DF015_ABC_REGRESSION = PASS_3_OF_3
+CURRENT_MAIN_REPRODUCTION = PASS
 
 ## Non-claims
 
