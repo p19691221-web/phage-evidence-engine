@@ -55,7 +55,20 @@ def _assert_result_shape(result):
         f"evidence-origin result missing keys: "
         f"{required - set(result)}"
     )
+PRODUCER_AUTHORITY_ENTRY_POINT = "produce_trusted_evidence_authorized"
 
+
+def run_producer_authority_gate_surface(module):
+    entry_point = getattr(
+        module,
+        PRODUCER_AUTHORITY_ENTRY_POINT,
+        None,
+    )
+
+    assert callable(entry_point), (
+        "producer-authority gated entry point is not implemented: "
+        f"{PRODUCER_AUTHORITY_ENTRY_POINT}"
+    )
 
 def run_fixture_g1(module):
     assert module is not None, (
@@ -295,7 +308,6 @@ def run():
         "PHAGE Trust Evidence Origin regression PASS: "
         f"{len(fixtures)} / {len(fixtures)}"
     )
-
-
+        run_producer_authority_gate_surface(module)
 if __name__ == "__main__":
-    run()
+        run()

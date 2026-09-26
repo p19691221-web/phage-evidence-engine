@@ -36,6 +36,15 @@ def _content_snapshot(candidate):
         candidate.get("policy_version"),
         candidate.get("observed_at"),
     )
+def produce_trusted_evidence_authorized(*args, **kwargs):
+    """
+    Producer-authority gated entry point.
+
+    Authorization semantics are intentionally not implemented yet.
+    """
+    raise NotImplementedError(
+        "producer-authority gate semantics are not implemented"
+    )    
 def _produce_trusted_evidence(
     *,
     value,
