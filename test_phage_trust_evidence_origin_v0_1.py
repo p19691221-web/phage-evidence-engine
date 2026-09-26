@@ -308,6 +308,6 @@ def run():
         "PHAGE Trust Evidence Origin regression PASS: "
         f"{len(fixtures)} / {len(fixtures)}"
     )
-    run_producer_authority_gate_surface(module)
+        run_producer_authority_gate_surface(module)
 if __name__ == "__main__":
-    run()
+        run()
