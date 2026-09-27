@@ -46,12 +46,15 @@ def produce_trusted_evidence_authorized(
     """
     Producer-authority gated entry point.
 
-    Caller-authentication surface is exposed but not yet enforced.
+    Caller authentication NOT_ESTABLISHED fails closed.
 
     UNRESOLVED fails closed.
     REVOKED fails closed.
     AUTHORIZED delegates to the trusted producer primitive.
     """
+
+    if caller_authentication_status == "NOT_ESTABLISHED":
+        return None
 
     if authority_status == "UNRESOLVED":
         return None
