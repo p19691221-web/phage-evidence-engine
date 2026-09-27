@@ -318,6 +318,7 @@ def run():
         run_producer_caller_authentication_surface_red(module)
         run_producer_caller_authentication_not_established_red(module)
         run_producer_caller_authentication_established_authorized(module)
+        run_producer_caller_authentication_established_preservation(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -717,5 +718,91 @@ def run_producer_caller_authentication_established_authorized(module):
 
         for key in set(bindings) - before_keys:
             bindings.pop(key, None)
+def run_producer_caller_authentication_established_preservation(module):
+    entry_point = getattr(
+        module,
+        "produce_trusted_evidence_authorized",
+        None,
+    )
+    assert callable(entry_point)
+
+    producer = getattr(
+        module,
+        "_produce_trusted_evidence",
+        None,
+    )
+    assert callable(producer)
+
+    bindings = getattr(
+        module,
+        "_TRUSTED_ORIGIN_BINDINGS",
+        None,
+    )
+    assert isinstance(bindings, dict)
+
+    original_producer = producer
+
+    cases = (
+        ("UNRESOLVED", False),
+        ("REVOKED", False),
+        ("UNKNOWN_STATE", True),
+    )
+
+    for authority_status, expect_not_implemented in cases:
+        before_count = len(bindings)
+        producer_called = False
+
+        def sentinel_producer(*args, **kwargs):
+            nonlocal producer_called
+            producer_called = True
+            return None
+
+        module._produce_trusted_evidence = sentinel_producer
+
+        try:
+            if expect_not_implemented:
+                try:
+                    entry_point(
+                        caller_authentication_status="ESTABLISHED",
+                        authority_status=authority_status,
+                        value="SCHEDULE_NO_MATCH",
+                        source="schedule_engine",
+                        schedule_ref="schedule-OR-7",
+                        policy_version="v17",
+                        observed_at="2026-09-09T00:00:00Z",
+                    )
+                except NotImplementedError:
+                    pass
+                else:
+                    raise AssertionError(
+                        "unsupported authority state must remain fail closed"
+                    )
+            else:
+                result = entry_point(
+                    caller_authentication_status="ESTABLISHED",
+                    authority_status=authority_status,
+                    value="SCHEDULE_NO_MATCH",
+                    source="schedule_engine",
+                    schedule_ref="schedule-OR-7",
+                    policy_version="v17",
+                    observed_at="2026-09-09T00:00:00Z",
+                )
+
+                assert result is None, (
+                    f"ESTABLISHED + {authority_status} must remain fail closed"
+                )
+
+            assert producer_called is False, (
+                f"ESTABLISHED + {authority_status} must not call "
+                "_produce_trusted_evidence"
+            )
+
+            assert len(bindings) == before_count, (
+                f"ESTABLISHED + {authority_status} must not create "
+                "trusted-origin bindings"
+            )
+
+        finally:
+            module._produce_trusted_evidence = original_producer            
 if __name__ == "__main__":
         run()
