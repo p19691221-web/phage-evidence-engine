@@ -407,12 +407,12 @@ def run_producer_authority_authorized_red(module):
     original_producer = producer
 
 def sentinel_producer(*args, **kwargs):
-     nonlocal producer_call_count, producer_result
-        producer_call_count += 1
-        producer_result = original_producer(*args, **kwargs)
-        return producer_result
+    nonlocal producer_call_count, producer_result
+    producer_call_count += 1
+    producer_result = original_producer(*args, **kwargs)
+    return producer_result
 
-        module._produce_trusted_evidence = sentinel_producer
+    module._produce_trusted_evidence = sentinel_producer
 
     try:
         try:
