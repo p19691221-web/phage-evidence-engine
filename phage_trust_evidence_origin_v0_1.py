@@ -46,10 +46,14 @@ def produce_trusted_evidence_authorized(
     Producer-authority gated entry point.
 
     UNRESOLVED fails closed.
-    AUTHORIZED delegates to the existing trusted producer primitive.
+    REVOKED fails closed.
+    AUTHORIZED delegates to the trusted producer primitive.
     """
 
     if authority_status == "UNRESOLVED":
+        return None
+
+    if authority_status == "REVOKED":
         return None
 
     if authority_status == "AUTHORIZED":
