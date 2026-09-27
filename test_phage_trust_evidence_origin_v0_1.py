@@ -9,7 +9,9 @@ Specification closure does not imply enforcement closure.
 """
 import inspect
 import importlib
-
+CALLER_AUTHENTICATION_VERIFIER_ENTRY_POINT = (
+    "verify_caller_authentication"
+)
 
 MODULE = "phage_trust_evidence_origin_v0_1"
 
@@ -319,6 +321,7 @@ def run():
         run_producer_caller_authentication_not_established_red(module)
         run_producer_caller_authentication_established_authorized(module)
         run_producer_caller_authentication_established_preservation(module)
+        run_producer_caller_authentication_verifier_surface_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -803,6 +806,18 @@ def run_producer_caller_authentication_established_preservation(module):
             )
 
         finally:
-            module._produce_trusted_evidence = original_producer            
+            module._produce_trusted_evidence = original_producer          
+def run_producer_caller_authentication_verifier_surface_red(module):
+    verifier_entry = getattr(
+        module,
+        CALLER_AUTHENTICATION_VERIFIER_ENTRY_POINT,
+        None,
+    )
+
+    assert callable(verifier_entry), (
+        "caller-authentication verifier surface RED: "
+        "trusted authentication verifier seam is not implemented: "
+        f"{CALLER_AUTHENTICATION_VERIFIER_ENTRY_POINT}"
+    )            
 if __name__ == "__main__":
         run()
