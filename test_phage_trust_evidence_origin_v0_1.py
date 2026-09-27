@@ -314,7 +314,7 @@ def run():
         run_producer_authority_authorized_red(module)
 def run_producer_authority_unresolved_red(module):
     
-entry_point = getattr(
+        entry_point = getattr(
         module,
         "produce_trusted_evidence_authorized",
         None,
@@ -340,7 +340,7 @@ entry_point = getattr(
     producer_called = False
     original_producer = producer
 
-    def sentinel_producer(*args, **kwargs):
+ def sentinel_producer(*args, **kwargs):
         nonlocal producer_called
         producer_called = True
         return None
@@ -407,7 +407,7 @@ entry_point = getattr(
     producer_result = None
     original_producer = producer
 
-    def sentinel_producer(*args, **kwargs):
+def sentinel_producer(*args, **kwargs):
         nonlocal producer_call_count, producer_result
         producer_call_count += 1
         producer_result = original_producer(*args, **kwargs)
