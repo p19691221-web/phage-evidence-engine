@@ -310,12 +310,11 @@ def run():
     )
         run_producer_authority_gate_surface(module)
         run_producer_authority_unresolved_red(module)
-        run_producer_authority_gate_surface(module)
-        run_producer_authority_unresolved_red(module)
+        
         run_producer_authority_authorized_red(module)
 def run_producer_authority_unresolved_red(module):
     
-    entry_point = getattr(
+entry_point = getattr(
         module,
         "produce_trusted_evidence_authorized",
         None,
