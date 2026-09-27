@@ -36,6 +36,15 @@ def _content_snapshot(candidate):
         candidate.get("policy_version"),
         candidate.get("observed_at"),
     )
+def verify_caller_authentication(*args, **kwargs):
+    """
+    Trusted caller-authentication verifier seam.
+
+    Verification semantics are intentionally not implemented yet.
+    """
+    raise NotImplementedError(
+        "caller-authentication verification semantics are not implemented"
+    )    
 
 def produce_trusted_evidence_authorized(
     *,
