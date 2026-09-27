@@ -340,12 +340,12 @@ def run_producer_authority_unresolved_red(module):
     producer_called = False
     original_producer = producer
 
- def sentinel_producer(*args, **kwargs):
+def sentinel_producer(*args, **kwargs):
         nonlocal producer_called
         producer_called = True
         return None
 
-    module._produce_trusted_evidence = sentinel_producer
+        module._produce_trusted_evidence = sentinel_producer
 
     try:
         try:
@@ -372,7 +372,7 @@ def run_producer_authority_unresolved_red(module):
     assert len(bindings) == before_count, (
         "unresolved producer authority must not create trusted-origin bindings"
     )
- def run_producer_authority_authorized_red(module):
+def run_producer_authority_authorized_red(module):
     entry_point = getattr(
         module,
         "produce_trusted_evidence_authorized",
@@ -408,12 +408,12 @@ def run_producer_authority_unresolved_red(module):
     original_producer = producer
 
 def sentinel_producer(*args, **kwargs):
-        nonlocal producer_call_count, producer_result
+     nonlocal producer_call_count, producer_result
         producer_call_count += 1
         producer_result = original_producer(*args, **kwargs)
         return producer_result
 
-    module._produce_trusted_evidence = sentinel_producer
+        module._produce_trusted_evidence = sentinel_producer
 
     try:
         try:
