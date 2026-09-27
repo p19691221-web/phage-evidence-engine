@@ -309,5 +309,66 @@ def run():
         f"{len(fixtures)} / {len(fixtures)}"
     )
         run_producer_authority_gate_surface(module)
+        run_producer_authority_unresolved_red(module)
+def run_producer_authority_unresolved_red(module):
+    
+    entry_point = getattr(
+        module,
+        "produce_trusted_evidence_authorized",
+        None,
+    )
+    assert callable(entry_point)
+
+    producer = getattr(
+        module,
+        "_produce_trusted_evidence",
+        None,
+    )
+    assert callable(producer)
+
+    bindings = getattr(
+        module,
+        "_TRUSTED_ORIGIN_BINDINGS",
+        None,
+    )
+    assert isinstance(bindings, dict)
+
+    before_count = len(bindings)
+
+    producer_called = False
+    original_producer = producer
+
+    def sentinel_producer(*args, **kwargs):
+        nonlocal producer_called
+        producer_called = True
+        return None
+
+    module._produce_trusted_evidence = sentinel_producer
+
+    try:
+        try:
+            entry_point(
+                authority_status="UNRESOLVED",
+                value="SCHEDULE_NO_MATCH",
+                source="schedule_engine",
+                schedule_ref="schedule-OR-7",
+                policy_version="v17",
+                observed_at="2026-09-09T00:00:00Z",
+            )
+        except NotImplementedError as exc:
+            raise AssertionError(
+                "unresolved producer-authority behavior is not implemented"
+            ) from exc
+    finally:
+        module._produce_trusted_evidence = original_producer
+
+    assert producer_called is False, (
+        "unresolved producer authority must fail closed before "
+        "_produce_trusted_evidence"
+    )
+
+    assert len(bindings) == before_count, (
+        "unresolved producer authority must not create trusted-origin bindings"
+    )
 if __name__ == "__main__":
         run()
