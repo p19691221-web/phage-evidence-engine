@@ -36,6 +36,7 @@ def _content_snapshot(candidate):
         candidate.get("policy_version"),
         candidate.get("observed_at"),
     )
+
 def produce_trusted_evidence_authorized(
     *,
     authority_status,
@@ -44,11 +45,15 @@ def produce_trusted_evidence_authorized(
     """
     Producer-authority gated entry point.
 
-    Only UNRESOLVED fail-closed behavior is implemented in this phase.
+    UNRESOLVED fails closed.
+    AUTHORIZED delegates to the existing trusted producer primitive.
     """
 
     if authority_status == "UNRESOLVED":
         return None
+
+    if authority_status == "AUTHORIZED":
+        return _produce_trusted_evidence(**producer_kwargs)
 
     raise NotImplementedError(
         "producer-authority behavior is not implemented for "

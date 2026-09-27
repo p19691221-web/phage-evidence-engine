@@ -310,8 +310,9 @@ def run():
     )
         run_producer_authority_gate_surface(module)
         run_producer_authority_unresolved_red(module)
+        
+        run_producer_authority_authorized_red(module)
 def run_producer_authority_unresolved_red(module):
-    
     entry_point = getattr(
         module,
         "produce_trusted_evidence_authorized",
@@ -370,5 +371,91 @@ def run_producer_authority_unresolved_red(module):
     assert len(bindings) == before_count, (
         "unresolved producer authority must not create trusted-origin bindings"
     )
+def run_producer_authority_authorized_red(module):
+    entry_point = getattr(
+        module,
+        "produce_trusted_evidence_authorized",
+        None,
+    )
+    assert callable(entry_point)
+
+    producer = getattr(
+        module,
+        "_produce_trusted_evidence",
+        None,
+    )
+    assert callable(producer)
+
+    evaluate = getattr(
+        module,
+        "evaluate_evidence_origin",
+        None,
+    )
+    assert callable(evaluate)
+
+    bindings = getattr(
+        module,
+        "_TRUSTED_ORIGIN_BINDINGS",
+        None,
+    )
+    assert isinstance(bindings, dict)
+
+    before_keys = set(bindings)
+
+    producer_call_count = 0
+    producer_result = None
+    original_producer = producer
+    def sentinel_producer(*args, **kwargs):
+        nonlocal producer_call_count, producer_result
+        producer_call_count += 1
+        producer_result = original_producer(*args, **kwargs)
+        return producer_result
+
+    module._produce_trusted_evidence = sentinel_producer
+
+    try:
+        try:
+            result = entry_point(
+                authority_status="AUTHORIZED",
+                value="SCHEDULE_NO_MATCH",
+                source="schedule_engine",
+                schedule_ref="schedule-OR-7",
+                policy_version="v17",
+                observed_at="2026-09-09T00:00:00Z",
+            )
+        except NotImplementedError as exc:
+            raise AssertionError(
+                "authorized producer-authority behavior is not implemented"
+            ) from exc
+
+        assert producer_call_count == 1, (
+            "AUTHORIZED producer authority must invoke "
+            "_produce_trusted_evidence exactly once"
+        )
+
+        assert len(bindings) == len(before_keys) + 1, (
+            "AUTHORIZED producer authority must create exactly one "
+            "trusted-origin binding"
+        )
+
+        assert result is producer_result, (
+            "gated entry point must return the trusted producer result"
+        )
+
+        evaluated = evaluate(candidate=result)
+
+        _assert_result_shape(evaluated)
+
+        assert evaluated["origin_status"] == EVIDENCE_ORIGIN_VERIFIED
+        assert evaluated["effect_path"] == NOT_DETERMINED
+
+    finally:
+        module._produce_trusted_evidence = original_producer
+
+        for key in set(bindings) - before_keys:
+            bindings.pop(key, None)
+
+
+
 if __name__ == "__main__":
         run()
