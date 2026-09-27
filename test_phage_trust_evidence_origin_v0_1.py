@@ -1,4 +1,5 @@
 """
+
 Executable regression contract for PHAGE Trust Evidence Origin v0.1.
 
 G1 — Forged Evidence Origin
@@ -6,7 +7,7 @@ G2 — Evidence Verifier Internal Failure
 
 Specification closure does not imply enforcement closure.
 """
-
+import inspect
 import importlib
 
 
@@ -314,6 +315,7 @@ def run():
         run_producer_authority_authorized_red(module)
         run_producer_authority_revoked_red(module)
         run_producer_authority_unknown_behavior(module)
+        run_producer_caller_authentication_surface_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -572,7 +574,21 @@ def run_producer_authority_unknown_behavior(module):
     assert len(bindings) == before_count, (
         "unsupported producer authority must not create trusted-origin bindings"
     )            
+def run_producer_caller_authentication_surface_red(module):
+    entry_point = getattr(
+        module,
+        "produce_trusted_evidence_authorized",
+        None,
+    )
+    assert callable(entry_point)
 
+    signature = inspect.signature(entry_point)
+
+    assert "caller_authentication_status" in signature.parameters, (
+        "caller-authentication surface RED: "
+        "produce_trusted_evidence_authorized must expose "
+        "caller_authentication_status explicitly"
+    )
 
 
 if __name__ == "__main__":
