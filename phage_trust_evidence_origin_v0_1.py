@@ -40,10 +40,13 @@ def _content_snapshot(candidate):
 def produce_trusted_evidence_authorized(
     *,
     authority_status,
+    caller_authentication_status=None,
     **producer_kwargs,
 ):
     """
     Producer-authority gated entry point.
+
+    Caller-authentication surface is exposed but not yet enforced.
 
     UNRESOLVED fails closed.
     REVOKED fails closed.
