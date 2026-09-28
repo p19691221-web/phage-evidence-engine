@@ -40,11 +40,17 @@ def verify_caller_authentication(*args, **kwargs):
     """
     Trusted caller-authentication verifier seam.
 
-    Verification semantics are intentionally not implemented yet.
+    Missing authentication evidence fails closed.
+    Positive verification semantics are not implemented yet.
     """
+
+    if not args and not kwargs:
+        return "NOT_ESTABLISHED"
+
     raise NotImplementedError(
-        "caller-authentication verification semantics are not implemented"
-    )    
+        "caller-authentication verification semantics are not implemented "
+        "for supplied evidence"
+    )
 
 def produce_trusted_evidence_authorized(
     *,
