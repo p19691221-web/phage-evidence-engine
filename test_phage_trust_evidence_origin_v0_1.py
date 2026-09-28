@@ -322,6 +322,7 @@ def run():
         run_producer_caller_authentication_established_authorized(module)
         run_producer_caller_authentication_established_preservation(module)
         run_producer_caller_authentication_verifier_surface_red(module)
+        run_producer_caller_authentication_verifier_unverified_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -819,5 +820,25 @@ def run_producer_caller_authentication_verifier_surface_red(module):
         "trusted authentication verifier seam is not implemented: "
         f"{CALLER_AUTHENTICATION_VERIFIER_ENTRY_POINT}"
     )            
+def run_producer_caller_authentication_verifier_unverified_red(module):
+    verifier = getattr(
+        module,
+        "verify_caller_authentication",
+        None,
+    )
+    assert callable(verifier)
+
+    try:
+        result = verifier()
+    except NotImplementedError as exc:
+        raise AssertionError(
+            "unverified caller-authentication verifier behavior "
+            "is not implemented"
+        ) from exc
+
+    assert result == "NOT_ESTABLISHED", (
+        "missing / unverified authentication evidence must yield "
+        "NOT_ESTABLISHED"
+    )    
 if __name__ == "__main__":
         run()
