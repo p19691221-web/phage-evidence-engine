@@ -54,24 +54,22 @@ def verify_caller_authentication(*args, **kwargs):
         return "ESTABLISHED"
 
     return "NOT_ESTABLISHED"
+
 def produce_trusted_evidence_authorized(
     *,
     authority_status,
     caller_authentication_status=None,
+    caller_authentication_evidence=None,
     **producer_kwargs,
 ):
     """
     Producer-authority gated entry point.
 
-    Caller authentication NOT_ESTABLISHED fails closed.
+    Caller-supplied authentication status is retained only for
+    compatibility and is not authoritative.
 
-    UNRESOLVED fails closed.
-    REVOKED fails closed.
-    AUTHORIZED delegates to the trusted producer primitive.
+    Trusted production requires verifier-established authentication.
     """
-
-    if caller_authentication_status == "NOT_ESTABLISHED":
-        return None
 
     if authority_status == "UNRESOLVED":
         return None
@@ -79,13 +77,23 @@ def produce_trusted_evidence_authorized(
     if authority_status == "REVOKED":
         return None
 
-    if authority_status == "AUTHORIZED":
-        return _produce_trusted_evidence(**producer_kwargs)
+    if authority_status != "AUTHORIZED":
+        raise NotImplementedError(
+            "producer-authority behavior is not implemented for "
+            f"{authority_status}"
+        )
 
-    raise NotImplementedError(
-        "producer-authority behavior is not implemented for "
-        f"{authority_status}"
-    )
+    if caller_authentication_evidence is None:
+        effective_authentication_status = verify_caller_authentication()
+    else:
+        effective_authentication_status = verify_caller_authentication(
+            caller_authentication_evidence
+        )
+
+    if effective_authentication_status != "ESTABLISHED":
+        return None
+
+    return _produce_trusted_evidence(**producer_kwargs)
 def _produce_trusted_evidence(
     *,
     value,
