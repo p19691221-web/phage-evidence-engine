@@ -703,9 +703,16 @@ def run_producer_caller_authentication_established_authorized(module):
 
     module._produce_trusted_evidence = sentinel_producer
 
-    try:
+        try:
+        verified_fixture = getattr(
+            module,
+            "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+            None,
+        )
+        assert verified_fixture is not None
+
         result = entry_point(
-            caller_authentication_status="ESTABLISHED",
+            caller_authentication_evidence=verified_fixture,
             authority_status="AUTHORIZED",
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
@@ -730,6 +737,12 @@ def run_producer_caller_authentication_established_authorized(module):
         for key in set(bindings) - before_keys:
             bindings.pop(key, None)
 def run_producer_caller_authentication_established_preservation(module):
+        verified_fixture = getattr(
+        module,
+        "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+        None,
+    )
+    assert verified_fixture is not None
     entry_point = getattr(
         module,
         "produce_trusted_evidence_authorized",
@@ -774,7 +787,7 @@ def run_producer_caller_authentication_established_preservation(module):
             if expect_not_implemented:
                 try:
                     entry_point(
-                        caller_authentication_status="ESTABLISHED",
+                        caller_authentication_evidence=verified_fixture,
                         authority_status=authority_status,
                         value="SCHEDULE_NO_MATCH",
                         source="schedule_engine",
@@ -790,7 +803,7 @@ def run_producer_caller_authentication_established_preservation(module):
                     )
             else:
                 result = entry_point(
-                    caller_authentication_status="ESTABLISHED",
+                    caller_authentication_evidence=verified_fixture,
                     authority_status=authority_status,
                     value="SCHEDULE_NO_MATCH",
                     source="schedule_engine",
