@@ -738,7 +738,7 @@ def run_producer_caller_authentication_established_authorized(module):
         for key in set(bindings) - before_keys:
             bindings.pop(key, None)
 def run_producer_caller_authentication_established_preservation(module):
-        verified_fixture = getattr(
+    verified_fixture = getattr(
         module,
         "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
         None,
