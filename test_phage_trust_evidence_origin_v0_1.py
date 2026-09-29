@@ -493,12 +493,13 @@ def run_producer_authority_authorized_red(module):
     try:
         try:
             result = entry_point(
-                authority_status="AUTHORIZED",
-                value="SCHEDULE_NO_MATCH",
-                source="schedule_engine",
-                schedule_ref="schedule-OR-7",
-                policy_version="v17",
-                observed_at="2026-09-09T00:00:00Z",
+    caller_authentication_evidence=verified_fixture,
+    authority_status="AUTHORIZED",
+    value="SCHEDULE_NO_MATCH",
+    source="schedule_engine",
+    schedule_ref="schedule-OR-7",
+    policy_version="v17",
+    observed_at="2026-09-09T00:00:00Z",
             )
         except NotImplementedError as exc:
             raise AssertionError(
@@ -701,7 +702,7 @@ def run_producer_caller_authentication_established_authorized(module):
         producer_result = original_producer(*args, **kwargs)
         return producer_result
 
-    module._produce_trusted_evidence = sentinel_producer
+    
 
         module._produce_trusted_evidence = sentinel_producer
 
