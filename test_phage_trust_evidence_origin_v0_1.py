@@ -9,6 +9,9 @@ Specification closure does not imply enforcement closure.
 """
 import inspect
 import importlib
+VERIFIED_CALLER_AUTHENTICATION_FIXTURE = (
+    "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE"
+)
 CALLER_AUTHENTICATION_VERIFIER_ENTRY_POINT = (
     "verify_caller_authentication"
 )
@@ -324,6 +327,7 @@ def run():
         run_producer_caller_authentication_verifier_surface_red(module)
         run_producer_caller_authentication_verifier_unverified_red(module)
         run_producer_caller_authentication_verifier_supplied_unverified_red(module)
+        run_producer_caller_authentication_verified_fixture_surface_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -862,6 +866,17 @@ def run_producer_caller_authentication_verifier_supplied_unverified_red(module):
     assert result == "NOT_ESTABLISHED", (
         "supplied unverified authentication evidence must yield "
         "NOT_ESTABLISHED"
+    )    
+def run_producer_caller_authentication_verified_fixture_surface_red(module):
+    fixture = getattr(
+        module,
+        VERIFIED_CALLER_AUTHENTICATION_FIXTURE,
+        None,
+    )
+
+    assert fixture is not None, (
+        "verified caller-authentication fixture surface RED: "
+        "trusted verifier-positive fixture is not implemented"
     )    
 if __name__ == "__main__":
         run()
