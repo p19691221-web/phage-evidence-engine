@@ -713,7 +713,7 @@ def run_producer_caller_authentication_established_authorized(module):
             None,
         )
         assert verified_fixture is not None
-
+        
         result = entry_point(
             caller_authentication_evidence=verified_fixture,
             authority_status="AUTHORIZED",
