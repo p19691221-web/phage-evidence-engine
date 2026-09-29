@@ -703,7 +703,9 @@ def run_producer_caller_authentication_established_authorized(module):
 
     module._produce_trusted_evidence = sentinel_producer
 
-        try:
+        module._produce_trusted_evidence = sentinel_producer
+
+    try:
         verified_fixture = getattr(
             module,
             "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
