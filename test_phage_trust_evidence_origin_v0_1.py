@@ -328,6 +328,7 @@ def run():
         run_producer_caller_authentication_verifier_unverified_red(module)
         run_producer_caller_authentication_verifier_supplied_unverified_red(module)
         run_producer_caller_authentication_verified_fixture_surface_red(module)
+        run_producer_caller_authentication_verifier_verified_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -877,6 +878,27 @@ def run_producer_caller_authentication_verified_fixture_surface_red(module):
     assert fixture is not None, (
         "verified caller-authentication fixture surface RED: "
         "trusted verifier-positive fixture is not implemented"
+    )    
+def run_producer_caller_authentication_verifier_verified_red(module):
+    verifier = getattr(
+        module,
+        "verify_caller_authentication",
+        None,
+    )
+    assert callable(verifier)
+
+    verified_fixture = getattr(
+        module,
+        "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+        None,
+    )
+    assert verified_fixture is not None
+
+    result = verifier(verified_fixture)
+
+    assert result == "ESTABLISHED", (
+        "trusted verifier-positive caller-authentication fixture "
+        "must yield ESTABLISHED"
     )    
 if __name__ == "__main__":
         run()
