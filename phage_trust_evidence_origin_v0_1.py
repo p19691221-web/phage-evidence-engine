@@ -40,9 +40,18 @@ def verify_caller_authentication(*args, **kwargs):
     """
     Trusted caller-authentication verifier seam.
 
-    Missing or currently unverified authentication evidence fails closed.
-    Positive verification semantics are not implemented yet.
+    The module-owned verified fixture represents the current
+    verifier-positive prototype path.
+
+    Missing or other supplied evidence fails closed.
     """
+
+    if (
+        len(args) == 1
+        and not kwargs
+        and args[0] is _CALLER_AUTHENTICATION_VERIFIED_FIXTURE
+    ):
+        return "ESTABLISHED"
 
     return "NOT_ESTABLISHED"
 def produce_trusted_evidence_authorized(
