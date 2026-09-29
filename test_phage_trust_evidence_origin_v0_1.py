@@ -702,9 +702,7 @@ def run_producer_caller_authentication_established_authorized(module):
         producer_result = original_producer(*args, **kwargs)
         return producer_result
 
-    
-
-        module._produce_trusted_evidence = sentinel_producer
+    module._produce_trusted_evidence = sentinel_producer
 
     try:
         verified_fixture = getattr(
@@ -713,7 +711,7 @@ def run_producer_caller_authentication_established_authorized(module):
             None,
         )
         assert verified_fixture is not None
-        
+
         result = entry_point(
             caller_authentication_evidence=verified_fixture,
             authority_status="AUTHORIZED",
