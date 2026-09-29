@@ -21,7 +21,7 @@ NOT_DETERMINED = "NOT_DETERMINED"
 _TRUST_MARKER_KEY = "_phage_trusted_origin_token"
 _TRUSTED_ORIGIN_BINDINGS = {}
 
-
+_CALLER_AUTHENTICATION_VERIFIED_FIXTURE = object()
 def _result(*, origin_status, effect_path):
     return {
         "origin_status": origin_status,
