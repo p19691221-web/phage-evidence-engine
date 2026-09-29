@@ -323,6 +323,7 @@ def run():
         run_producer_caller_authentication_established_preservation(module)
         run_producer_caller_authentication_verifier_surface_red(module)
         run_producer_caller_authentication_verifier_unverified_red(module)
+        run_producer_caller_authentication_verifier_supplied_unverified_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -838,6 +839,28 @@ def run_producer_caller_authentication_verifier_unverified_red(module):
 
     assert result == "NOT_ESTABLISHED", (
         "missing / unverified authentication evidence must yield "
+        "NOT_ESTABLISHED"
+    )    
+def run_producer_caller_authentication_verifier_supplied_unverified_red(module):
+    verifier = getattr(
+        module,
+        "verify_caller_authentication",
+        None,
+    )
+    assert callable(verifier)
+
+    unverified_evidence = object()
+
+    try:
+        result = verifier(unverified_evidence)
+    except NotImplementedError as exc:
+        raise AssertionError(
+            "supplied unverified caller-authentication evidence "
+            "behavior is not implemented"
+        ) from exc
+
+    assert result == "NOT_ESTABLISHED", (
+        "supplied unverified authentication evidence must yield "
         "NOT_ESTABLISHED"
     )    
 if __name__ == "__main__":
