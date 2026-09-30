@@ -476,7 +476,12 @@ def run_producer_authority_authorized_red(module):
         None,
     )
     assert isinstance(bindings, dict)
-
+        verified_fixture = getattr(
+        module,
+        "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+        None,
+    )
+    assert verified_fixture is not None
     before_keys = set(bindings)
 
     producer_call_count = 0
