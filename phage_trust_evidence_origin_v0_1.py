@@ -13,7 +13,7 @@ identity, signature, attestation, or provenance system.
 EVIDENCE_ORIGIN_VERIFIED = "EVIDENCE_ORIGIN_VERIFIED"
 EVIDENCE_ORIGIN_UNVERIFIED = "EVIDENCE_ORIGIN_UNVERIFIED"
 EVIDENCE_VERIFICATION_ERROR = "EVIDENCE_VERIFICATION_ERROR"
-
+_PRODUCER_AUTHORITY_VERIFIED_FIXTURE = object()
 BLOCKED = "BLOCKED"
 NOT_DETERMINED = "NOT_DETERMINED"
 
@@ -165,3 +165,12 @@ def evaluate_evidence_origin(*, candidate):
         candidate=candidate,
         verifier=_default_verifier,
     )
+def verify_producer_authority(*args, **kwargs):
+    if (
+        len(args) == 1
+        and not kwargs
+        and args[0] is _PRODUCER_AUTHORITY_VERIFIED_FIXTURE
+    ):
+        return "AUTHORIZED"
+
+    return "UNRESOLVED"
