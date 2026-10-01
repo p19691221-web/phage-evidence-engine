@@ -482,6 +482,7 @@ def run_producer_authority_authorized_red(module):
         None,
     )
     assert verified_fixture is not None    
+    before_keys = set(bindings)
     producer_call_count = 0
     producer_result = None
     original_producer = producer
