@@ -329,6 +329,7 @@ def run():
         run_producer_caller_authentication_verifier_supplied_unverified_red(module)
         run_producer_caller_authentication_verified_fixture_surface_red(module)
         run_producer_caller_authentication_verifier_verified_red(module)
+        run_producer_caller_authentication_verifier_binding_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -475,9 +476,13 @@ def run_producer_authority_authorized_red(module):
         None,
     )
     assert isinstance(bindings, dict)
-
+    verified_fixture = getattr(
+        module,
+"_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+        None,
+    )
+    assert verified_fixture is not None    
     before_keys = set(bindings)
-
     producer_call_count = 0
     producer_result = None
     original_producer = producer
@@ -492,12 +497,13 @@ def run_producer_authority_authorized_red(module):
     try:
         try:
             result = entry_point(
-                authority_status="AUTHORIZED",
-                value="SCHEDULE_NO_MATCH",
-                source="schedule_engine",
-                schedule_ref="schedule-OR-7",
-                policy_version="v17",
-                observed_at="2026-09-09T00:00:00Z",
+    caller_authentication_evidence=verified_fixture,
+    authority_status="AUTHORIZED",
+    value="SCHEDULE_NO_MATCH",
+    source="schedule_engine",
+    schedule_ref="schedule-OR-7",
+    policy_version="v17",
+    observed_at="2026-09-09T00:00:00Z",
             )
         except NotImplementedError as exc:
             raise AssertionError(
@@ -703,8 +709,15 @@ def run_producer_caller_authentication_established_authorized(module):
     module._produce_trusted_evidence = sentinel_producer
 
     try:
+        verified_fixture = getattr(
+            module,
+            "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+            None,
+        )
+        assert verified_fixture is not None
+
         result = entry_point(
-            caller_authentication_status="ESTABLISHED",
+            caller_authentication_evidence=verified_fixture,
             authority_status="AUTHORIZED",
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
@@ -729,6 +742,12 @@ def run_producer_caller_authentication_established_authorized(module):
         for key in set(bindings) - before_keys:
             bindings.pop(key, None)
 def run_producer_caller_authentication_established_preservation(module):
+    verified_fixture = getattr(
+        module,
+        "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+        None,
+    )
+    assert verified_fixture is not None
     entry_point = getattr(
         module,
         "produce_trusted_evidence_authorized",
@@ -773,7 +792,7 @@ def run_producer_caller_authentication_established_preservation(module):
             if expect_not_implemented:
                 try:
                     entry_point(
-                        caller_authentication_status="ESTABLISHED",
+                        caller_authentication_evidence=verified_fixture,
                         authority_status=authority_status,
                         value="SCHEDULE_NO_MATCH",
                         source="schedule_engine",
@@ -789,7 +808,7 @@ def run_producer_caller_authentication_established_preservation(module):
                     )
             else:
                 result = entry_point(
-                    caller_authentication_status="ESTABLISHED",
+                    caller_authentication_evidence=verified_fixture,
                     authority_status=authority_status,
                     value="SCHEDULE_NO_MATCH",
                     source="schedule_engine",
@@ -899,6 +918,69 @@ def run_producer_caller_authentication_verifier_verified_red(module):
     assert result == "ESTABLISHED", (
         "trusted verifier-positive caller-authentication fixture "
         "must yield ESTABLISHED"
+    )    
+ 
+
+def run_producer_caller_authentication_verifier_binding_red(module):
+    entry_point = getattr(
+        module,
+        "produce_trusted_evidence_authorized",
+        None,
+    )
+    assert callable(entry_point)
+
+    producer = getattr(
+        module,
+        "_produce_trusted_evidence",
+        None,
+    )
+    assert callable(producer)
+
+    bindings = getattr(
+        module,
+        "_TRUSTED_ORIGIN_BINDINGS",
+        None,
+    )
+    assert isinstance(bindings, dict)
+
+    before_count = len(bindings)
+
+    producer_called = False
+    original_producer = producer
+
+    def sentinel_producer(*args, **kwargs):
+        nonlocal producer_called
+        producer_called = True
+        return None
+
+    module._produce_trusted_evidence = sentinel_producer
+
+    try:
+        result = entry_point(
+            caller_authentication_status="ESTABLISHED",
+            authority_status="AUTHORIZED",
+            value="SCHEDULE_NO_MATCH",
+            source="schedule_engine",
+            schedule_ref="schedule-OR-7",
+            policy_version="v17",
+            observed_at="2026-09-09T00:00:00Z",
+        )
+    finally:
+        module._produce_trusted_evidence = original_producer
+
+    assert producer_called is False, (
+        "caller self-asserted ESTABLISHED without verified evidence "
+        "must not enter trusted production"
+    )
+
+    assert result is None, (
+        "caller self-asserted ESTABLISHED without verified evidence "
+        "must fail closed"
+    )
+
+    assert len(bindings) == before_count, (
+        "caller self-asserted ESTABLISHED without verified evidence "
+        "must not create trusted-origin bindings"
     )    
 if __name__ == "__main__":
         run()
