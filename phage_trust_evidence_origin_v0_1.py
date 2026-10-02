@@ -60,27 +60,36 @@ def produce_trusted_evidence_authorized(
     authority_status,
     caller_authentication_status=None,
     caller_authentication_evidence=None,
+    authority_evidence=None,
     **producer_kwargs,
 ):
     """
     Producer-authority gated entry point.
 
-    Caller-supplied authentication status is retained only for
-    compatibility and is not authoritative.
+    Caller-supplied authentication and authority status values are retained
+    only for compatibility and are not authoritative.
 
-    Trusted production requires verifier-established authentication.
+    Trusted production requires verifier-established authentication and
+    verifier-established producer authority.
     """
 
-    if authority_status == "UNRESOLVED":
+    if authority_evidence is None:
+        effective_authority_status = verify_producer_authority()
+    else:
+        effective_authority_status = verify_producer_authority(
+            authority_evidence
+        )
+
+    if effective_authority_status == "UNRESOLVED":
         return None
 
-    if authority_status == "REVOKED":
+    if effective_authority_status == "REVOKED":
         return None
 
-    if authority_status != "AUTHORIZED":
+    if effective_authority_status != "AUTHORIZED":
         raise NotImplementedError(
             "producer-authority behavior is not implemented for "
-            f"{authority_status}"
+            f"{effective_authority_status}"
         )
 
     if caller_authentication_evidence is None:
