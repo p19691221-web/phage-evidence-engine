@@ -5,6 +5,24 @@ Prepared 2026-10-03 (Asia/Taipei); semantic source: reconstructed L/M
 requirements approved through PR #87, main f904d02. This is a new interface
 proposal, not recovered wording from the 2026-09-08 specification.
 
+## Issuance scope and explicit modeling assumption
+Evidence-producer authority does not establish authority to issue an operational
+Decision or audit receipt. The issue_* entries below are fixture-only origin
+constructors, not operational decision makers or audit services. A shared
+producer request can construct both fixture kinds; this is a modeling assumption
+for origin testing, not an inference of cross-kind authority.
+No decision-issuer/receipt-issuer authority resolver is implemented or claimed.
+Operational issuance is outside this interface and requires a separately
+specified artifact-kind and payload-scoped authority boundary before use.
+
+Store the issuing evidence's origin token in the artifact's private provenance
+record alongside its kind and content snapshot. This links fixture construction
+to the actual successful evidence-producer event. It does not establish payload
+authorization, issuer legitimacy, or decision validity beyond origin.
+The regression-only _issuance_provenance_for_test(artifact) returns
+evidence_origin_token and artifact_kind for trace assertions; returned data
+is not an authorization input.
+
 ## Module and issuance
 Module: phage_trust_boundary_lm_v0_1.
 issue_decision and issue_audit_receipt accept keyword payload (a plain dict
@@ -13,7 +31,9 @@ They return artifact (opaque issued object or None) and producer_diagnostics.
 
 Issuance must call phage_trust_evidence_origin_v0_1.
 produce_trusted_evidence_authorized with a newly allocated dedicated
-diagnostics dictionary. Callers must not supply diagnostics in producer_request.
+diagnostics dictionary. Reject non-plain payload dicts and any diagnostics key in producer_request
+with TypeError before calling the gate or mutating state.
+Callers must not supply diagnostics in producer_request.
 Only a returned candidate together with ESTABLISHED, AUTHORIZED and
 VERIFIED_PRODUCTION_PERMITTED permits artifact issuance. Preserve denial
 and verifier-error diagnostics; do not issue an artifact on either path.
@@ -42,18 +62,26 @@ verifier-error classification. Verification only permits fixture consumption;
 it does not authorize an operational effect, Gateway ALLOW, or execution.
 No receipt single-use or revocation policy is introduced.
 
-The regression-only _tamper_audit_receipt_for_test hook changes stored
-receipt payload without changing its original content binding. It exists
+The regression-only _tamper_decision_for_test and
+_tamper_audit_receipt_for_test hooks change stored artifact payload without
+changing its original content binding. It exists
 to test hostile post-issuance mutation, not as an authorized receipt edit API.
 Mocking the explicit verifier functions supplies deterministic G2 faults.
 
 ## RED baseline and scope
-The test harness contains 21 tests. If the module is absent, tests fail
+The test harness contains 34 tests. If the module is absent, tests fail
 with an explicit surface assertion rather than an uncaught import error.
-This is a module-surface RED, not evidence of 21 observed behavioral defects.
+This is a module-surface RED, not evidence of 34 observed behavioral defects.
 Once the surface exists, tests exercise positive controls, caller forgeries and cross-kind substitution,
 verifier errors, strict verifier results, use-time revalidation, snapshot
 isolation, producer hard-stop/denial/error integration, and receipt tampering.
+
+A dedicated GitHub Actions workflow runs this test file directly on push and
+pull_request, with Python 3.11. While the module is missing this check must be
+RED; existing green checks cannot substitute for this run. Do not mark these
+tests skipped or expected failures. Before implementation, retain a separate
+surface-only stub commit and its behavioral failure record in the implementation
+branch; do not describe the absent-module baseline as behavioral RED.
 
 This PR adds no implementation and does not modify the frozen producer
 verifier or contract, Schedule, Emergency Override, or G6. Test-interface

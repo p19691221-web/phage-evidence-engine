@@ -33,7 +33,8 @@ class Boundary:
         self.consume = getattr(lm, "consume_" + self.kind)
         self.verify_name = "verify_" + self.kind + "_origin"
         self.bindings = dict(producer._TRUSTED_ORIGIN_BINDINGS)
-        self.payload = {"reference": "fixture-1", "outcome": "fixture-observation"}
+        self.payload = {"reference": "fixture-1", "outcome": "fixture-observation",
+                        "details": {"steps": ["original"]}}
 
     def tearDown(self):
         # Only remove producer tokens created by this isolated test.
@@ -124,15 +125,99 @@ class Boundary:
     def test_payload_snapshot_isolated(self):
         artifact = self.issued()
         self.payload["outcome"] = "caller mutation"
+        self.payload["details"]["steps"].append("caller mutation")
         seen = []
         result = self.consume(candidate=artifact, on_verified=seen.append)
         self.assertEqual(result["origin_status"], self.verified)
         self.assertEqual(seen[0]["outcome"], "fixture-observation")
+        self.assertEqual(seen[0]["details"]["steps"], ["original"])
         seen[0]["outcome"] = "consumer mutation"
+        seen[0]["details"]["steps"].append("consumer mutation")
         seen.clear()
         result = self.consume(candidate=artifact, on_verified=seen.append)
         self.assertEqual(result["origin_status"], self.verified)
         self.assertEqual(seen[0]["outcome"], "fixture-observation")
+
+    def test_nested_snapshot_after_consumer_mutation(self):
+        artifact = self.issued()
+        def mutate(payload):
+            payload["details"]["steps"].append("consumer mutation")
+        self.consume(candidate=artifact, on_verified=mutate)
+        seen = []
+        result = self.consume(candidate=artifact, on_verified=seen.append)
+        self.assertEqual(result["origin_status"], self.verified)
+        self.assertEqual(seen[0]["details"]["steps"], ["original"])
+
+    def test_verified_evidence_is_not_artifact(self):
+        candidate = producer.produce_trusted_evidence_authorized(**request())
+        self.assertEqual(producer.evaluate_evidence_origin(candidate=candidate)["origin_status"],
+                         "EVIDENCE_ORIGIN_VERIFIED")
+        use = Mock()
+        result = self.consume(candidate=candidate, on_verified=use)
+        self.assertEqual(result["origin_status"], self.unverified)
+        self.assertEqual(result["effect_path"], "BLOCKED")
+        use.assert_not_called()
+
+    def test_callback_exception_propagates(self):
+        artifact = self.issued()
+        failure = RuntimeError("callback failure")
+        use = Mock(side_effect=failure)
+        with self.assertRaises(RuntimeError) as caught:
+            self.consume(candidate=artifact, on_verified=use)
+        self.assertIs(caught.exception, failure)
+        use.assert_called_once()
+
+    def test_tampered_content_rejected(self):
+        artifact = self.issued()
+        getattr(lm, "_tamper_" + self.kind + "_for_test")(
+            artifact, payload={"reference": "fixture-1", "outcome": "tampered"})
+        use = Mock()
+        result = self.consume(candidate=artifact, on_verified=use)
+        self.assertEqual(result["origin_status"], self.unverified)
+        self.assertEqual(result["effect_path"], "BLOCKED")
+        use.assert_not_called()
+
+    def test_payload_requires_plain_dict_before_gate(self):
+        class DictSubclass(dict):
+            pass
+        for payload in (None, [], "payload", DictSubclass(self.payload)):
+            with self.subTest(payload=type(payload).__name__):
+                with patch.object(producer, "produce_trusted_evidence_authorized") as gate:
+                    with self.assertRaises(TypeError):
+                        self.issue(payload=payload, producer_request=request())
+                gate.assert_not_called()
+                self.assertEqual(producer._TRUSTED_ORIGIN_BINDINGS, self.bindings)
+
+    def test_caller_diagnostics_rejected_before_gate(self):
+        req = request()
+        supplied = {"reason": "caller claim"}
+        req["diagnostics"] = supplied
+        with patch.object(producer, "produce_trusted_evidence_authorized") as gate:
+            with self.assertRaises(TypeError):
+                self.issue(payload=self.payload, producer_request=req)
+        gate.assert_not_called()
+        self.assertEqual(supplied, {"reason": "caller claim"})
+        self.assertEqual(producer._TRUSTED_ORIGIN_BINDINGS, self.bindings)
+
+    def test_issuance_evidence_trace_and_dedicated_diagnostics(self):
+        issued_candidates = []
+        sinks = []
+        actual = producer.produce_trusted_evidence_authorized
+        def traced(**kwargs):
+            sinks.append(kwargs["diagnostics"])
+            candidate = actual(**kwargs)
+            issued_candidates.append(candidate)
+            return candidate
+        with patch.object(producer, "produce_trusted_evidence_authorized", side_effect=traced):
+            first = self.issued()
+            second = self.issued()
+        self.assertEqual(len(sinks), 2)
+        self.assertIsNot(sinks[0], sinks[1])
+        for artifact, candidate in zip((first, second), issued_candidates):
+            trace = getattr(lm, "_issuance_provenance_for_test")(artifact)
+            self.assertIs(trace["evidence_origin_token"],
+                          candidate[producer._TRUST_MARKER_KEY])
+            self.assertEqual(trace["artifact_kind"], self.kind)
 
     def test_authentication_hard_stop_at_issuance(self):
         req = request()
@@ -183,16 +268,6 @@ class ReceiptTests(Boundary, unittest.TestCase):
     unverified = "AUDIT_ORIGIN_UNVERIFIED"
     error = "AUDIT_VERIFICATION_ERROR"
 
-    def test_tampered_receipt_rejected_at_use(self):
-        artifact = self.issued()
-        # Regression-only hostile fault hook; no production mutation API.
-        getattr(lm, "_tamper_audit_receipt_for_test")(
-            artifact, payload={"reference": "fixture-1", "outcome": "tampered"})
-        use = Mock()
-        result = self.consume(candidate=artifact, on_verified=use)
-        self.assertEqual(result["origin_status"], self.unverified)
-        self.assertEqual(result["effect_path"], "BLOCKED")
-        use.assert_not_called()
 
 
 if __name__ == "__main__":
