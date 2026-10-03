@@ -29,6 +29,15 @@ NOT_DETERMINED = "NOT_DETERMINED"
 
 
 
+def _require_verified_authority_fixture(module):
+    """Return the module's verifier-positive producer-authority fixture."""
+    fixture = getattr(module, "_PRODUCER_AUTHORITY_VERIFIED_FIXTURE", None)
+    assert fixture is not None, (
+        "verifier-positive producer-authority fixture must be exposed"
+    )
+    return fixture
+
+
 def _load_module():
     try:
         return importlib.import_module(MODULE)
@@ -502,6 +511,7 @@ def run_producer_authority_authorized_red(module):
             result = entry_point(
     caller_authentication_evidence=verified_fixture,
     authority_status="AUTHORIZED",
+    authority_evidence=_require_verified_authority_fixture(module),
     value="SCHEDULE_NO_MATCH",
     source="schedule_engine",
     schedule_ref="schedule-OR-7",
@@ -648,6 +658,7 @@ def run_producer_caller_authentication_not_established_red(module):
     try:
         entry_point(
             authority_status="AUTHORIZED",
+            authority_evidence=_require_verified_authority_fixture(module),
             caller_authentication_status="NOT_ESTABLISHED",
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
@@ -722,6 +733,7 @@ def run_producer_caller_authentication_established_authorized(module):
         result = entry_point(
             caller_authentication_evidence=verified_fixture,
             authority_status="AUTHORIZED",
+            authority_evidence=_require_verified_authority_fixture(module),
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
             schedule_ref="schedule-OR-7",
@@ -962,6 +974,7 @@ def run_producer_caller_authentication_verifier_binding_red(module):
         result = entry_point(
             caller_authentication_status="ESTABLISHED",
             authority_status="AUTHORIZED",
+            authority_evidence=_require_verified_authority_fixture(module),
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
             schedule_ref="schedule-OR-7",
