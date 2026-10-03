@@ -19,3 +19,6 @@ jobs:
 
       - name: Run G1 G2 evidence origin regression
         run: python test_phage_trust_evidence_origin_v0_1.py
+
+      - name: Run producer verifier contract candidate regression
+        run: python test_phage_producer_verifier_contract_v0_2.py
