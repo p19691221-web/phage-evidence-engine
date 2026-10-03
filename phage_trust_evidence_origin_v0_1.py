@@ -94,6 +94,10 @@ def produce_trusted_evidence_authorized(
         raise TypeError("diagnostics must not alias trusted-origin bindings")
     if diagnostics is not None and type(diagnostics) is not dict:
         raise TypeError("diagnostics must be a plain dictionary or None")
+    if diagnostics is globals():
+        raise TypeError("diagnostics must not alias module globals")
+    if diagnostics is not None and _TRUST_MARKER_KEY in diagnostics:
+        raise TypeError("diagnostics must not be an evidence candidate")
 
     def record(authentication, authority, reason):
         if diagnostics is not None:

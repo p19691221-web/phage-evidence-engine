@@ -150,6 +150,8 @@ class ProducerVerifierContract(unittest.TestCase):
                         with self.assertRaises(m.ProducerVerificationError) as caught:
                             self.invoke(None)
                         self.assertEqual(caught.exception.stage, stage)
+                        self.assertIsNone(caught.exception.__cause__)
+                        self.assertIsNone(caught.exception.__context__)
                         self.assertEqual(caught.exception.reason,
                                          stage.upper() + "_VERIFICATION_ERROR")
                         authenticate.assert_called_once()
@@ -218,6 +220,42 @@ class ProducerVerifierContract(unittest.TestCase):
         finally:
             m._TRUSTED_ORIGIN_BINDINGS.clear()
             m._TRUSTED_ORIGIN_BINDINGS.update(original)
+
+    def test_module_globals_rejected_without_mutation(self):
+        snapshot = dict(vars(m))
+        with patch.object(m, "verify_caller_authentication") as auth, \
+             patch.object(m, "verify_producer_authority") as authority, \
+             patch.object(m, "_produce_trusted_evidence") as producer:
+            with self.assertRaises(TypeError):
+                self.invoke(vars(m))
+            auth.assert_not_called()
+            authority.assert_not_called()
+            producer.assert_not_called()
+        self.assertEqual(vars(m), snapshot)
+
+    def test_trusted_candidate_rejected_without_mutation(self):
+        candidate = m._produce_trusted_evidence(
+            value="SCHEDULE_NO_MATCH", source="schedule_engine",
+            schedule_ref="schedule-OR-7", policy_version="v17",
+            observed_at="2026-09-09T00:00:00Z")
+        snapshot = dict(candidate)
+        bindings = dict(m._TRUSTED_ORIGIN_BINDINGS)
+        token = candidate[m._TRUST_MARKER_KEY]
+        try:
+            with patch.object(m, "verify_caller_authentication") as auth, \
+                 patch.object(m, "verify_producer_authority") as authority, \
+                 patch.object(m, "_produce_trusted_evidence") as producer:
+                with self.assertRaises(TypeError):
+                    self.invoke(candidate)
+                auth.assert_not_called()
+                authority.assert_not_called()
+                producer.assert_not_called()
+            self.assertEqual(candidate, snapshot)
+            self.assertEqual(m._TRUSTED_ORIGIN_BINDINGS, bindings)
+            self.assertEqual(m.evaluate_evidence_origin(candidate=candidate)
+                             ["origin_status"], m.EVIDENCE_ORIGIN_VERIFIED)
+        finally:
+            m._TRUSTED_ORIGIN_BINDINGS.pop(token, None)
 
     def test_unsupported_input_does_not_write_diagnostics(self):
         diagnostics = {"caller": "unchanged"}

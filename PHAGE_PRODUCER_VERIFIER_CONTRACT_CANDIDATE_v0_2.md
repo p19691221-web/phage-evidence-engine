@@ -34,7 +34,11 @@ authorization. Do not forward diagnostics to the producer or store it in
 trusted evidence. The dictionary contains gate decisions, not production
 completion results. Reject non-plain dictionaries (including subclasses),
 and the trusted-origin binding registry itself, with TypeError before any
-verification or diagnostic mutation.
+verification or diagnostic mutation. The module's globals dictionary and
+any dictionary containing the evidence trust-marker key are also rejected.
+The caller must supply a dedicated diagnostic container, not an evidence
+candidate or a shared state dictionary. These checks reject known dangerous
+aliases; they do not identify every possible shared plain dictionary.
 
 If diagnostics is omitted or None, verifier exceptions, reported
 VERIFICATION_ERROR, and unexpected verifier results raise the dedicated
@@ -43,7 +47,10 @@ and reason (AUTHENTICATION_VERIFICATION_ERROR or AUTHORITY_VERIFICATION_ERROR).
 Authentication errors still prohibit authority evaluation; all verifier
 errors prohibit production. Ordinary denials continue returning None.
 With a valid diagnostic sink, verifier errors return None and populate the
-distinct error fields. The original verifier exception is not propagated.
+distinct error fields. Consumers choosing the diagnostic path must inspect
+the status fields and reason before interpreting the outcome.
+The original verifier exception is not propagated or chained:
+ProducerVerificationError has neither __cause__ nor __context__.
 Unsupported legacy input raises before writing diagnostics; no verification
 decision is produced for that invalid request.
 
