@@ -61,6 +61,7 @@ def produce_trusted_evidence_authorized(
     caller_authentication_status=None,
     caller_authentication_evidence=None,
     authority_evidence=None,
+    diagnostics=None,
     **producer_kwargs,
 ):
     """
@@ -80,35 +81,56 @@ def produce_trusted_evidence_authorized(
             f"{authority_status}"
         )
 
-    if authority_evidence is None:
-        effective_authority_status = verify_producer_authority()
-    else:
-        effective_authority_status = verify_producer_authority(
-            authority_evidence
-        )
+    if diagnostics is not None and not isinstance(diagnostics, dict):
+        raise TypeError("diagnostics must be a dictionary or None")
 
-    if effective_authority_status == "UNRESOLVED":
+    def record(authentication, authority, reason):
+        if diagnostics is not None:
+            diagnostics.clear()
+            diagnostics.update(
+                authentication_status=authentication,
+                authority_status=authority,
+                reason=reason,
+            )
+
+    try:
+        if caller_authentication_evidence is None:
+            authentication = verify_caller_authentication()
+        else:
+            authentication = verify_caller_authentication(
+                caller_authentication_evidence
+            )
+    except Exception:
+        authentication = "VERIFICATION_ERROR"
+
+    if authentication not in ("ESTABLISHED", "NOT_ESTABLISHED",
+                              "VERIFICATION_ERROR"):
+        authentication = "VERIFICATION_ERROR"
+
+    if authentication != "ESTABLISHED":
+        reason = ("AUTHENTICATION_NOT_ESTABLISHED"
+                  if authentication == "NOT_ESTABLISHED"
+                  else "AUTHENTICATION_VERIFICATION_ERROR")
+        record(authentication, "not_evaluated", reason)
         return None
 
-    if effective_authority_status == "REVOKED":
+    try:
+        if authority_evidence is None:
+            authority = verify_producer_authority()
+        else:
+            authority = verify_producer_authority(authority_evidence)
+    except Exception:
+        authority = "VERIFICATION_ERROR"
+
+    if authority not in ("AUTHORIZED", "UNRESOLVED", "REVOKED", "UNKNOWN",
+                         "VERIFICATION_ERROR"):
+        authority = "VERIFICATION_ERROR"
+
+    if authority != "AUTHORIZED":
+        record(authentication, authority, "AUTHORITY_" + authority)
         return None
 
-    if effective_authority_status != "AUTHORIZED":
-        raise NotImplementedError(
-            "producer-authority behavior is not implemented for "
-            f"{effective_authority_status}"
-        )
-
-    if caller_authentication_evidence is None:
-        effective_authentication_status = verify_caller_authentication()
-    else:
-        effective_authentication_status = verify_caller_authentication(
-            caller_authentication_evidence
-        )
-
-    if effective_authentication_status != "ESTABLISHED":
-        return None
-
+    record(authentication, authority, "VERIFIED_PRODUCTION_PERMITTED")
     return _produce_trusted_evidence(**producer_kwargs)
 def _produce_trusted_evidence(
     *,
