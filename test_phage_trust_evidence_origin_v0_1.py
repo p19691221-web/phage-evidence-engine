@@ -15,7 +15,9 @@ VERIFIED_CALLER_AUTHENTICATION_FIXTURE = (
 CALLER_AUTHENTICATION_VERIFIER_ENTRY_POINT = (
     "verify_caller_authentication"
 )
-
+PRODUCER_AUTHORITY_VERIFIER_ENTRY_POINT = (
+    "verify_producer_authority"
+)
 MODULE = "phage_trust_evidence_origin_v0_1"
 
 EVIDENCE_ORIGIN_VERIFIED = "EVIDENCE_ORIGIN_VERIFIED"
@@ -25,6 +27,15 @@ EVIDENCE_VERIFICATION_ERROR = "EVIDENCE_VERIFICATION_ERROR"
 BLOCKED = "BLOCKED"
 NOT_DETERMINED = "NOT_DETERMINED"
 
+
+
+def _require_verified_authority_fixture(module):
+    """Return the module's verifier-positive producer-authority fixture."""
+    fixture = getattr(module, "_PRODUCER_AUTHORITY_VERIFIED_FIXTURE", None)
+    assert fixture is not None, (
+        "verifier-positive producer-authority fixture must be exposed"
+    )
+    return fixture
 
 
 def _load_module():
@@ -330,6 +341,7 @@ def run():
         run_producer_caller_authentication_verified_fixture_surface_red(module)
         run_producer_caller_authentication_verifier_verified_red(module)
         run_producer_caller_authentication_verifier_binding_red(module)
+        run_producer_authority_verifier_binding_red(module)
 def run_producer_authority_revoked_red(module):
     entry_point = getattr(
         module,
@@ -499,6 +511,7 @@ def run_producer_authority_authorized_red(module):
             result = entry_point(
     caller_authentication_evidence=verified_fixture,
     authority_status="AUTHORIZED",
+    authority_evidence=_require_verified_authority_fixture(module),
     value="SCHEDULE_NO_MATCH",
     source="schedule_engine",
     schedule_ref="schedule-OR-7",
@@ -645,6 +658,7 @@ def run_producer_caller_authentication_not_established_red(module):
     try:
         entry_point(
             authority_status="AUTHORIZED",
+            authority_evidence=_require_verified_authority_fixture(module),
             caller_authentication_status="NOT_ESTABLISHED",
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
@@ -719,6 +733,7 @@ def run_producer_caller_authentication_established_authorized(module):
         result = entry_point(
             caller_authentication_evidence=verified_fixture,
             authority_status="AUTHORIZED",
+            authority_evidence=_require_verified_authority_fixture(module),
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
             schedule_ref="schedule-OR-7",
@@ -959,6 +974,7 @@ def run_producer_caller_authentication_verifier_binding_red(module):
         result = entry_point(
             caller_authentication_status="ESTABLISHED",
             authority_status="AUTHORIZED",
+            authority_evidence=_require_verified_authority_fixture(module),
             value="SCHEDULE_NO_MATCH",
             source="schedule_engine",
             schedule_ref="schedule-OR-7",
@@ -981,6 +997,74 @@ def run_producer_caller_authentication_verifier_binding_red(module):
     assert len(bindings) == before_count, (
         "caller self-asserted ESTABLISHED without verified evidence "
         "must not create trusted-origin bindings"
+    )    
+def run_producer_authority_verifier_binding_red(module):
+    entry_point = getattr(
+        module,
+        "produce_trusted_evidence_authorized",
+        None,
+    )
+    assert callable(entry_point)
+
+    producer = getattr(
+        module,
+        "_produce_trusted_evidence",
+        None,
+    )
+    assert callable(producer)
+
+    bindings = getattr(
+        module,
+        "_TRUSTED_ORIGIN_BINDINGS",
+        None,
+    )
+    assert isinstance(bindings, dict)
+
+    verified_authentication_fixture = getattr(
+        module,
+        "_CALLER_AUTHENTICATION_VERIFIED_FIXTURE",
+        None,
+    )
+    assert verified_authentication_fixture is not None
+
+    before_count = len(bindings)
+
+    producer_called = False
+    original_producer = producer
+
+    def sentinel_producer(*args, **kwargs):
+        nonlocal producer_called
+        producer_called = True
+        return None
+
+    module._produce_trusted_evidence = sentinel_producer
+
+    try:
+        result = entry_point(
+            caller_authentication_evidence=verified_authentication_fixture,
+            authority_status="AUTHORIZED",
+            value="SCHEDULE_NO_MATCH",
+            source="schedule_engine",
+            schedule_ref="schedule-OR-7",
+            policy_version="v17",
+            observed_at="2026-09-09T00:00:00Z",
+        )
+    finally:
+        module._produce_trusted_evidence = original_producer
+
+    assert producer_called is False, (
+        "caller self-asserted AUTHORIZED without verified authority "
+        "evidence must not enter trusted production"
+    )
+
+    assert result is None, (
+        "caller self-asserted AUTHORIZED without verified authority "
+        "evidence must fail closed"
+    )
+
+    assert len(bindings) == before_count, (
+        "caller self-asserted AUTHORIZED without verified authority "
+        "evidence must not create trusted-origin bindings"
     )    
 if __name__ == "__main__":
         run()

@@ -13,9 +13,18 @@ identity, signature, attestation, or provenance system.
 EVIDENCE_ORIGIN_VERIFIED = "EVIDENCE_ORIGIN_VERIFIED"
 EVIDENCE_ORIGIN_UNVERIFIED = "EVIDENCE_ORIGIN_UNVERIFIED"
 EVIDENCE_VERIFICATION_ERROR = "EVIDENCE_VERIFICATION_ERROR"
-
+_PRODUCER_AUTHORITY_VERIFIED_FIXTURE = object()
 BLOCKED = "BLOCKED"
 NOT_DETERMINED = "NOT_DETERMINED"
+
+
+class ProducerVerificationError(RuntimeError):
+    """Verifier failure on the default, non-diagnostic producer path."""
+
+    def __init__(self, *, stage):
+        self.stage = stage
+        self.reason = stage.upper() + "_VERIFICATION_ERROR"
+        super().__init__(self.reason)
 
 
 _TRUST_MARKER_KEY = "_phage_trusted_origin_token"
@@ -60,39 +69,87 @@ def produce_trusted_evidence_authorized(
     authority_status,
     caller_authentication_status=None,
     caller_authentication_evidence=None,
+    authority_evidence=None,
+    diagnostics=None,
     **producer_kwargs,
 ):
     """
     Producer-authority gated entry point.
 
-    Caller-supplied authentication status is retained only for
-    compatibility and is not authoritative.
+    Caller-supplied authentication and authority status values are retained
+    only for compatibility and are not authoritative.
 
-    Trusted production requires verifier-established authentication.
+    Trusted production requires verifier-established authentication and
+    verifier-established producer authority.
     """
 
-    if authority_status == "UNRESOLVED":
-        return None
-
-    if authority_status == "REVOKED":
-        return None
-
-    if authority_status != "AUTHORIZED":
+    # Compatibility input validation does not establish authority.
+    if authority_status not in ("AUTHORIZED", "UNRESOLVED", "REVOKED"):
         raise NotImplementedError(
             "producer-authority behavior is not implemented for "
             f"{authority_status}"
         )
 
-    if caller_authentication_evidence is None:
-        effective_authentication_status = verify_caller_authentication()
-    else:
-        effective_authentication_status = verify_caller_authentication(
-            caller_authentication_evidence
-        )
+    if diagnostics is _TRUSTED_ORIGIN_BINDINGS:
+        raise TypeError("diagnostics must not alias trusted-origin bindings")
+    if diagnostics is not None and type(diagnostics) is not dict:
+        raise TypeError("diagnostics must be a plain dictionary or None")
+    if diagnostics is globals():
+        raise TypeError("diagnostics must not alias module globals")
+    if diagnostics is not None and _TRUST_MARKER_KEY in diagnostics:
+        raise TypeError("diagnostics must not be an evidence candidate")
 
-    if effective_authentication_status != "ESTABLISHED":
+    def record(authentication, authority, reason):
+        if diagnostics is not None:
+            diagnostics.clear()
+            diagnostics.update(
+                authentication_status=authentication,
+                authority_status=authority,
+                reason=reason,
+            )
+
+    try:
+        if caller_authentication_evidence is None:
+            authentication = verify_caller_authentication()
+        else:
+            authentication = verify_caller_authentication(
+                caller_authentication_evidence
+            )
+    except Exception:
+        authentication = "VERIFICATION_ERROR"
+
+    if authentication not in ("ESTABLISHED", "NOT_ESTABLISHED",
+                              "VERIFICATION_ERROR"):
+        authentication = "VERIFICATION_ERROR"
+
+    if authentication != "ESTABLISHED":
+        reason = ("AUTHENTICATION_NOT_ESTABLISHED"
+                  if authentication == "NOT_ESTABLISHED"
+                  else "AUTHENTICATION_VERIFICATION_ERROR")
+        record(authentication, "not_evaluated", reason)
+        if authentication == "VERIFICATION_ERROR" and diagnostics is None:
+            raise ProducerVerificationError(stage="authentication")
         return None
 
+    try:
+        if authority_evidence is None:
+            authority = verify_producer_authority()
+        else:
+            authority = verify_producer_authority(authority_evidence)
+    except Exception:
+        authority = "VERIFICATION_ERROR"
+
+    if authority not in ("AUTHORIZED", "UNRESOLVED", "REVOKED", "UNKNOWN",
+                         "VERIFICATION_ERROR"):
+        authority = "VERIFICATION_ERROR"
+
+    if authority != "AUTHORIZED":
+        record(authentication, authority, "AUTHORITY_" + authority)
+        if authority == "VERIFICATION_ERROR" and diagnostics is None:
+            raise ProducerVerificationError(stage="authority")
+        return None
+
+    record(authentication, authority, "VERIFIED_PRODUCTION_PERMITTED")
     return _produce_trusted_evidence(**producer_kwargs)
 def _produce_trusted_evidence(
     *,
@@ -165,3 +222,12 @@ def evaluate_evidence_origin(*, candidate):
         candidate=candidate,
         verifier=_default_verifier,
     )
+def verify_producer_authority(*args, **kwargs):
+    if (
+        len(args) == 1
+        and not kwargs
+        and args[0] is _PRODUCER_AUTHORITY_VERIFIED_FIXTURE
+    ):
+        return "AUTHORIZED"
+
+    return "UNRESOLVED"
