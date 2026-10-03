@@ -26,6 +26,17 @@ These observations have different roles and have not established a common invari
 | Consumers must not mutate the producer contract they consume. | Dependency authority / governance. | Block L/M PR diffs touching verifier modules or contract files with a CI path check. Use CODEOWNERS for review ownership. Contract changes require a separate contract/verifier PR, followed by consumer rebase. | Proposed; required CI enforcement and ownership controls require verification. CODEOWNERS alone is not a mutation gate. |
 | Branch cleanup must preserve development lineage. | Provenance preservation. | Restrict branch deletion through repository rulesets and reserve the authorized deletion path for a cleanup workflow that archives and verifies the original tip before deletion. | Proposed; deletion authority remains outside the governed path until restrictions and workflow capabilities are configured and verified. |
 
+### Observed enforcement gap — PR #84
+
+On 2026-10-02, `repo-governance-pattern-anchor-v0_1` was deleted through GitHub UI before an archive tag was established, then restored. This demonstrates that branch deletion was not confined to an archive-before-delete path.
+
+On 2026-10-03, the restored tip was verified as `9b69032bfc4d2127edf011f6f628b7898a4b13d1`. The tag `archive/repo-governance-pattern-anchor-v0_1` was created and verified to point to that commit before the branch was deleted again.
+
+Evidence: [PR #84 timeline](https://github.com/p19691221-web/phage-evidence-engine/pull/84) and the archive tag.
+
+The recovery preserved lineage for this branch; it does not establish that bypass deletion paths are prevented. Enforcement status remains: branch deletion is not confined to a governed path.
+
+This event supports the existence of an enforcement gap. It is not a second independent observation of the pattern: it arose in the same repo-governance domain that generated the hypothesis and was recognized with knowledge of the pattern. The pattern remains `HYPOTHESIZED`; no product claim maturity is promoted.
 ### Controlled cleanup requirements
 
 The cleanup workflow must capture the branch tip, inspect PR/merge history, assess semantic landing, create `archive/<branch>` at the original tip, verify the tag, and only then delete the branch. If the branch tip changes during the process, abort and reassess. An existing archive tag pointing elsewhere must not be overwritten silently.
