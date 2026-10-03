@@ -73,6 +73,13 @@ def produce_trusted_evidence_authorized(
     verifier-established producer authority.
     """
 
+    # Compatibility input validation does not establish authority.
+    if authority_status not in ("AUTHORIZED", "UNRESOLVED", "REVOKED"):
+        raise NotImplementedError(
+            "producer-authority behavior is not implemented for "
+            f"{authority_status}"
+        )
+
     if authority_evidence is None:
         effective_authority_status = verify_producer_authority()
     else:
