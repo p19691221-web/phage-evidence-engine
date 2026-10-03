@@ -124,7 +124,125 @@ class ProducerVerifierContract(unittest.TestCase):
             self.assertEqual(m.evaluate_evidence_origin(candidate=candidate)
                              ["origin_status"], m.EVIDENCE_ORIGIN_VERIFIED)
         finally:
-            m._TRUSTED_ORIGIN_BINDINGS.pop(candidate[m._TRUST_MARKER_KEY], None)
+            if isinstance(candidate, dict):
+                m._TRUSTED_ORIGIN_BINDINGS.pop(
+                    candidate.get(m._TRUST_MARKER_KEY), None)
+
+    def test_default_path_verifier_errors_are_observable(self):
+        for stage in ("authentication", "authority"):
+            for failure in (RuntimeError("fault"), "VERIFICATION_ERROR",
+                            "UNEXPECTED"):
+                with self.subTest(stage=stage, failure=repr(failure)):
+                    before = len(m._TRUSTED_ORIGIN_BINDINGS)
+                    auth_result = "ESTABLISHED"
+                    authority_result = "AUTHORIZED"
+                    target = ({"side_effect": failure} if isinstance(failure, Exception)
+                              else {"return_value": failure})
+                    auth_args = (target if stage == "authentication"
+                                 else {"return_value": auth_result})
+                    authority_args = (target if stage == "authority"
+                                      else {"return_value": authority_result})
+                    with patch.object(m, "verify_caller_authentication",
+                                      **auth_args) as authenticate, \
+                         patch.object(m, "verify_producer_authority",
+                                      **authority_args) as authorize, \
+                         patch.object(m, "_produce_trusted_evidence") as producer:
+                        with self.assertRaises(m.ProducerVerificationError) as caught:
+                            self.invoke(None)
+                        self.assertEqual(caught.exception.stage, stage)
+                        self.assertEqual(caught.exception.reason,
+                                         stage.upper() + "_VERIFICATION_ERROR")
+                        authenticate.assert_called_once()
+                        if stage == "authentication":
+                            authorize.assert_not_called()
+                        else:
+                            authorize.assert_called_once()
+                        producer.assert_not_called()
+                    self.assertEqual(len(m._TRUSTED_ORIGIN_BINDINGS), before)
+
+    def test_default_path_ordinary_denial_remains_none(self):
+        with patch.object(m, "verify_caller_authentication",
+                          return_value="NOT_ESTABLISHED"), \
+             patch.object(m, "verify_producer_authority") as authority, \
+             patch.object(m, "_produce_trusted_evidence") as producer:
+            self.assertIsNone(self.invoke(None))
+            authority.assert_not_called()
+            producer.assert_not_called()
+
+    def test_supported_caller_status_does_not_override_verifier(self):
+        for status in ("AUTHORIZED", "REVOKED", "UNRESOLVED"):
+            with self.subTest(status=status):
+                sentinel = object()
+                diagnostics = {}
+                with patch.object(m, "_produce_trusted_evidence",
+                                  return_value=sentinel) as producer:
+                    result = m.produce_trusted_evidence_authorized(
+                        authority_status=status,
+                        caller_authentication_evidence=
+                            m._CALLER_AUTHENTICATION_VERIFIED_FIXTURE,
+                        authority_evidence=m._PRODUCER_AUTHORITY_VERIFIED_FIXTURE,
+                        diagnostics=diagnostics)
+                self.assertIs(result, sentinel)
+                producer.assert_called_once()
+                self.assertEqual(diagnostics["authority_status"], "AUTHORIZED")
+
+    def test_invalid_sink_rejected_before_verification(self):
+        class DictSubclass(dict):
+            pass
+        for sink in ([], 1, "sink", DictSubclass()):
+            with self.subTest(sink=repr(sink)), \
+                 patch.object(m, "verify_caller_authentication") as auth, \
+                 patch.object(m, "verify_producer_authority") as authority, \
+                 patch.object(m, "_produce_trusted_evidence") as producer:
+                with self.assertRaises(TypeError):
+                    self.invoke(sink)
+                auth.assert_not_called()
+                authority.assert_not_called()
+                producer.assert_not_called()
+
+    def test_binding_registry_rejected_as_sink_without_mutation(self):
+        original = dict(m._TRUSTED_ORIGIN_BINDINGS)
+        token = object()
+        m._TRUSTED_ORIGIN_BINDINGS[token] = ("existing binding",)
+        expected = dict(m._TRUSTED_ORIGIN_BINDINGS)
+        try:
+            with patch.object(m, "verify_caller_authentication") as auth, \
+                 patch.object(m, "verify_producer_authority") as authority, \
+                 patch.object(m, "_produce_trusted_evidence") as producer:
+                with self.assertRaises(TypeError):
+                    self.invoke(m._TRUSTED_ORIGIN_BINDINGS)
+                auth.assert_not_called()
+                authority.assert_not_called()
+                producer.assert_not_called()
+            self.assertEqual(m._TRUSTED_ORIGIN_BINDINGS, expected)
+        finally:
+            m._TRUSTED_ORIGIN_BINDINGS.clear()
+            m._TRUSTED_ORIGIN_BINDINGS.update(original)
+
+    def test_unsupported_input_does_not_write_diagnostics(self):
+        diagnostics = {"caller": "unchanged"}
+        with patch.object(m, "verify_caller_authentication") as auth, \
+             patch.object(m, "verify_producer_authority") as authority, \
+             patch.object(m, "_produce_trusted_evidence") as producer:
+            with self.assertRaises(NotImplementedError):
+                m.produce_trusted_evidence_authorized(
+                    authority_status="UNKNOWN_STATE", diagnostics=diagnostics)
+            self.assertEqual(diagnostics, {"caller": "unchanged"})
+            auth.assert_not_called()
+            authority.assert_not_called()
+            producer.assert_not_called()
+
+    def test_output_clears_extra_keys_and_permission_is_gate_only(self):
+        diagnostics = {"extra": "remove me", "authority_status": "REVOKED"}
+        with patch.object(m, "_produce_trusted_evidence",
+                          side_effect=RuntimeError("production failed")) as producer:
+            with self.assertRaisesRegex(RuntimeError, "production failed"):
+                self.invoke(diagnostics)
+            producer.assert_called_once()
+        self.assertEqual(diagnostics, {
+            "authentication_status": "ESTABLISHED",
+            "authority_status": "AUTHORIZED",
+            "reason": "VERIFIED_PRODUCTION_PERMITTED"})
 
 
 if __name__ == "__main__":

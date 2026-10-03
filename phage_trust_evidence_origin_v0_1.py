@@ -18,6 +18,15 @@ BLOCKED = "BLOCKED"
 NOT_DETERMINED = "NOT_DETERMINED"
 
 
+class ProducerVerificationError(RuntimeError):
+    """Verifier failure on the default, non-diagnostic producer path."""
+
+    def __init__(self, *, stage):
+        self.stage = stage
+        self.reason = stage.upper() + "_VERIFICATION_ERROR"
+        super().__init__(self.reason)
+
+
 _TRUST_MARKER_KEY = "_phage_trusted_origin_token"
 _TRUSTED_ORIGIN_BINDINGS = {}
 
@@ -81,8 +90,10 @@ def produce_trusted_evidence_authorized(
             f"{authority_status}"
         )
 
-    if diagnostics is not None and not isinstance(diagnostics, dict):
-        raise TypeError("diagnostics must be a dictionary or None")
+    if diagnostics is _TRUSTED_ORIGIN_BINDINGS:
+        raise TypeError("diagnostics must not alias trusted-origin bindings")
+    if diagnostics is not None and type(diagnostics) is not dict:
+        raise TypeError("diagnostics must be a plain dictionary or None")
 
     def record(authentication, authority, reason):
         if diagnostics is not None:
@@ -112,6 +123,8 @@ def produce_trusted_evidence_authorized(
                   if authentication == "NOT_ESTABLISHED"
                   else "AUTHENTICATION_VERIFICATION_ERROR")
         record(authentication, "not_evaluated", reason)
+        if authentication == "VERIFICATION_ERROR" and diagnostics is None:
+            raise ProducerVerificationError(stage="authentication")
         return None
 
     try:
@@ -128,6 +141,8 @@ def produce_trusted_evidence_authorized(
 
     if authority != "AUTHORIZED":
         record(authentication, authority, "AUTHORITY_" + authority)
+        if authority == "VERIFICATION_ERROR" and diagnostics is None:
+            raise ProducerVerificationError(stage="authority")
         return None
 
     record(authentication, authority, "VERIFIED_PRODUCTION_PERMITTED")

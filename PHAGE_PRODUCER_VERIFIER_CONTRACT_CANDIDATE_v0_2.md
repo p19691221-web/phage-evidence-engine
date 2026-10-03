@@ -1,7 +1,8 @@
 # Producer verifier contract candidate v0.2
 
-Status: CANDIDATE; not frozen, not merged. A separate local implementation
-patch is supplied for review; this is not a main-branch implementation claim.
+Status: CANDIDATE; not frozen. PR #85 contains this candidate and its
+implementation for review. Repository landing is determined by the PR
+merge record, not this document's status. Contract approval/freeze is separate.
 Prepared 2026-10-03 (Asia/Taipei).
 Baseline: main 9d503474b49cd61404b1d044d5d3ac76c7ccdead;
 implementation branch 7b05a9c4a2490d2a01e9d28c0d7417df7df197d8.
@@ -12,11 +13,16 @@ The diagnostic interface below is a new proposal, not a claim about #83.
 
 ## Compatibility and input validation
 
-Keep produce_trusted_evidence_authorized's candidate-or-None return interface.
+Keep candidate returns for permitted production and None for ordinary denial.
+Verifier failure on the non-diagnostic path raises ProducerVerificationError.
+This is an intentional exception-interface extension.
 Unsupported caller authority vocabulary raises NotImplementedError before
 verification; supported caller values never establish effective authority.
 The supported legacy vocabulary remains AUTHORIZED, UNRESOLVED, REVOKED.
 UNKNOWN_STATE is an unsupported input, distinct from verifier result UNKNOWN.
+All supported caller values are ignored for both permitting and denying
+production. Caller REVOKED or UNRESOLVED does not override an AUTHORIZED
+verifier result. Cancellation requires a separately specified interface.
 
 ## Proposed observable interface
 
@@ -25,10 +31,19 @@ If a dictionary is supplied, populate it with exactly these fields for the
 verification decision: authentication_status, authority_status, reason.
 It is output only: overwrite caller-provided values; never read them for
 authorization. Do not forward diagnostics to the producer or store it in
-trusted evidence. This preserves existing return semantics while exposing
-the states needed by tests and later consumers. Callers omitting it retain
-the existing candidate-or-None interface.
-Reject a non-dictionary diagnostic sink with TypeError before verification.
+trusted evidence. The dictionary contains gate decisions, not production
+completion results. Reject non-plain dictionaries (including subclasses),
+and the trusted-origin binding registry itself, with TypeError before any
+verification or diagnostic mutation.
+
+If diagnostics is omitted or None, verifier exceptions, reported
+VERIFICATION_ERROR, and unexpected verifier results raise the dedicated
+ProducerVerificationError. It exposes stage ("authentication" or "authority")
+and reason (AUTHENTICATION_VERIFICATION_ERROR or AUTHORITY_VERIFICATION_ERROR).
+Authentication errors still prohibit authority evaluation; all verifier
+errors prohibit production. Ordinary denials continue returning None.
+With a valid diagnostic sink, verifier errors return None and populate the
+distinct error fields. The original verifier exception is not propagated.
 Unsupported legacy input raises before writing diagnostics; no verification
 decision is produced for that invalid request.
 
@@ -59,15 +74,20 @@ is the current seam's representation of the governance UNVERIFIED outcome.
 The default authority verifier may still return only AUTHORIZED and
 UNRESOLVED for its existing fixtures. Injecting other results tests the
 gate's contract; it does not establish real revocation or policy support.
-Producer exceptions are outside verifier-error classification.
-Every denied/error path must preserve the trusted-origin binding count.
+Producer exceptions are outside verifier-error classification and propagate.
+VERIFIED_PRODUCTION_PERMITTED records the gate decision made before invoking
+the producer; it does not claim that production completed successfully.
+Every gate denial/verifier-error path must preserve trusted-origin bindings.
+An invalid diagnostic sink is rejected without changing the registry.
 
 ## Merge and freeze boundaries
 
-PR A test migration and the separate compatibility repair remain separate
-changes. This candidate and its RED tests form PR B. Implement its behavior
-in a separate PR C. Do not describe this contract as frozen until the
-agreed interface is implemented and its regressions pass.
+PR #85 includes the three pre-existing branch commits plus separate commits
+for test migration (e1abb30), compatibility repair (5bd45cb), candidate/RED
+tests (71c187a), and implementation (ac96110). These are separate commits
+within one PR, not separate PR A/B/C submissions. Review corrections follow
+as additional commits. Do not describe the contract as frozen until reviewed,
+explicitly approved and recorded through the contract change process.
 The candidate does not change G1-G5, evidence origin evaluation, G6, L/M,
-or claim maturity. Required CI integration for the new test file is part
-of PR B; a local RED record is not evidence that CI already runs it.
+or claim maturity. The PR changes the existing CI workflow to run the new
+test file. CI results are established by run records, not this document.
