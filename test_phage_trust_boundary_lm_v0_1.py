@@ -213,11 +213,22 @@ class Boundary:
             second = self.issued()
         self.assertEqual(len(sinks), 2)
         self.assertIsNot(sinks[0], sinks[1])
-        for artifact, candidate in zip((first, second), issued_candidates):
+        self.assertEqual(len(issued_candidates), 2)
+        matches = getattr(lm, "_issuance_matches_evidence_for_test")
+        for index, artifact in enumerate((first, second)):
+            candidate = issued_candidates[index]
+            other_candidate = issued_candidates[1 - index]
             trace = getattr(lm, "_issuance_provenance_for_test")(artifact)
-            self.assertIs(trace["evidence_origin_token"],
-                          candidate[producer._TRUST_MARKER_KEY])
-            self.assertEqual(trace["artifact_kind"], self.kind)
+            self.assertEqual(trace, {"artifact_kind": self.kind})
+            self.assertIs(matches(artifact, candidate), True)
+            self.assertIs(matches(artifact, other_candidate), False)
+            # Identical evidence fields cannot substitute for origin identity.
+            different_origin = dict(candidate)
+            different_origin[producer._TRUST_MARKER_KEY] = object()
+            self.assertIs(matches(artifact, different_origin), False)
+            missing_origin = dict(candidate)
+            missing_origin.pop(producer._TRUST_MARKER_KEY)
+            self.assertIs(matches(artifact, missing_origin), False)
 
     def test_authentication_hard_stop_at_issuance(self):
         req = request()

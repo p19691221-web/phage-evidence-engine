@@ -19,9 +19,15 @@ Store the issuing evidence's origin token in the artifact's private provenance
 record alongside its kind and content snapshot. This links fixture construction
 to the actual successful evidence-producer event. It does not establish payload
 authorization, issuer legitimacy, or decision validity beyond origin.
-The regression-only _issuance_provenance_for_test(artifact) returns
-evidence_origin_token and artifact_kind for trace assertions; returned data
-is not an authorization input.
+The regression-only _issuance_provenance_for_test(artifact) returns only
+artifact_kind for trace assertions; it must not expose the evidence origin token
+or evidence candidate. The regression-only
+_issuance_matches_evidence_for_test(artifact, candidate) returns exact True only
+when candidate carries the identical evidence origin token recorded privately
+for that artifact, and exact False for a different or missing token. This is an
+origin-event identity comparison, not a field-equality check or an authorization
+resolver. Neither hook returns the token or evidence candidate; trace results
+are not authorization inputs.
 
 ## Module and issuance
 Module: phage_trust_boundary_lm_v0_1.
