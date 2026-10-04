@@ -12,5 +12,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Run L-M regression (RED until implementation)
+      - name: Run L-M regression
         run: python test_phage_trust_boundary_lm_v0_1.py
