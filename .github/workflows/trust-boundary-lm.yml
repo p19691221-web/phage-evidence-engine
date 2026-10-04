@@ -1,0 +1,16 @@
+name: L-M trust boundary regression
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  lm-origin-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run L-M regression (RED until implementation)
+        run: python test_phage_trust_boundary_lm_v0_1.py
