@@ -1,0 +1,578 @@
+Python 3.14.2
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+======================================================================
+ERROR: test_authentication_hard_stop_at_issuance (__main__.DecisionTests.test_authentication_hard_stop_at_issuance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 237, in test_authentication_hard_stop_at_issuance
+    result = self.issue(payload=self.payload, producer_request=req)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_authority_denials_preserved_at_issuance (__main__.DecisionTests.test_authority_denials_preserved_at_issuance) (status='UNRESOLVED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 251, in test_authority_denials_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_authority_denials_preserved_at_issuance (__main__.DecisionTests.test_authority_denials_preserved_at_issuance) (status='REVOKED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 251, in test_authority_denials_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_authority_denials_preserved_at_issuance (__main__.DecisionTests.test_authority_denials_preserved_at_issuance) (status='UNKNOWN')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 251, in test_authority_denials_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_callback_exception_propagates (__main__.DecisionTests.test_callback_exception_propagates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 162, in test_callback_exception_propagates
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.DecisionTests.test_caller_created_object_rejected) (candidate='NoneType')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 16, in consume_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.DecisionTests.test_caller_created_object_rejected) (candidate='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 16, in consume_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.DecisionTests.test_caller_created_object_rejected) (candidate='object')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 16, in consume_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.DecisionTests.test_caller_created_object_rejected) (candidate='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 16, in consume_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_diagnostics_rejected_before_gate (__main__.DecisionTests.test_caller_diagnostics_rejected_before_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 197, in test_caller_diagnostics_rejected_before_gate
+    self.issue(payload=self.payload, producer_request=req)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_fault_injection_is_distinct (__main__.DecisionTests.test_fault_injection_is_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 93, in test_fault_injection_is_distinct
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_issuance_evidence_trace_and_dedicated_diagnostics (__main__.DecisionTests.test_issuance_evidence_trace_and_dedicated_diagnostics)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 212, in test_issuance_evidence_trace_and_dedicated_diagnostics
+    first = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_nested_snapshot_after_consumer_mutation (__main__.DecisionTests.test_nested_snapshot_after_consumer_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 142, in test_nested_snapshot_after_consumer_mutation
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_other_artifact_kind_rejected (__main__.DecisionTests.test_other_artifact_kind_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 83, in test_other_artifact_kind_rejected
+    artifact = getattr(lm, "issue_" + other)(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payload=self.payload, producer_request=request())["artifact"]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.DecisionTests.test_payload_requires_plain_dict_before_gate) (payload='NoneType')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.DecisionTests.test_payload_requires_plain_dict_before_gate) (payload='list')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.DecisionTests.test_payload_requires_plain_dict_before_gate) (payload='str')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.DecisionTests.test_payload_requires_plain_dict_before_gate) (payload='DictSubclass')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_snapshot_isolated (__main__.DecisionTests.test_payload_snapshot_isolated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 126, in test_payload_snapshot_isolated
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_positive_origin_at_use (__main__.DecisionTests.test_positive_origin_at_use)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 53, in test_positive_origin_at_use
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_producer_verifier_errors_preserved_at_issuance (__main__.DecisionTests.test_producer_verifier_errors_preserved_at_issuance) (stage='authentication')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 262, in test_producer_verifier_errors_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_producer_verifier_errors_preserved_at_issuance (__main__.DecisionTests.test_producer_verifier_errors_preserved_at_issuance) (stage='authority')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 262, in test_producer_verifier_errors_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_reverify_every_use (__main__.DecisionTests.test_reverify_every_use)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 114, in test_reverify_every_use
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_tampered_content_rejected (__main__.DecisionTests.test_tampered_content_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 171, in test_tampered_content_rejected
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_verified_evidence_is_not_artifact (__main__.DecisionTests.test_verified_evidence_is_not_artifact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 156, in test_verified_evidence_is_not_artifact
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 16, in consume_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_verifier_must_return_exact_boolean (__main__.DecisionTests.test_verifier_must_return_exact_boolean)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 103, in test_verifier_must_return_exact_boolean
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_authentication_hard_stop_at_issuance (__main__.ReceiptTests.test_authentication_hard_stop_at_issuance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 237, in test_authentication_hard_stop_at_issuance
+    result = self.issue(payload=self.payload, producer_request=req)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_authority_denials_preserved_at_issuance (__main__.ReceiptTests.test_authority_denials_preserved_at_issuance) (status='UNRESOLVED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 251, in test_authority_denials_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_authority_denials_preserved_at_issuance (__main__.ReceiptTests.test_authority_denials_preserved_at_issuance) (status='REVOKED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 251, in test_authority_denials_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_authority_denials_preserved_at_issuance (__main__.ReceiptTests.test_authority_denials_preserved_at_issuance) (status='UNKNOWN')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 251, in test_authority_denials_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_callback_exception_propagates (__main__.ReceiptTests.test_callback_exception_propagates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 162, in test_callback_exception_propagates
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.ReceiptTests.test_caller_created_object_rejected) (candidate='NoneType')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 19, in consume_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.ReceiptTests.test_caller_created_object_rejected) (candidate='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 19, in consume_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.ReceiptTests.test_caller_created_object_rejected) (candidate='object')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 19, in consume_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_created_object_rejected (__main__.ReceiptTests.test_caller_created_object_rejected) (candidate='dict')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 76, in test_caller_created_object_rejected
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 19, in consume_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_caller_diagnostics_rejected_before_gate (__main__.ReceiptTests.test_caller_diagnostics_rejected_before_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 197, in test_caller_diagnostics_rejected_before_gate
+    self.issue(payload=self.payload, producer_request=req)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_fault_injection_is_distinct (__main__.ReceiptTests.test_fault_injection_is_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 93, in test_fault_injection_is_distinct
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_issuance_evidence_trace_and_dedicated_diagnostics (__main__.ReceiptTests.test_issuance_evidence_trace_and_dedicated_diagnostics)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 212, in test_issuance_evidence_trace_and_dedicated_diagnostics
+    first = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_nested_snapshot_after_consumer_mutation (__main__.ReceiptTests.test_nested_snapshot_after_consumer_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 142, in test_nested_snapshot_after_consumer_mutation
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_other_artifact_kind_rejected (__main__.ReceiptTests.test_other_artifact_kind_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 83, in test_other_artifact_kind_rejected
+    artifact = getattr(lm, "issue_" + other)(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        payload=self.payload, producer_request=request())["artifact"]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 4, in issue_decision
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.ReceiptTests.test_payload_requires_plain_dict_before_gate) (payload='NoneType')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.ReceiptTests.test_payload_requires_plain_dict_before_gate) (payload='list')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.ReceiptTests.test_payload_requires_plain_dict_before_gate) (payload='str')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_requires_plain_dict_before_gate (__main__.ReceiptTests.test_payload_requires_plain_dict_before_gate) (payload='DictSubclass')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 187, in test_payload_requires_plain_dict_before_gate
+    self.issue(payload=payload, producer_request=request())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_payload_snapshot_isolated (__main__.ReceiptTests.test_payload_snapshot_isolated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 126, in test_payload_snapshot_isolated
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_positive_origin_at_use (__main__.ReceiptTests.test_positive_origin_at_use)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 53, in test_positive_origin_at_use
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_producer_verifier_errors_preserved_at_issuance (__main__.ReceiptTests.test_producer_verifier_errors_preserved_at_issuance) (stage='authentication')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 262, in test_producer_verifier_errors_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_producer_verifier_errors_preserved_at_issuance (__main__.ReceiptTests.test_producer_verifier_errors_preserved_at_issuance) (stage='authority')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 262, in test_producer_verifier_errors_preserved_at_issuance
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_reverify_every_use (__main__.ReceiptTests.test_reverify_every_use)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 114, in test_reverify_every_use
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_tampered_content_rejected (__main__.ReceiptTests.test_tampered_content_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 171, in test_tampered_content_rejected
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_verified_evidence_is_not_artifact (__main__.ReceiptTests.test_verified_evidence_is_not_artifact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 156, in test_verified_evidence_is_not_artifact
+    result = self.consume(candidate=candidate, on_verified=use)
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 19, in consume_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+======================================================================
+ERROR: test_verifier_must_return_exact_boolean (__main__.ReceiptTests.test_verifier_must_return_exact_boolean)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 103, in test_verifier_must_return_exact_boolean
+    artifact = self.issued()
+  File "/workspaces/phage-evidence-engine/test_phage_trust_boundary_lm_v0_1.py", line 46, in issued
+    result = self.issue(payload=self.payload, producer_request=request())
+  File "/workspaces/phage-evidence-engine/phage_trust_boundary_lm_v0_1.py", line 7, in issue_audit_receipt
+    raise NotImplementedError("L/M behavior not implemented")
+NotImplementedError: L/M behavior not implemented
+
+----------------------------------------------------------------------
+Ran 34 tests in 0.026s
+
+FAILED (errors=52)
