@@ -120,6 +120,9 @@ def resolve_policy_change(*, request, authenticate, snapshot_provider, verify_gr
         supplied = snapshot_provider()
         if supplied is None:
             return _result('AUTHORITY_UNRESOLVED')
+        error = _preflight(supplied)
+        if error:
+            return _result(error)
         state = deepcopy(supplied)
         error = _preflight(state)
         if error:
