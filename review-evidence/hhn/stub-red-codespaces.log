@@ -1,0 +1,1280 @@
+test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) ...
+  test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) (outcome='NOT_ESTABLISHED') ... FAIL
+  test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) (outcome='VERIFICATION_ERROR') ... FAIL
+  test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) (outcome=True) ... FAIL
+test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) ... FAIL
+test_A02_missing_state_and_exact_root (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A02_missing_state_and_exact_root) ... ok
+test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) ...
+  test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='subject') ... FAIL
+  test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='issuer') ... FAIL
+  test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='delegation') ... FAIL
+  test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='targets') ... FAIL
+  test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='start') ... FAIL
+  test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='end') ... FAIL
+test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) ...
+  test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) (at=10, revoked=True) ... FAIL
+  test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) (at=-1, revoked=False) ... FAIL
+  test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) (at=100, revoked=False) ... FAIL
+test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) ... FAIL
+test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) ...
+  test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) (field='policy_id') ... FAIL
+  test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) (field='expected_revision') ... FAIL
+  test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) (field='expected_digest') ... FAIL
+test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) ... FAIL
+test_E01_provider_and_verifier_faults (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_E01_provider_and_verifier_faults) ... FAIL
+test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) ...
+  test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='authenticated') ... FAIL
+  test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='trusted_root') ... FAIL
+  test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='new_grant') ... FAIL
+  test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='self_authorized') ... FAIL
+test_H03_protected_target (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H03_protected_target) ... FAIL
+test_HP01_HP02_positive_binding_and_order (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_HP01_HP02_positive_binding_and_order) ... FAIL
+test_N01_N02_cycles (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N01_N02_cycles) ...
+  test_N01_N02_cycles (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N01_N02_cycles) (count=1, prefix=False) ... FAIL
+  test_N01_N02_cycles (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N01_N02_cycles) (count=2, prefix=False) ... FAIL
+  test_N01_N02_cycles (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N01_N02_cycles) (count=2, prefix=True) ... FAIL
+test_N03_N04_budget_boundary (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N03_N04_budget_boundary) ... FAIL
+test_R01_reacquires_state (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_R01_reacquires_state) ... FAIL
+test_V01_duplicate_and_malformed (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_V01_duplicate_and_malformed) ... FAIL
+test_matching_scopes_without_requested_authority (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_matching_scopes_without_requested_authority) ...
+  test_matching_scopes_without_requested_authority (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_matching_scopes_without_requested_authority) (field='operations') ... FAIL
+  test_matching_scopes_without_requested_authority (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_matching_scopes_without_requested_authority) (field='targets') ... FAIL
+test_matching_scopes_without_requested_authority (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_matching_scopes_without_requested_authority) ... FAIL
+test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) ...
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('at',), action='set', value=True) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('policy', 'mutable_by_policy_change'), action='set', value=1) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('roots', 'root'), action='set', value=[]) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('roots', 'root', 'extra'), action='set', value='x') ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('policy', 'extra'), action='set', value='x') ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('extra',), action='set', value='x') ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'extra'), action='set', value='x') ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'not_before'), action='set', value=False) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'operations'), action='set', value=['POLICY_CHANGE', 'extra']) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'operations'), action='set', value=['POLICY_CHANGE', 'POLICY_CHANGE']) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'targets'), action='set', value=['*']) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'targets'), action='set', value=['policy', 'policy']) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'targets'), action='set', value=['']) ... FAIL
+  test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants',), action='set', value={}) ... FAIL
+test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) ... FAIL
+test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) ...
+  test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) (field='expected_digest') ... FAIL
+  test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) (field='requester_id') ... FAIL
+  test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) (field='proposed_digest') ... FAIL
+test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) ... FAIL
+test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) ...
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='revoked', value=True) ... FAIL
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='revoked', value=None) ... FAIL
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='not_before', value=11) ... FAIL
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='expires_at', value=10) ... FAIL
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='revoked', value=True) ... FAIL
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='revoked', value=None) ... FAIL
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='not_before', value=11) ... FAIL
+  test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='expires_at', value=10) ... FAIL
+test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) ... FAIL
+test_seam_argument_isolation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_seam_argument_isolation) ... FAIL
+
+======================================================================
+FAIL: test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) (outcome='NOT_ESTABLISHED')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 117, in test_A01_authentication_hard_stop
+    self.calls = []; self.denied(reason, authentication=outcome)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[44 chars]'AUTHORITY_UNRESOLVED', 'effect_path': 'BLOCKE[44 chars]None} != {'aut[44 chars]'AUTHENTICATION_NOT_ESTABLISHED', 'effect_path[54 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHENTICATION_NOT_ESTABLISHED',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) (outcome='VERIFICATION_ERROR')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 117, in test_A01_authentication_hard_stop
+    self.calls = []; self.denied(reason, authentication=outcome)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'VERIFICATION_ERROR', 'reason': 'AUTHORITY[88 chars]None}
+- {'authorization_status': 'UNVERIFIED',
+?                           --       ^
+
++ {'authorization_status': 'VERIFICATION_ERROR',
+?                                 +++++++ ^^^^
+
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_VERIFICATION_ERROR',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop) (outcome=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 117, in test_A01_authentication_hard_stop
+    self.calls = []; self.denied(reason, authentication=outcome)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'VERIFICATION_ERROR', 'reason': 'AUTHORITY[88 chars]None}
+- {'authorization_status': 'UNVERIFIED',
+?                           --       ^
+
++ {'authorization_status': 'VERIFICATION_ERROR',
+?                                 +++++++ ^^^^
+
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_VERIFICATION_ERROR',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A01_authentication_hard_stop (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A01_authentication_hard_stop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 133, in test_A01_authentication_hard_stop
+    self.assertEqual(result, dict(authorization_status='VERIFICATION_ERROR',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='AUTHORITY_VERIFICATION_ERROR', effect_path='BLOCKED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=None, snapshot_id=None))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'VERIFICATION_ERROR', 'reason': 'AUTHORITY[88 chars]None}
+- {'authorization_status': 'UNVERIFIED',
+?                           --       ^
+
++ {'authorization_status': 'VERIFICATION_ERROR',
+?                                 +++++++ ^^^^
+
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_VERIFICATION_ERROR',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='subject')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 158, in test_A03_delegation_attenuation
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='issuer')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 158, in test_A03_delegation_attenuation
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='delegation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 158, in test_A03_delegation_attenuation
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='targets')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 158, in test_A03_delegation_attenuation
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='start')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 158, in test_A03_delegation_attenuation
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A03_delegation_attenuation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A03_delegation_attenuation) (case='end')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 158, in test_A03_delegation_attenuation
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) (at=10, revoked=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 167, in test_A04_revocation_and_time
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_REVOKED', 'effect_path': 'BLOCKED', 'requ[35 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
+?                       --  ^ ^^
+
++  'reason': 'AUTHORITY_REVOKED',
+?                         ^ ^
+
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) (at=-1, revoked=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 167, in test_A04_revocation_and_time
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_NOT_CURRENT', 'effect_path': 'BLOCKED', '[39 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
+?                        ^  ^^^^^^
+
++  'reason': 'AUTHORITY_NOT_CURRENT',
+?                       +++++ ^  ^^
+
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time) (at=100, revoked=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 167, in test_A04_revocation_and_time
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_NOT_CURRENT', 'effect_path': 'BLOCKED', '[39 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
+?                        ^  ^^^^^^
+
++  'reason': 'AUTHORITY_NOT_CURRENT',
+?                       +++++ ^  ^^
+
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A04_revocation_and_time (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A04_revocation_and_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 169, in test_A04_revocation_and_time
+    self.assertEqual(self.resolve()['authorization_status'], 'AUTHORIZED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNVERIFIED' != 'AUTHORIZED'
+- UNVERIFIED
++ AUTHORIZED
+
+
+======================================================================
+FAIL: test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) (field='policy_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 209, in test_A05_policy_and_request_binding
+    self.denied('POLICY_STATE_MISMATCH')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'POLICY_STATE_MISMATCH', 'effect_path': 'B[49 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'POLICY_STATE_MISMATCH',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) (field='expected_revision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 209, in test_A05_policy_and_request_binding
+    self.denied('POLICY_STATE_MISMATCH')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'POLICY_STATE_MISMATCH', 'effect_path': 'B[49 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'POLICY_STATE_MISMATCH',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding) (field='expected_digest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 209, in test_A05_policy_and_request_binding
+    self.denied('POLICY_STATE_MISMATCH')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'POLICY_STATE_MISMATCH', 'effect_path': 'B[49 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'POLICY_STATE_MISMATCH',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_A05_policy_and_request_binding (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_A05_policy_and_request_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 213, in test_A05_policy_and_request_binding
+    self.assertNotEqual(previous['request_binding'], current['request_binding'])
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None == None
+
+======================================================================
+FAIL: test_E01_provider_and_verifier_faults (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_E01_provider_and_verifier_faults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 242, in test_E01_provider_and_verifier_faults
+    self.denied('AUTHORITY_VERIFICATION_ERROR', provider=fault)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'VERIFICATION_ERROR', 'reason': 'AUTHORITY[88 chars]None}
+- {'authorization_status': 'UNVERIFIED',
+?                           --       ^
+
++ {'authorization_status': 'VERIFICATION_ERROR',
+?                                 +++++++ ^^^^
+
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_VERIFICATION_ERROR',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='authenticated')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 101, in test_H01_H02_caller_claims
+    self.denied('INVALID_AUTHORITY_INPUT')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='trusted_root')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 101, in test_H01_H02_caller_claims
+    self.denied('INVALID_AUTHORITY_INPUT')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='new_grant')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 101, in test_H01_H02_caller_claims
+    self.denied('INVALID_AUTHORITY_INPUT')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_H01_H02_caller_claims (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H01_H02_caller_claims) (extra='self_authorized')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 101, in test_H01_H02_caller_claims
+    self.denied('INVALID_AUTHORITY_INPUT')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_H03_protected_target (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_H03_protected_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 109, in test_H03_protected_target
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_HP01_HP02_positive_binding_and_order (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_HP01_HP02_positive_binding_and_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 90, in test_HP01_HP02_positive_binding_and_order
+    self.assertEqual(result, dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_N01_N02_cycles (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N01_N02_cycles) (count=1, prefix=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 225, in test_N01_N02_cycles
+    self.assertEqual(observed['result'], dict(authorization_status='UNVERIFIED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='AUTHORITY_CYCLE_DETECTED', effect_path='BLOCKED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=None, snapshot_id=None))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_CYCLE_DETECTED', 'effect_path': 'BLOCKED'[42 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
+?                       ^^^ ^^^^
+
++  'reason': 'AUTHORITY_CYCLE_DETECTED',
+?                       ^^^^ ^^^^^^^
+
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_N01_N02_cycles (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N01_N02_cycles) (count=2, prefix=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 225, in test_N01_N02_cycles
+    self.assertEqual(observed['result'], dict(authorization_status='UNVERIFIED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='AUTHORITY_CYCLE_DETECTED', effect_path='BLOCKED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=None, snapshot_id=None))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_CYCLE_DETECTED', 'effect_path': 'BLOCKED'[42 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
+?                       ^^^ ^^^^
+
++  'reason': 'AUTHORITY_CYCLE_DETECTED',
+?                       ^^^^ ^^^^^^^
+
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_N01_N02_cycles (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N01_N02_cycles) (count=2, prefix=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 225, in test_N01_N02_cycles
+    self.assertEqual(observed['result'], dict(authorization_status='UNVERIFIED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='AUTHORITY_CYCLE_DETECTED', effect_path='BLOCKED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=None, snapshot_id=None))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_CYCLE_DETECTED', 'effect_path': 'BLOCKED'[42 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
+?                       ^^^ ^^^^
+
++  'reason': 'AUTHORITY_CYCLE_DETECTED',
+?                       ^^^^ ^^^^^^^
+
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_N03_N04_budget_boundary (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_N03_N04_budget_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 235, in test_N03_N04_budget_boundary
+    self.denied('AUTHORITY_LIMIT_EXCEEDED')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_LIMIT_EXCEEDED', 'effect_path': 'BLOCKED'[42 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
+?                       ^^^ ^^^^
+
++  'reason': 'AUTHORITY_LIMIT_EXCEEDED',
+?                       ^^^^^^ ^^^^^
+
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_R01_reacquires_state (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_R01_reacquires_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 251, in test_R01_reacquires_state
+    self.assertEqual(self.resolve()['authorization_status'], 'AUTHORIZED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNVERIFIED' != 'AUTHORIZED'
+- UNVERIFIED
++ AUTHORIZED
+
+
+======================================================================
+FAIL: test_V01_duplicate_and_malformed (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_V01_duplicate_and_malformed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 260, in test_V01_duplicate_and_malformed
+    self.denied('INVALID_AUTHORITY_INPUT')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_matching_scopes_without_requested_authority (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_matching_scopes_without_requested_authority) (field='operations')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 201, in test_matching_scopes_without_requested_authority
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_matching_scopes_without_requested_authority (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_matching_scopes_without_requested_authority) (field='targets')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 201, in test_matching_scopes_without_requested_authority
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_matching_scopes_without_requested_authority (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_matching_scopes_without_requested_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 203, in test_matching_scopes_without_requested_authority
+    self.assertEqual(self.resolve()['authorization_status'], 'AUTHORIZED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNVERIFIED' != 'AUTHORIZED'
+- UNVERIFIED
++ AUTHORIZED
+
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('at',), action='set', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('policy', 'mutable_by_policy_change'), action='set', value=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('roots', 'root'), action='set', value=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('roots', 'root', 'extra'), action='set', value='x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('policy', 'extra'), action='set', value='x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('extra',), action='set', value='x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'extra'), action='set', value='x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'not_before'), action='set', value=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'operations'), action='set', value=['POLICY_CHANGE', 'extra'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'operations'), action='set', value=['POLICY_CHANGE', 'POLICY_CHANGE'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'targets'), action='set', value=['*'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'targets'), action='set', value=['policy', 'policy'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants', 0, 'targets'), action='set', value=[''])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table) (path=('grants',), action='set', value={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 294, in test_missing_malformed_and_extra_state_table
+    self.denied(reason)
+    ~~~~~~~~~~~^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_missing_malformed_and_extra_state_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_missing_malformed_and_extra_state_table)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 299, in test_missing_malformed_and_extra_state_table
+    self.denied('INVALID_AUTHORITY_INPUT')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) (field='expected_digest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 311, in test_request_and_api_validation_table
+    self.denied('INVALID_AUTHORITY_INPUT'); self.assertEqual(self.calls, [])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) (field='requester_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 311, in test_request_and_api_validation_table
+    self.denied('INVALID_AUTHORITY_INPUT'); self.assertEqual(self.calls, [])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table) (field='proposed_digest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 311, in test_request_and_api_validation_table
+    self.denied('INVALID_AUTHORITY_INPUT'); self.assertEqual(self.calls, [])
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[40 chars]n': 'AUTHORITY_UNRESOLVED', 'effect_path': 'BL[48 chars]None} != {'aut[40 chars]n': 'INVALID_AUTHORITY_INPUT', 'effect_path': [51 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'INVALID_AUTHORITY_INPUT',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_request_and_api_validation_table (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_request_and_api_validation_table)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 313, in test_request_and_api_validation_table
+    self.denied('AUTHORITY_SCOPE_VIOLATION')
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 85, in denied
+    self.assertEqual(result, dict(authorization_status=status, reason=reason,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     effect_path='BLOCKED', request_binding=None, snapshot_id=None))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[50 chars]RITY_UNRESOLVED', 'effect_path': 'BLOCKED', 'r[38 chars]None} != {'aut[50 chars]RITY_SCOPE_VIOLATION', 'effect_path': 'BLOCKED[43 chars]None}
+  {'authorization_status': 'UNVERIFIED',
+   'effect_path': 'BLOCKED',
+-  'reason': 'AUTHORITY_UNRESOLVED',
++  'reason': 'AUTHORITY_SCOPE_VIOLATION',
+   'request_binding': None,
+   'snapshot_id': None}
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='revoked', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='revoked', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='not_before', value=11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='root', field='expires_at', value=10)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='revoked', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='revoked', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='not_before', value=11)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity) (location='middle', field='expires_at', value=10)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 183, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve(), dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_root_and_intermediate_local_validity (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_root_and_intermediate_local_validity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 194, in test_root_and_intermediate_local_validity
+    self.assertEqual(self.resolve()['authorization_status'], 'AUTHORIZED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNVERIFIED' != 'AUTHORIZED'
+- UNVERIFIED
++ AUTHORIZED
+
+
+======================================================================
+FAIL: test_seam_argument_isolation (test_phage_authority_lineage_hhn_v0_1.HHNTests.test_seam_argument_isolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspaces/phage-evidence-engine/test_phage_authority_lineage_hhn_v0_1.py", line 333, in test_seam_argument_isolation
+    self.assertEqual(result, dict(authorization_status='AUTHORIZED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        reason='POLICY_CHANGE_AUTHORIZED', effect_path='NOT_DETERMINED',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        request_binding=tuple(self.request[k] for k in FIELDS), snapshot_id='s1'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'aut[16 chars]s': 'UNVERIFIED', 'reason': 'AUTHORITY_UNRESOL[72 chars]None} != {'aut[16 chars]s': 'AUTHORIZED', 'reason': 'POLICY_CHANGE_AUT[149 chars]'s1'}
+Diff is 739 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.128s
+
+FAILED (failures=63)

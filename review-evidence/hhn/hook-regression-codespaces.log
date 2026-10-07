@@ -1,0 +1,17 @@
+PASS request key
+PASS request value
+PASS snapshot key
+PASS policy key
+PASS grant key
+PASS anchor key
+PASS root identifier
+PASS snapshot value
+PASS scope element
+PASS scope list
+PASS bool integer
+PASS tuple scope remains malformed
+PASS deep scope
+PASS cycle scope
+PASS shared expansion
+PASS request detached before provider
+16 checks; 0 mismatches; hook counter = 0
