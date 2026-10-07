@@ -3,7 +3,6 @@
 Trusted seams model authentication, coherent state and record acceptance.
 AUTHORIZED is an inspection result, never an operational application permit.
 """
-from copy import deepcopy
 
 _FIELDS = ('requester_id', 'policy_id', 'expected_revision', 'expected_digest',
            'proposed_revision', 'proposed_digest', 'operation', 'leaf_grant_id')
@@ -39,6 +38,10 @@ def _preflight(state):
     def shape(record, fields, predicates):
         nonlocal malformed, missing
         if type(record) is not dict:
+            malformed = True
+            return False
+        # Check keys before hashing, equality, or lookup can dispatch hooks.
+        if not all(type(key) is str for key in dict.keys(record)):
             malformed = True
             return False
         malformed |= bool(set(record) - set(fields))
@@ -97,12 +100,31 @@ def _preflight(state):
     return None
 
 
+def _copy_grant(record):
+    """Rebuild only preflight-validated, finite schema slots; no copy hooks."""
+    out = {key: record[key] for key in _GRANT}
+    out['operations'] = list(record['operations'])
+    out['targets'] = list(record['targets'])
+    return out
+
+
+def _copy_snapshot(state):
+    # The frozen schema has no recursive definitions. Its only variable
+    # containers hold grants, scalar scopes, or scalar root anchors.
+    return dict(snapshot_id=state['snapshot_id'], policy=dict(state['policy']),
+                grants=[_copy_grant(record) for record in state['grants']],
+                roots={key: dict(anchor) for key, anchor in state['roots'].items()},
+                at=state['at'], max_grants=state['max_grants'])
+
+
 def resolve_policy_change(*, request, authenticate, snapshot_provider, verify_grant):
     """Resolve once against private state; never call an application effect."""
     if type(request) is not dict or not all(callable(seam) for seam in
                                            (authenticate, snapshot_provider, verify_grant)):
         raise TypeError('plain request dict and callable seams required')
-    if set(request) != set(_FIELDS) or not all(_string(request[key]) for key in _FIELDS):
+    if (not all(type(key) is str for key in dict.keys(request)) or
+            set(request) != set(_FIELDS) or
+            not all(_string(request[key]) for key in _FIELDS)):
         return _result('INVALID_AUTHORITY_INPUT')
     # Freeze request before external seams can change caller-owned references.
     bound = dict(request)
@@ -123,7 +145,7 @@ def resolve_policy_change(*, request, authenticate, snapshot_provider, verify_gr
         error = _preflight(supplied)
         if error:
             return _result(error)
-        state = deepcopy(supplied)
+        state = _copy_snapshot(supplied)
         error = _preflight(state)
         if error:
             return _result(error)
@@ -154,7 +176,7 @@ def _resolve(request, state, verify_grant):
         if record is None:
             return _result('AUTHORITY_UNRESOLVED')
         # A verifier receives another copy; mutations cannot rewrite resolution state.
-        verification = verify_grant(deepcopy(record), state['at'])
+        verification = verify_grant(_copy_grant(record), state['at'])
         if type(verification) is not str:
             return _result('AUTHORITY_VERIFICATION_ERROR')
         if verification == 'UNVERIFIED':
