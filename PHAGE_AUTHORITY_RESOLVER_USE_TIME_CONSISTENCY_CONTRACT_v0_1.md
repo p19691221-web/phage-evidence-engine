@@ -1,6 +1,6 @@
 # Authority resolver — use-time consistency contract revision v0.1
 
-Status: REVIEW PROPOSAL rev 2, NOT FROZEN. Prepared 2026-10-08, revised
+Status: REVIEW PROPOSAL rev 3, NOT FROZEN. Prepared 2026-10-08, revised
 2026-10-09 (Asia/Taipei).
 Baseline inspected: main `2e8ac147163d28e9fba423c34443c7bf8577b1c6`.
 Revises: H/H′/N executable interface (PR #92, frozen) and its fixture
@@ -19,6 +19,14 @@ rev 2 closes four review gaps in rev 1:
 | R2 | "Single use follows from epoch advance" was stated without scope; read as request-level replay protection | §4 |
 | R3 | Preflight traversal could call hooks on non-exact types; visit counting and limit/malformed precedence were order-dependent | §5 |
 | R4 | Atomic rejection did not require zero writes; mixed seam failures had no precedence; write-then-raise untested | §3.4, §3.5, §6, §8 |
+
+rev 3 closes three review findings on rev 2:
+
+| Gap | rev 2 defect | rev 3 location |
+|---|---|---|
+| R5 | No obligation tying snapshot content to its `state_epoch` label; a label newer than its content is undetectable and was not stated | §3.6, §6, §8 O01–O04, §9 |
+| R6 | Key gate was per key, so lookups or hashing on a dict could run while another key of the same dict was still ungated (hash-collision `__eq__` path) | §5.2 S-4, §5.5, §8 T04–T05 |
+| R7 | P03 required TIME_REGRESSION and NOT_CURRENT together, which `snapshot_at < valid_until` makes unreachable | §3.3, §6, §8 P03 |
 
 Q1 resolved: global epoch for v0.2 (reviewer approved).
 
@@ -155,11 +163,23 @@ the source after the call equals the source before it: policy, all grants, root
 anchors, configuration, and epoch. No partial write, no epoch advance, no
 mutation log entry counted as a write.
 
-**Precedence inside the seam** is the step order above:
-TIME_REGRESSION > EPOCH_MISMATCH > NOT_CURRENT. Rationale: a trusted-time
-fault invalidates step 4's comparison, so it is reported as a verification
-error, not as a freshness or state result; a moved epoch invalidates the
-authorization basis regardless of time, so it is reported before freshness.
+**Precedence inside the seam** is the step order above. Only two pairs can
+co-occur:
+
+- TIME_REGRESSION with EPOCH_MISMATCH → TIME_REGRESSION. A trusted-time fault
+  is a verification error and is reported before any state or freshness
+  result.
+- EPOCH_MISMATCH with NOT_CURRENT → EPOCH_MISMATCH. A moved epoch removes the
+  authorization basis regardless of time.
+
+TIME_REGRESSION and NOT_CURRENT are mutually exclusive. Resolution requires
+`at < expires_at` for every visited grant, so every AUTHORIZED result has
+`snapshot_at < valid_until`. Then `now < snapshot_at` implies
+`now < valid_until`. The entry checks `snapshot_at < valid_until` before
+calling the seam; if it fails (an internal fault, unreachable under a correct
+resolver), the seam is not called and the result is COMMIT_ERROR /
+AUTHORITY_VERIFICATION_ERROR / BLOCKED. That guard is an implementation
+assertion, not an acceptance case.
 
 ### 3.4 Use-time entry
 
@@ -177,8 +197,8 @@ commit_policy_change(*, request, authenticate, snapshot_provider,
 ```
 
 Return validation. `raw` is well-formed only if all hold:
-`type(raw) is dict`; its key set is exactly `{outcome, committed_epoch}`
-(keys checked as exact `str` before comparison); `type(outcome) is str` and
+`type(raw) is dict`; `len(raw) == 2`; the whole-dict key gate (§5.2 S-4)
+passes; its key set is then exactly `{outcome, committed_epoch}`; `type(outcome) is str` and
 in the vocabulary; for COMMITTED, `committed_epoch` is an exact int (not bool)
 with `committed_epoch > expected_epoch`; for every other outcome,
 `committed_epoch is None`.
@@ -211,6 +231,41 @@ are set only for COMMITTED; `committed_epoch` is the seam's validated value.
 | commit_if_epoch | 1 only if resolution AUTHORIZED, else 0 |
 
 No seam is called after `commit_if_epoch` returns or raises.
+
+### 3.6 Snapshot / epoch consistency obligations
+
+The epoch checks compare labels. They are sound only if each label describes
+the content it is attached to. These are obligations on the state source. The
+resolver cannot verify them; it can only show which violations fail closed.
+
+- **O1 Atomic snapshot.** `snapshot_provider()` returns content and
+  `state_epoch` from one read that is atomic with respect to every mutator in
+  epoch scope. The content equals source state at exactly that epoch. No torn
+  reads: no record from before a mutation together with a record from after
+  it.
+- **O2 One counter.** `snapshot_provider`, `current_epoch` and
+  `commit_if_epoch` read and advance the same epoch counter of the same
+  source. A replica, cache or second source behind any one of them violates
+  O2.
+- **O3 Snapshot time.** `at` is trusted source time taken within the O1 read.
+  `commit_if_epoch` reads `now` from the same trusted time source.
+- **O4 Epoch scope coverage.** Every write to anything the resolver reads
+  advances the epoch in the same atomic section as the write (restates §3.1 as
+  a source obligation).
+
+Effect of an O1 violation, by direction:
+
+| Violation | Example | Detected | Outcome |
+|---|---|---|---|
+| Label older than content | content at E+1, label E, current E+1 | Yes, D2 | AUTHORITY_STATE_CHANGED (spurious, fail-closed) |
+| Label newer than content | content at E−1, label E, current E | No | Commit may succeed on stale content |
+| Mixed content | half at E−1, half at E, label E | No | Commit may succeed on content that never existed |
+
+The second and third rows are why O1 is load-bearing. No check inside the
+resolver or the entry can close them, because the resolver has no view of
+source state other than the snapshot itself. §8 O02–O03 record this as a
+positive non-claim test, in the same way U03 records the absence of replay
+protection.
 
 ## 4. Single-use scope and replay
 
@@ -289,10 +344,29 @@ caller- or provider-defined code runs during measurement.
   copied.
 - S-3 **Iterate only gated containers**, via `dict.items(d)` / plain list
   iteration on the exact type, after the size check passes.
-- S-4 **Keys before use.** A dict key is gated as exact `str` and
-  length-checked before membership tests, hashing into a set, or lookup. A
-  non-`str` key marks the dict malformed; that pair is not otherwise
-  processed.
+- S-4 **Whole-dict key gate before any keyed access.** Lookups on a dict can
+  run `__eq__` of any stored key whose hash collides with the probe, so
+  gating keys one at a time is not enough. For every exact dict `d`
+  (request, snapshot, policy, grant, roots, anchor, seam return):
+
+  1. Before the gate, the only permitted operations are `type(d)`, `len(d)`,
+     and one iteration of `dict.keys(d)` or `dict.items(d)`. Iteration does
+     not hash or compare keys.
+  2. Size check: `len(d)` against the applicable cap (`REQUEST_MAX_KEYS`,
+     `SNAPSHOT_MAX_RECORD_KEYS`, `SNAPSHOT_MAX_ROOTS`, or exactly 2 for a seam
+     return).
+  3. Gate pass: iterate *all* keys of `d` once. Each key must satisfy
+     `type(k) is str`; each exact-`str` key is length-checked. The pass does
+     not stop at the first non-`str` key, so a later over-length key still
+     yields LIMIT (§5.4).
+  4. Only if every key of `d` is an exact `str` may any keyed operation
+     follow: `d[k]`, `d.get(k)`, `k in d`, `set(d)`, `dict(d)`, `==` on `d`
+     or its key set. Comparing an exact-`str` key against the module's field
+     name tuple is permitted after step 3, since both operands are exact `str`.
+  5. If any key fails the gate, `d` is malformed. From then on `d` is accessed
+     only by `dict.items(d)` iteration: no keyed operation, no hashing, no
+     copy. Its scalar values are still size-checked (an over-length `str`
+     value is LIMIT); its container values are not entered.
 - S-5 **Fixed schema walk, no generic recursion.** The scan descends only at
   schema container positions:
 
@@ -323,8 +397,12 @@ For an exact container entered at a schema container position:
 visits(dict d) = 1 + Σ_{(k,v) in d} (1 + inner(v))
 visits(list l) = 1 + Σ_{e in l}      (1 + inner(e))
 inner(x)       = visits(x)  if x is an exact container at a schema container position
-               = 0          otherwise (scalars, malformed objects, containers at scalar positions)
+               = 0          otherwise (scalars, malformed objects, containers at scalar
+                            positions, and every value of a dict that failed its key gate)
 ```
+
+The key gate pass (S-4 step 3) does not add visits: each pair is charged once
+under `1 + inner(v)` whether it is reached by the gate pass or the value pass.
 
 Snapshot cost = `visits(snapshot)`. The counter is incremented before each
 unit; the unit that would make the total exceed `SNAPSHOT_MAX_VISITS` is not
@@ -374,9 +452,14 @@ Before authentication; any failure means zero seam calls.
 ```
 1  type(request) is not dict                 -> TypeError (#92)
 2  len(request) > REQUEST_MAX_KEYS           -> REQUEST_LIMIT_EXCEEDED  (no key iterated)
-3  phase 1 over ≤16 pairs: key gate S-4, key and value string length
-4  phase 2: LIMIT > INVALID_AUTHORITY_INPUT (non-str key, non-str/empty value,
-   field set ≠ the eight fields)
+3  phase 1: one dict.items(request) pass over ≤16 pairs, no keyed access:
+     key: type(k) is str, else mark malformed; if str, len(k) > 256 -> size
+     value: type(v) is str, else mark malformed; if str, len(v) > 256 -> size
+4  phase 2: size -> REQUEST_LIMIT_EXCEEDED
+            any non-str key or value  -> INVALID_AUTHORITY_INPUT (no keyed access)
+5  keyed checks, only after all keys passed: set(request) == the eight fields,
+   every value nonempty                      -> else INVALID_AUTHORITY_INPUT
+6  bound copy built from the gated pairs
 ```
 
 A 9–16-key request with an extra field remains INVALID_AUTHORITY_INPUT, as in
@@ -408,8 +491,12 @@ Earlier stage wins. Mixed failures across stages:
 | traversal denial + state changed | traversal reason | D2 not run on denial |
 | traversal authorizes + state changed | AUTHORITY_STATE_CHANGED | D2 |
 | epoch mismatch + now ≥ valid_until | AUTHORITY_STATE_CHANGED | seam step 3 before 4 |
-| now < snapshot_at + epoch mismatch (± expired) | AUTHORITY_VERIFICATION_ERROR | seam step 2 first |
+| now < snapshot_at + epoch mismatch | AUTHORITY_VERIFICATION_ERROR | seam step 2 first |
+| now < snapshot_at + now ≥ valid_until | not reachable | `snapshot_at < valid_until` (§3.3) |
 | seam raises after writing | COMMIT_OUTCOME_UNKNOWN | §3.4 |
+| dict with non-str key + over-length key or value | LIMIT | whole-dict gate pass completes (§5.2 S-4) |
+| snapshot label older than content | AUTHORITY_STATE_CHANGED | D2; fail-closed (§3.6) |
+| snapshot label newer than content, or torn content | not detected | O1 obligation (§3.6) |
 
 Inspection result fields, exactly: `authorization_status`, `reason`,
 `effect_path`, `request_binding`, `snapshot_id`, `state_epoch`,
@@ -481,8 +568,13 @@ Seam rejection: zero writes and precedence
   root; `now` between the two → NOT_CURRENT.
 - P01 Epoch mismatch + expired → AUTHORITY_STATE_CHANGED.
 - P02 Time regression + epoch mismatch → AUTHORITY_VERIFICATION_ERROR.
-- P03 All three → AUTHORITY_VERIFICATION_ERROR. Each of P01–P03 also asserts
-  zero writes.
+- P03 Tightest window, showing TIME_REGRESSION and NOT_CURRENT never
+  co-occur: chain minimum `expires_at = at + 1`, so `valid_until = at + 1`.
+  `now = at - 1` → TIME_REGRESSION; `now = at` → COMMITTED (separate fresh
+  source); `now = at + 1` → NOT_CURRENT. Each with epoch mismatch added:
+  `at - 1` → AUTHORITY_VERIFICATION_ERROR, `at + 1` →
+  AUTHORITY_STATE_CHANGED. No `now` value produces both time conditions.
+- P01–P03 each assert zero writes on every rejection.
 
 Exception and malformed seam result
 - X01 Seam performs step 5, then raises → COMMIT_OUTCOME_UNKNOWN,
@@ -528,6 +620,30 @@ Safe traversal
   not SNAPSHOT_LIMIT_EXCEEDED; zero hook calls.
 - T03 Dict with a non-str key whose `__hash__` / `__eq__` records →
   INVALID_AUTHORITY_INPUT; recorder calls = 0.
+- T04 Hash-collision probe, whole-dict gate: a grant dict holds every valid
+  field plus one non-str key whose `__hash__` returns `hash('id')` (computed
+  at runtime, so hash randomization does not matter) and whose `__eq__`
+  records. Recorder reset after construction. The non-str key is placed
+  last in insertion order, so a per-key gate would already have looked up
+  `'id'`. Expect INVALID_AUTHORITY_INPUT and recorder calls = 0. Repeat for
+  the request dict (collision with `'requester_id'`), the snapshot dict, the
+  policy dict, an anchor dict and a seam return dict (collision with
+  `'outcome'`; result COMMIT_OUTCOME_UNKNOWN).
+- T05 Same dict also holds a 257-char str key, placed after the non-str key →
+  SNAPSHOT_LIMIT_EXCEEDED (request variant: REQUEST_LIMIT_EXCEEDED); recorder
+  calls = 0.
+
+Snapshot / epoch consistency (§3.6)
+- O01 Reference source: `snapshot_provider`, `current_epoch` and
+  `commit_if_epoch` share one counter; a mutation through any source mutator
+  is visible to all three at the same epoch (O2, O4 for the reference model).
+- O02 Lagging-content provider (content from E−1 with leaf unrevoked, label
+  E, current E with leaf revoked) → COMMITTED. Positive non-claim test: an O1
+  violation in this direction is undetectable by the resolver.
+- O03 Torn provider (policy from E, grants from E−1, label E) → same as O02,
+  same non-claim.
+- O04 Leading-content provider (content from E+1, label E, current E+1) →
+  AUTHORITY_STATE_CHANGED at D2; `commit_if_epoch` calls = 0.
 
 Shared references within schema depth
 - S01 One `targets` list object shared by K grants, expanded count under
@@ -551,6 +667,10 @@ fixture `current_epoch`; their expected results do not change.
   replication semantics. The reference fixture source models atomicity.
 - Epoch non-reuse across restart/restore is a formal-source obligation, not
   validated here.
+- Snapshot/epoch consistency O1–O4 (§3.6) are source obligations. The
+  resolver does not and cannot verify them; O02–O03 show that an O1
+  violation with a label newer than its content passes undetected. Fixture
+  validation covers only the reference source model.
 - No request-level replay protection or idempotency (§4).
 - Trusted time remains a modeling assumption (see
   PHAGE_TRUST_EVIDENCE_TRUSTED_CURRENT_TIME_ACQUISITION_BOUNDARY_DESIGN_v0_1).
