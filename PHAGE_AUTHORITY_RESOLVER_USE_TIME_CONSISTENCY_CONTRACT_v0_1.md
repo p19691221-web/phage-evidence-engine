@@ -1,6 +1,6 @@
 # Authority resolver — use-time consistency contract revision v0.1
 
-Status: REVIEW PROPOSAL rev 3, NOT FROZEN. Prepared 2026-10-08, revised
+Status: REVIEW PROPOSAL rev 4, NOT FROZEN. Prepared 2026-10-08, revised
 2026-10-09 (Asia/Taipei).
 Baseline inspected: main `2e8ac147163d28e9fba423c34443c7bf8577b1c6`.
 Revises: H/H′/N executable interface (PR #92, frozen) and its fixture
@@ -27,6 +27,20 @@ rev 3 closes three review findings on rev 2:
 | R5 | No obligation tying snapshot content to its `state_epoch` label; a label newer than its content is undetectable and was not stated | §3.6, §6, §8 O01–O04, §9 |
 | R6 | Key gate was per key, so lookups or hashing on a dict could run while another key of the same dict was still ungated (hash-collision `__eq__` path) | §5.2 S-4, §5.5, §8 T04–T05 |
 | R7 | P03 required TIME_REGRESSION and NOT_CURRENT together, which `snapshot_at < valid_until` makes unreachable | §3.3, §6, §8 P03 |
+
+rev 4 closes review findings on rev 3 (R7 accepted as closed):
+
+| Gap | rev 3 defect | rev 4 location |
+|---|---|---|
+| R5a | O1 covered atomic read only; nothing kept the returned object fixed until copy, so S-6's copy bound did not follow | §3.6 O1a, §5.2 S-6, §8 O05, §9 |
+| R6a | T04 added the collider beside a legitimate key inserted first; lookup matches the legitimate key by identity and never calls the collider, so an unsafe resolver passed | §8 T04 (collider replaces the field; control assertion), T05 |
+| R6b | §5.4 claimed LIMIT > malformed > missing "globally", contradicting S-4's non-entry of a failed dict's container values | §5.4, §6, §8 B09–B10 |
+| R6c | S-4 permitted `==` on a gated dict; gated keys say nothing about value comparison hooks | §5.2 S-4 step 4 |
+| Q5 | Reject rule drafted (both revision and digest equal), pending decision | §5.5 step 6, §6, §8 V01–V03 |
+
+T04 basis: a local Python check showed a lookup for `'id'` makes 0 collider
+`__eq__` calls when legitimate `'id'` is inserted first, and 1 call when the
+collider replaces it.
 
 Q1 resolved: global epoch for v0.2 (reviewer approved).
 
@@ -243,6 +257,15 @@ resolver cannot verify them; it can only show which violations fail closed.
   epoch scope. The content equals source state at exactly that epoch. No torn
   reads: no record from before a mutation together with a record from after
   it.
+- **O1a Returned-object stability.** An atomic read does not by itself keep
+  the returned object fixed. From the moment `snapshot_provider()` returns
+  until the resolver's private copy is complete, the returned snapshot and
+  every container reachable from it must not change. No source mutator, and
+  no other thread or process acting on the source, may modify them. A
+  provider meets this by returning a structure detached from its live store
+  (or an immutable view), never live store containers. After the private
+  copy is complete the resolver no longer reads the returned object, so
+  later changes to it do not affect resolution.
 - **O2 One counter.** `snapshot_provider`, `current_epoch` and
   `commit_if_epoch` read and advance the same epoch counter of the same
   source. A replica, cache or second source behind any one of them violates
@@ -360,9 +383,12 @@ caller- or provider-defined code runs during measurement.
      not stop at the first non-`str` key, so a later over-length key still
      yields LIMIT (§5.4).
   4. Only if every key of `d` is an exact `str` may any keyed operation
-     follow: `d[k]`, `d.get(k)`, `k in d`, `set(d)`, `dict(d)`, `==` on `d`
-     or its key set. Comparing an exact-`str` key against the module's field
-     name tuple is permitted after step 3, since both operands are exact `str`.
+     follow: `d[k]`, `d.get(k)`, `k in d`, `set(d)`, `dict(d)`, and
+     comparison of `set(d)` (a set of exact `str`) with a module field-name
+     set. Comparing an exact-`str` key against the module's field name tuple
+     is permitted after step 3, since both operands are exact `str`.
+     `==` on `d` itself is never used, even after the gate: it compares
+     values, and gated keys say nothing about values.
   5. If any key fails the gate, `d` is malformed. From then on `d` is accessed
      only by `dict.items(d)` iteration: no keyed operation, no hashing, no
      copy. Its scalar values are still size-checked (an over-length `str`
@@ -381,8 +407,15 @@ caller- or provider-defined code runs during measurement.
   Every other position is scalar. A container found at a scalar position
   (including a list that contains itself, or a dict inside `targets`) is
   malformed and is not entered. Maximum depth is 4 by construction.
-- S-6 **No seam calls between first preflight and completed copy.** The copy
-  is therefore bounded by what the preflight counted.
+- S-6 **Copy bounded by preflight, under two conditions.** (a) The resolver
+  calls no seam between the start of the first preflight and the completed
+  copy. (b) The returned snapshot is stable over that window (§3.6 O1a).
+  Only with both is the copy bounded by what the preflight counted. (a) is
+  a resolver obligation; (b) is a source obligation the resolver cannot
+  verify. If (b) is violated, the copy may exceed the counted budget and
+  the copied content may differ from the preflighted content. The second
+  preflight over the private copy then catches malformation but cannot undo
+  copy cost already spent.
 - S-7 The private copy is built from exact-typed values only; it contains no
   aliasing and no subclass instances.
 
@@ -431,9 +464,20 @@ INVALID_AUTHORITY_INPUT per #92).
 
 Consequences:
 
-- **LIMIT > malformed > missing**, globally, independent of where in the
-  structure each condition sits. Whether a structure exceeds a cap is a
-  property of the structure; the stopping point does not change the result.
+- **LIMIT > malformed > missing, over the positions reachable by safe
+  traversal.** A position is reachable if the walk of §5.2 enters it: every
+  container on the path to it is exact-typed, sits at a schema container
+  position, and (for dicts) passed its whole-dict key gate. Within that set
+  the order is independent of where each condition sits, and the stopping
+  point does not change the result.
+- **Unreachable positions are not measured.** A dict that fails its key gate
+  is malformed and its container values are not entered (S-4 step 5); a
+  non-exact or misplaced container is not entered (S-2, S-5). A cap
+  exceedance behind such a dict or container is invisible, and the result is
+  INVALID_AUTHORITY_INPUT, not LIMIT. Example: a snapshot dict with one
+  non-`str` key and a `grants` list of 1025 records → INVALID_AUTHORITY_INPUT
+  (§8 B09). Scalar values and key lengths of a key-gate-failed dict are still
+  measured, so an over-length `str` there is LIMIT (§8 T05).
 - Once a size exceedance stops the scan, later malformations are unknown.
   LIMIT is the only claim the resolver can support.
 - LIMIT is reported only for sizes measured on exact-typed objects. An object
@@ -459,8 +503,15 @@ Before authentication; any failure means zero seam calls.
             any non-str key or value  -> INVALID_AUTHORITY_INPUT (no keyed access)
 5  keyed checks, only after all keys passed: set(request) == the eight fields,
    every value nonempty                      -> else INVALID_AUTHORITY_INPUT
-6  bound copy built from the gated pairs
+6  [Q5] no-op change: proposed_revision == expected_revision
+        AND proposed_digest == expected_digest -> INVALID_AUTHORITY_INPUT
+7  bound copy built from the gated pairs
 ```
+
+Step 6 (pending Q5 decision) rejects only when both revision and digest are
+unchanged. A request that changes either one proceeds. The check is
+request-local, runs before authentication, and calls no seam. It removes the
+simplest self-replay shape; it is not replay protection (§4).
 
 A 9–16-key request with an extra field remains INVALID_AUTHORITY_INPUT, as in
 #92.
@@ -494,7 +545,9 @@ Earlier stage wins. Mixed failures across stages:
 | now < snapshot_at + epoch mismatch | AUTHORITY_VERIFICATION_ERROR | seam step 2 first |
 | now < snapshot_at + now ≥ valid_until | not reachable | `snapshot_at < valid_until` (§3.3) |
 | seam raises after writing | COMMIT_OUTCOME_UNKNOWN | §3.4 |
-| dict with non-str key + over-length key or value | LIMIT | whole-dict gate pass completes (§5.2 S-4) |
+| dict with non-str key + over-length key or scalar value | LIMIT | whole-dict gate pass completes (§5.2 S-4) |
+| dict with non-str key + oversized container value | INVALID_AUTHORITY_INPUT | container not reachable (§5.4) |
+| [Q5] proposed = expected (both) + any later-stage failure | INVALID_AUTHORITY_INPUT | request stage, zero seam calls |
 | snapshot label older than content | AUTHORITY_STATE_CHANGED | D2; fail-closed (§3.6) |
 | snapshot label newer than content, or torn content | not detected | O1 obligation (§3.6) |
 
@@ -610,6 +663,15 @@ Budget, both sides
   SNAPSHOT_LIMIT_EXCEEDED.
 - B08 Snapshot over limit and `max_grants` too small for the chain →
   SNAPSHOT_LIMIT_EXCEEDED.
+- B09 Unreachable oversize (§5.4): snapshot dict with one non-`str` key (no
+  hash collision) and a `grants` list of 1025 records →
+  INVALID_AUTHORITY_INPUT, not SNAPSHOT_LIMIT_EXCEEDED. Contrast: same
+  snapshot without the bad key → SNAPSHOT_LIMIT_EXCEEDED.
+- B10 Sibling reachability: grant A has a non-`str` key and a 65-item
+  `targets`; grant B is well-formed. With B's `targets` at 64 →
+  INVALID_AUTHORITY_INPUT (A's list is unreachable). With B's `targets` at 65
+  → SNAPSHOT_LIMIT_EXCEEDED (B's list is reachable). Result is the same with
+  A before or after B in `grants`.
 
 Safe traversal
 - T01 Subclass of `str`, `list`, `dict`, `int` at every schema position, each
@@ -620,18 +682,40 @@ Safe traversal
   not SNAPSHOT_LIMIT_EXCEEDED; zero hook calls.
 - T03 Dict with a non-str key whose `__hash__` / `__eq__` records →
   INVALID_AUTHORITY_INPUT; recorder calls = 0.
-- T04 Hash-collision probe, whole-dict gate: a grant dict holds every valid
-  field plus one non-str key whose `__hash__` returns `hash('id')` (computed
-  at runtime, so hash randomization does not matter) and whose `__eq__`
-  records. Recorder reset after construction. The non-str key is placed
-  last in insertion order, so a per-key gate would already have looked up
-  `'id'`. Expect INVALID_AUTHORITY_INPUT and recorder calls = 0. Repeat for
-  the request dict (collision with `'requester_id'`), the snapshot dict, the
-  policy dict, an anchor dict and a seam return dict (collision with
-  `'outcome'`; result COMMIT_OUTCOME_UNKNOWN).
-- T05 Same dict also holds a 257-char str key, placed after the non-str key →
-  SNAPSHOT_LIMIT_EXCEEDED (request variant: REQUEST_LIMIT_EXCEEDED); recorder
-  calls = 0.
+- T04 Hash-collision probe, whole-dict gate. The colliding key *replaces* a
+  field key the resolver would look up; it is not added beside it. (If the
+  legitimate key is also present and inserted first, a lookup for it matches
+  by identity in its own slot and never calls the collider's `__eq__`, so an
+  unsafe resolver would pass.)
+
+  Collider: non-`str` object with `__hash__` returning `hash(<field>)`
+  computed at runtime (independent of hash randomization) and `__eq__`
+  appending to a recorder and returning False.
+
+  For each target dict below, build the dict with the collider in place of
+  the named field; all other fields valid; key count unchanged.
+
+  | Target dict | Replaced field | Expected result |
+  |---|---|---|
+  | request | `requester_id` | INVALID_AUTHORITY_INPUT; zero seam calls |
+  | snapshot | `snapshot_id` | INVALID_AUTHORITY_INPUT; zero `verify_grant` |
+  | policy | `policy_id` | INVALID_AUTHORITY_INPUT; zero `verify_grant` |
+  | grant (leaf) | `id` | INVALID_AUTHORITY_INPUT; zero `verify_grant` |
+  | roots | the root grant's ID | INVALID_AUTHORITY_INPUT; zero `verify_grant` |
+  | anchor | `revision` | INVALID_AUTHORITY_INPUT; zero `verify_grant` |
+  | seam return | `outcome` (dict keeps exactly 2 keys, so `len != 2` does not pre-empt) | COMMIT_OUTCOME_UNKNOWN |
+
+  Per row, in order:
+  1. **Control.** The test itself performs the unsafe lookup the resolver
+     would do (`'<field>' in d`) and asserts recorder calls ≥ 1. This shows
+     the fixture can detect the path. If the control fails, the row fails
+     as a fixture defect, not as a resolver pass.
+  2. Reset the recorder.
+  3. Call the entry; assert the expected result and recorder calls = 0 for
+     the whole call.
+- T05 The T04 grant dict additionally holds a 257-char `str` key, inserted
+  after the collider → SNAPSHOT_LIMIT_EXCEEDED; recorder calls = 0. Request
+  variant (key count kept ≤ 16) → REQUEST_LIMIT_EXCEEDED; recorder calls = 0.
 
 Snapshot / epoch consistency (§3.6)
 - O01 Reference source: `snapshot_provider`, `current_epoch` and
@@ -644,6 +728,22 @@ Snapshot / epoch consistency (§3.6)
   same non-claim.
 - O04 Leading-content provider (content from E+1, label E, current E+1) →
   AUTHORITY_STATE_CHANGED at D2; `commit_if_epoch` calls = 0.
+- O05 Reference source, O1a: the object returned by `snapshot_provider` shares
+  no container with the live store (no identity overlap at any schema
+  container position). After return, a source mutation leaves the returned
+  object unchanged. This validates the reference model only; concurrent
+  mutation of a returned object by a non-conforming source is outside
+  fixture scope (§9).
+
+No-op request (§5.5 step 6, pending Q5)
+- V01 `proposed_revision == expected_revision` and
+  `proposed_digest == expected_digest` → INVALID_AUTHORITY_INPUT;
+  `authenticate`, `snapshot_provider`, `verify_grant`, `current_epoch`,
+  `commit_if_epoch` calls all 0.
+- V02 Only revision equal (digest differs) → proceeds; positive control
+  COMMITTED. Only digest equal (revision differs) → proceeds; COMMITTED.
+- V03 V01 request with authentication set to fail → still
+  INVALID_AUTHORITY_INPUT (request stage precedes authentication).
 
 Shared references within schema depth
 - S01 One `targets` list object shared by K grants, expanded count under
@@ -667,10 +767,12 @@ fixture `current_epoch`; their expected results do not change.
   replication semantics. The reference fixture source models atomicity.
 - Epoch non-reuse across restart/restore is a formal-source obligation, not
   validated here.
-- Snapshot/epoch consistency O1–O4 (§3.6) are source obligations. The
-  resolver does not and cannot verify them; O02–O03 show that an O1
-  violation with a label newer than its content passes undetected. Fixture
-  validation covers only the reference source model.
+- Snapshot/epoch consistency O1, O1a, O2–O4 (§3.6) are source obligations.
+  The resolver does not and cannot verify them; O02–O03 show that an O1
+  violation with a label newer than its content passes undetected. An O1a
+  violation (returned object mutated before the private copy completes)
+  voids the copy bound of S-6. Fixture validation covers only the reference
+  source model.
 - No request-level replay protection or idempotency (§4).
 - Trusted time remains a modeling assumption (see
   PHAGE_TRUST_EVIDENCE_TRUSTED_CURRENT_TIME_ACQUISITION_BOUNDARY_DESIGN_v0_1).
@@ -695,12 +797,21 @@ fixture `current_epoch`; their expected results do not change.
 
 ## 11. Open review questions
 
+Reviewer recommendations for Q2–Q5 were given in an earlier review round.
+Their text is not in this draft's source material and is not reproduced or
+paraphrased here. Each item carries a placeholder to be filled verbatim
+before freeze.
+
 - Q2 AUTHORITY_STATE_CHANGED as a new code vs reusing POLICY_STATE_MISMATCH.
-  Proposed: new.
+  Author proposal: new.
+  Reviewer recommendation: [to be transcribed].
 - Q3 Numeric budget values in §5.1.
-- Q4 Keep inspection AUTHORIZED although never consumable. Proposed: keep,
-  for #92 continuity.
-- Q5 A request with `proposed_* == expected_*` (no-op) commits and advances
-  the epoch under the current rules, and is the simplest U03-style replay.
-  Options: allow (current); reject as INVALID_AUTHORITY_INPUT. Proposed:
-  reject, as a narrow change; it does not add replay protection.
+  Reviewer recommendation: [to be transcribed].
+- Q4 Keep inspection AUTHORIZED although never consumable. Author proposal:
+  keep, for #92 continuity.
+  Reviewer recommendation: [to be transcribed].
+- Q5 No-op request. Author proposal: reject. Drafted in §5.5 step 6 and §8
+  V01–V03: reject only when both `proposed_revision == expected_revision`
+  and `proposed_digest == expected_digest`; request stage, zero seam calls.
+  If Q5 is decided as allow, delete §5.5 step 6, its §6 row and V01–V03.
+  Reviewer recommendation: [to be transcribed].
