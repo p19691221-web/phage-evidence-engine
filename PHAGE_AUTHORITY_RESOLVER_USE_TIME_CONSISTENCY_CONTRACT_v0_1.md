@@ -1,6 +1,7 @@
 # Authority resolver — use-time consistency contract revision v0.1
 
-Status: REVIEW PROPOSAL rev 4, NOT FROZEN. Prepared 2026-10-08, revised
+Status: REVIEW PROPOSAL rev 5 (spec review passed on rev 4; editorial
+finalization), NOT FROZEN. Prepared 2026-10-08, revised
 2026-10-09 (Asia/Taipei).
 Baseline inspected: main `2e8ac147163d28e9fba423c34443c7bf8577b1c6`.
 Revises: H/H′/N executable interface (PR #92, frozen) and its fixture
@@ -41,6 +42,17 @@ rev 4 closes review findings on rev 3 (R7 accepted as closed):
 T04 basis: a local Python check showed a lookup for `'id'` makes 0 collider
 `__eq__` calls when legitimate `'id'` is inserted first, and 1 call when the
 collider replaces it.
+
+rev 5 is editorial. Spec review passed on rev 4; no normative rule changed
+except adopting Q5 as drafted.
+
+| Item | Change | Location |
+|---|---|---|
+| Q2–Q5 | Reviewer recommendations recorded verbatim | §11 |
+| Q5 | Pending markers removed; rule adopted as drafted | §5.5, §6, §8 V01–V03 |
+| Q5 / §4 | No-op resubmission example removed; independent-revert example (U03) kept | §4 |
+| Q3 | Hand-checkable visit example and exact 65536 / 65537 boundary instance | §5.3 |
+| Q3 | Every cap tested at limit and limit + 1 | §8 B04–B05 |
 
 Q1 resolved: global epoch for v0.2 (reviewer approved).
 
@@ -312,9 +324,9 @@ What it does not guarantee:
 - In normal use a resubmission after commit fails with POLICY_STATE_MISMATCH,
   but only because `expected_revision` / `expected_digest` no longer match
   the committed policy. That is the precondition doing its job, not replay
-  detection. If the policy returns to the expected revision and digest
-  (independent revert, or a request whose proposed value equals its expected
-  value), the identical request can commit again.
+  detection. If an independent, separately authorized change returns the
+  policy to the expected revision and digest, the identical request can
+  commit again (§8 U03).
 - The request has no nonce, request ID, or idempotency key. Neither the
   resolver nor the source records which requests have been committed.
 
@@ -336,7 +348,7 @@ Three budgets, three distinct results. None is supplied by the request.
 
 Structural limits are module constants, not provider-supplied and not
 overridable per call: the provider's data size is the quantity being bounded.
-Values are review defaults (Q3):
+Values are accepted as fixture v0.2 limits (Q3, §11):
 
 ```
 REQUEST_MAX_KEYS           = 16
@@ -444,6 +456,38 @@ performed, and the scan stops with SNAPSHOT_LIMIT_EXCEEDED.
 Request cost = `1 + len(request)`, ≤ 17 after the key cap; no separate visit
 constant.
 
+**Worked example (hand-checkable).** The #92 base fixture plus
+`state_epoch`: snapshot with 7 keys; policy with 4 scalar fields; two grants,
+each with 12 fields, `operations` of 1 item and `targets` of 1 item; `roots`
+with one anchor of 2 fields.
+
+```
+policy        = 1 + 4                                   =  5
+operations    = 1 + 1                                   =  2
+targets       = 1 + 1                                   =  2
+grant         = 1 + 12 + 2 + 2                          = 17
+grants        = 1 + 2 × (1 + 17)                        = 37
+anchor        = 1 + 2                                   =  3
+roots         = 1 + (1 + 3)                             =  5
+snapshot      = 1 + 7 + 5 + 37 + 5                      = 55
+```
+
+General form for this shape with `n` grants, grant `i` having `o_i`
+operations and `t_i` targets, one root anchor:
+
+```
+grant_i  = 15 + o_i + t_i
+snapshot = 19 + Σ_i (16 + o_i + t_i)
+```
+
+Boundary instance used by §8 B04: `n = 1024`, every `o_i = 1`; 1023 grants
+with `t_i = 47` and one grant with `t_i = 28`:
+`19 + 1023 × 64 + 45 = 65536`. Raising the last grant to `t_i = 29` gives
+65537. Every individual cap stays at or below its limit in both instances,
+so only the visit cap distinguishes them. These figures were checked with a
+small script implementing the formula above; the RED-test helper must
+reproduce them.
+
 Aliasing is charged per expansion (per reference path), not per distinct
 object. The resolver does not memoize by object identity, because the copy
 materializes every expansion and the budget must bound that work. Aliasing
@@ -503,12 +547,12 @@ Before authentication; any failure means zero seam calls.
             any non-str key or value  -> INVALID_AUTHORITY_INPUT (no keyed access)
 5  keyed checks, only after all keys passed: set(request) == the eight fields,
    every value nonempty                      -> else INVALID_AUTHORITY_INPUT
-6  [Q5] no-op change: proposed_revision == expected_revision
-        AND proposed_digest == expected_digest -> INVALID_AUTHORITY_INPUT
+6  no-op change: proposed_revision == expected_revision
+       AND proposed_digest == expected_digest -> INVALID_AUTHORITY_INPUT
 7  bound copy built from the gated pairs
 ```
 
-Step 6 (pending Q5 decision) rejects only when both revision and digest are
+Step 6 (Q5, adopted) rejects only when both revision and digest are
 unchanged. A request that changes either one proceeds. The check is
 request-local, runs before authentication, and calls no seam. It removes the
 simplest self-replay shape; it is not replay protection (§4).
@@ -547,7 +591,7 @@ Earlier stage wins. Mixed failures across stages:
 | seam raises after writing | COMMIT_OUTCOME_UNKNOWN | §3.4 |
 | dict with non-str key + over-length key or scalar value | LIMIT | whole-dict gate pass completes (§5.2 S-4) |
 | dict with non-str key + oversized container value | INVALID_AUTHORITY_INPUT | container not reachable (§5.4) |
-| [Q5] proposed = expected (both) + any later-stage failure | INVALID_AUTHORITY_INPUT | request stage, zero seam calls |
+| no-op request (revision and digest both unchanged) + any later-stage failure | INVALID_AUTHORITY_INPUT | request stage, zero seam calls |
 | snapshot label older than content | AUTHORITY_STATE_CHANGED | D2; fail-closed (§3.6) |
 | snapshot label newer than content, or torn content | not detected | O1 obligation (§3.6) |
 
@@ -653,10 +697,32 @@ Budget, both sides
 - B03 1025 grants → SNAPSHOT_LIMIT_EXCEEDED, zero `verify_grant` calls, with a
   malformed grant placed before and, separately, after the overflow point,
   and a missing field elsewhere.
-- B04 Snapshot with `visits` exactly 65536 passes preflight; 65537 →
-  SNAPSHOT_LIMIT_EXCEEDED. Helper computes the count from §5.3.
-- B05 Each cap individually: 257-char string, 65-item scope list, 33-key
-  grant dict, 65 roots, int of 65 bits → SNAPSHOT_LIMIT_EXCEEDED.
+- B04 Visit cap, using the §5.3 boundary instance: 65536 visits → preflight
+  does not report SNAPSHOT_LIMIT_EXCEEDED; 65537 → SNAPSHOT_LIMIT_EXCEEDED.
+  The helper computes the count from the §5.3 formula and first asserts the
+  worked example (55) and both boundary figures, so a wrong helper fails
+  before the resolver is tested.
+- B05 Every cap at its limit and at limit + 1. Each row varies one dimension
+  from an otherwise valid fixture. "At cap" asserts the result is not the
+  row's LIMIT code (another result, such as INVALID_AUTHORITY_INPUT for
+  extra fields, is acceptable). "Cap + 1" asserts the LIMIT code.
+
+  | Constant | At cap | Cap + 1 | Code at cap + 1 |
+  |---|---|---|---|
+  | REQUEST_MAX_KEYS | 16 keys | 17 keys | REQUEST_LIMIT_EXCEEDED |
+  | REQUEST_MAX_STRING_CHARS | 256-char value; 256-char key | 257 | REQUEST_LIMIT_EXCEEDED |
+  | SNAPSHOT_MAX_GRANTS | 1024 grants | 1025 | SNAPSHOT_LIMIT_EXCEEDED |
+  | SNAPSHOT_MAX_ROOTS | 64 roots | 65 | SNAPSHOT_LIMIT_EXCEEDED |
+  | SNAPSHOT_MAX_RECORD_KEYS | 32-key grant dict | 33 | SNAPSHOT_LIMIT_EXCEEDED |
+  | SNAPSHOT_MAX_SCOPE_ITEMS | 64 targets; 64 operations | 65 | SNAPSHOT_LIMIT_EXCEEDED |
+  | SNAPSHOT_MAX_STRING_CHARS | 256-char value; 256-char key | 257 | SNAPSHOT_LIMIT_EXCEEDED |
+  | SNAPSHOT_MAX_INT_BITS | `2**64 - 1` (64 bits) in each int field | `2**64` (65 bits) | SNAPSHOT_LIMIT_EXCEEDED |
+  | SNAPSHOT_MAX_VISITS | 65536 (B04) | 65537 | SNAPSHOT_LIMIT_EXCEEDED |
+
+  The 64-operations row is structurally invalid (operations must be unique
+  values from `{POLICY_CHANGE}`), so its "at cap" result is
+  INVALID_AUTHORITY_INPUT. That is still the intended assertion: size
+  measurement runs before vocabulary classification.
 - B06 Request and snapshot both over limit → REQUEST_LIMIT_EXCEEDED;
   `authenticate` and `snapshot_provider` never called.
 - B07 #92 N03/N04 unchanged: AUTHORITY_LIMIT_EXCEEDED, never
@@ -735,7 +801,7 @@ Snapshot / epoch consistency (§3.6)
   mutation of a returned object by a non-conforming source is outside
   fixture scope (§9).
 
-No-op request (§5.5 step 6, pending Q5)
+No-op request (§5.5 step 6, Q5 adopted)
 - V01 `proposed_revision == expected_revision` and
   `proposed_digest == expected_digest` → INVALID_AUTHORITY_INPUT;
   `authenticate`, `snapshot_provider`, `verify_grant`, `current_epoch`,
@@ -795,23 +861,18 @@ fixture `current_epoch`; their expected results do not change.
 - Implementation PR: `phage_authority_lineage_hhn_v0_2.py`,
   `phage_authority_protected_use_v0_1.py`. v0.1 module untouched.
 
-## 11. Open review questions
+## 11. Review decisions
 
-Reviewer recommendations for Q2–Q5 were given in an earlier review round.
-Their text is not in this draft's source material and is not reproduced or
-paraphrased here. Each item carries a placeholder to be filled verbatim
-before freeze.
+Q1 was resolved before rev 3. Q2–Q5 reviewer recommendations, recorded
+verbatim (original language) as given in review on 2026-10-09:
 
-- Q2 AUTHORITY_STATE_CHANGED as a new code vs reusing POLICY_STATE_MISMATCH.
-  Author proposal: new.
-  Reviewer recommendation: [to be transcribed].
-- Q3 Numeric budget values in §5.1.
-  Reviewer recommendation: [to be transcribed].
-- Q4 Keep inspection AUTHORIZED although never consumable. Author proposal:
-  keep, for #92 continuity.
-  Reviewer recommendation: [to be transcribed].
-- Q5 No-op request. Author proposal: reject. Drafted in §5.5 step 6 and §8
-  V01–V03: reject only when both `proposed_revision == expected_revision`
-  and `proposed_digest == expected_digest`; request stage, zero seam calls.
-  If Q5 is decided as allow, delete §5.5 step 6, its §6 row and V01–V03.
-  Reviewer recommendation: [to be transcribed].
+| Question | Reviewer recommendation | Applied in |
+|---|---|---|
+| Q1 Global epoch vs per-record read set | Global epoch for v0.2 | §3.1 |
+| Q2 New code vs reusing POLICY_STATE_MISMATCH | 採用 AUTHORITY_STATE_CHANGED，與 expectation mismatch 分開 | §3.2, §3.4, §7 |
+| Q3 Numeric budget values | 接受目前數值作為 fixture v0.2 上限；補一個可手算的 visit 範例，測試涵蓋每個上限及上限＋1 | §5.1 values unchanged; §5.3 worked example; §8 B04–B05 |
+| Q4 Keep non-consumable inspection AUTHORIZED | 保留 inspection AUTHORIZED，維持不可消費的定位 | §2 |
+| Q5 No-op request | 只有 revision 及 digest 都未變時，拒絕為 INVALID_AUTHORITY_INPUT；在 authentication 前處理、零 seam 呼叫 | §5.5 step 6, §6, §8 V01–V03; §4 example limited to independent revert (U03) |
+
+No review question remains open. These decisions apply to the v0.2
+interface freeze PR; this proposal itself stays NOT FROZEN.
