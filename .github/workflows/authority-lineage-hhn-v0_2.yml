@@ -1,0 +1,48 @@
+name: Authority lineage H/H'/N v0.2 and protected-use
+
+on:
+  push:
+    paths:
+      - "phage_authority_lineage_hhn_v0_2.py"
+      - "phage_authority_protected_use_v0_1.py"
+      - "phage_authority_lineage_hhn_v0_1.py"
+      - "fixture_phage_authority_reference_source_v0_1.py"
+      - "test_phage_authority_lineage_hhn_v0_2.py"
+      - "test_phage_authority_protected_use_v0_1.py"
+      - "test_phage_authority_lineage_hhn_v0_1.py"
+      - ".github/workflows/authority-lineage-hhn-v0_2.yml"
+  pull_request:
+    paths:
+      - "phage_authority_lineage_hhn_v0_2.py"
+      - "phage_authority_protected_use_v0_1.py"
+      - "phage_authority_lineage_hhn_v0_1.py"
+      - "fixture_phage_authority_reference_source_v0_1.py"
+      - "test_phage_authority_lineage_hhn_v0_2.py"
+      - "test_phage_authority_protected_use_v0_1.py"
+      - "test_phage_authority_lineage_hhn_v0_1.py"
+      - ".github/workflows/authority-lineage-hhn-v0_2.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  hhn-v0_2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inspection entry v0.2 (includes #92 carry-forward)
+        run: python -m unittest -v test_phage_authority_lineage_hhn_v0_2
+
+      - name: Protected-use entry v0.1
+        run: python -m unittest -v test_phage_authority_protected_use_v0_1
+
+      - name: v0.1 provenance regression (#92/#93, unchanged)
+        run: python -m unittest -v test_phage_authority_lineage_hhn_v0_1
