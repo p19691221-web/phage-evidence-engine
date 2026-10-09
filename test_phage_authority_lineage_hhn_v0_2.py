@@ -823,7 +823,12 @@ class SharedReferences(Harness):
         self.request, self.state = inputs()
         shared = ['policy']
         for record in self.state['grants']: record['targets'] = shared
-        self.assertEqual(self.resolve(), unaliased)
+        aliased = self.resolve()
+        self.assertEqual(aliased, unaliased)
+        # Strengthened (test revision 2026-10-09): equality alone passes under
+        # any constant result; both must be the positive control.
+        self.assertEqual(unaliased, authorized(self.request))
+        self.assertEqual(aliased, authorized(self.request))
 
     def test_P8_S02_verify_mutation_does_not_leak_through_alias(self):
         shared = ['policy']
@@ -871,6 +876,37 @@ class SharedReferences(Harness):
         observed = run_isolated(SELF_LIST_WORKER, None)
         self.assertEqual(observed['result'], denial('INVALID_AUTHORITY_INPUT'))
         self.assertEqual(observed['calls'], [])
+
+
+# ---------------------------------------------------------------------------
+# Supplementary cases, outside P§8 (test revision 2026-10-09).
+# E4: errata E4 rows 1-3 (scalar size scope in snapshot preflight).
+# ---------------------------------------------------------------------------
+
+class SupplementaryE4ScalarScope(Harness):
+    def check(self, mutate, at_limit, over_limit, opaque=False):
+        for value, expected in [(at_limit, 'INVALID_AUTHORITY_INPUT'),
+                                (over_limit, 'SNAPSHOT_LIMIT_EXCEEDED')]:
+            with self.subTest(value=repr(value)[:24], expected=expected):
+                self.request, self.state = inputs(); self.calls = []
+                mutate(self.state['grants'][0], value)
+                RECORDER.clear()
+                result = self.resolve(check_unchanged=not opaque)
+                self.assertEqual(result, denial(expected))
+                self.assertFalse(any(c[0] == 'grant' for c in self.calls))
+                self.assertEqual(self.epoch_calls, 0)
+                if opaque:
+                    self.assertEqual(RECORDER, [])
+
+    def test_SUPP_E4_1_extra_field_overlong_str(self):
+        self.check(lambda g, v: g.__setitem__('extra', v), 'x' * 256, 'x' * 257)
+
+    def test_SUPP_E4_2_extra_field_65_bit_int(self):
+        self.check(lambda g, v: g.__setitem__('extra', v), 2 ** 64 - 1, 2 ** 64)
+
+    def test_SUPP_E4_3_key_gate_failed_dict_overlong_scalar(self):
+        self.check(lambda g, v: g.__setitem__(OpaqueKey(), v), 'x' * 256, 'x' * 257,
+                   opaque=True)
 
 
 if __name__ == '__main__':

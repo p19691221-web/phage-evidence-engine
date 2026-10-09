@@ -150,6 +150,27 @@ class ReferenceSource:
         self.calls.append(('current_epoch',))
         return self.epoch
 
+    def epoch_read_then(self, hook):
+        """Test-only `current_epoch` seam that runs `hook(self)` once, after the
+        epoch value has been read and before that value is returned to the
+        resolver. On the authorized path this read is D2, the resolver's last
+        seam call (frozen interface §6 stage 7, §6.1). The hook therefore runs
+        after D2 has read E and before the resolver receives E; it does not run
+        after resolution has returned. Adds no product seam.
+
+        The returned callable exposes `.fired` and `.observed` for self-checks.
+        """
+        def seam():
+            value = self.current_epoch()
+            seam.observed.append(value)
+            if not seam.fired:
+                seam.fired += 1
+                hook(self)
+            return value
+        seam.fired = 0
+        seam.observed = []
+        return seam
+
     def commit_if_epoch(self, *, expected_epoch, snapshot_at, valid_until, binding):
         self.calls.append(('commit_if_epoch', dict(
             expected_epoch=expected_epoch, snapshot_at=snapshot_at,
