@@ -1,6 +1,9 @@
-# H/H′/N executable interface v0.2 — freeze candidate
+# H/H′/N executable interface v0.2
 
-Status: FREEZE CANDIDATE rev 2, NOT FROZEN. Prepared 2026-10-09 (Asia/Taipei).
+Status: FROZEN at rev 2 by approval and merge of #97 (merge commit
+`a853f35d7603ebf9b7f79c4ea2fab62c941d0a12`, 2026-10-09). Header metadata
+corrected by PHAGE_AUTHORITY_LINEAGE_HHN_V0_2_ERRATA_v0_1.md (E1–E3); no
+normative content changed. Prepared 2026-10-09 (Asia/Taipei).
 
 Revision log:
 
@@ -8,6 +11,7 @@ Revision log:
 |---|---|
 | 2 | §7.2 S-5 lists all eight container positions with expected types, including `snapshot`, `snapshot.grants` and `snapshot.roots`, which rev 1 omitted. §7.3 `inner` no longer requires a dict parent, so grant dicts inside the `grants` list are counted; a failed parent key gate blocks only that dict's container values. §9 V01–V03 expectations stated per entry (inspection V02 = AUTHORIZED; use-time V02 = COMMITTED). |
 | 2 | Review accepted two author arrangements: constants defined in the resolver module and imported by protected-use (§1); `snapshot_provider` returns classified as `None` → AUTHORITY_UNRESOLVED, non-dict → stage 4, exception → AUTHORITY_VERIFICATION_ERROR (§2). |
+
 Becomes frozen only on explicit review approval and merge.
 Baseline: main `cb425810b57d73a83d714a06e0509550157f9af5`.
 Supersedes for new work: PHAGE_AUTHORITY_LINEAGE_HHN_EXECUTABLE_INTERFACE_v0_1.md
