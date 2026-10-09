@@ -6,6 +6,9 @@ Interface: PHAGE_AUTHORITY_LINEAGE_HHN_EXECUTABLE_INTERFACE_v0_2.md (frozen by
 merge of #97). Acceptance IDs: #96 §8 (`P§8`), allocated per interface §9.
 Runtime: CPython 3.13.16, `python -m unittest`.
 
+Revision 2 (same date): Z03 corrected per review (§5); surface and baseline
+runs repeated. Revision 1 figures are kept in §7 for traceability.
+
 Status: RED. No `phage_authority_lineage_hhn_v0_2` or
 `phage_authority_protected_use_v0_1` exists. Nothing here is implementation or
 GREEN evidence.
@@ -34,13 +37,13 @@ python -m unittest test_phage_authority_protected_use_v0_1
 | File | Tests | Failed | Of which `SURFACE_RED` | Passed | Skipped |
 |---|---|---|---|---|---|
 | hhn v0.2 | 48 | 48 | 48 | 0 | 0 |
-| protected-use v0.1 | 29 | 24 | 24 | 4 | 1 |
+| protected-use v0.1 | 30 | 26 | 26 | 4 | 0 |
 
 Every failure message is `SURFACE_RED: <module> absent; not behavioral
 evidence`. No import, syntax, or fixture error occurs. The four passing tests
 are `ReferenceSourceModel` (visit figures 55/65536/65537, O01, O05, reference
-rejections write nothing); they validate the fixture only. The skip is Z03
-(§5).
+rejections write nothing); they validate the fixture only. No test is
+skipped.
 
 These results say only that the modules do not exist.
 
@@ -62,7 +65,7 @@ Command: `PYTHONPATH=<baseline dir> python -m unittest -v <test module>`.
 | File | Tests | ok | FAIL | ERROR | Skipped | `SURFACE_RED` |
 |---|---|---|---|---|---|---|
 | hhn v0.2 | 48 | 21 | 27 (60 failing subtests) | 0 | 0 | 0 |
-| protected-use v0.1 | 29 | 12 | 13 | 4 (X03 has both) | 1 | 0 |
+| protected-use v0.1 | 30 | 13 | 14 (29 failures) | 4 (6 errors; X03 is in both) | 0 | 0 |
 
 Every failure was inspected. Each is a behavioral mismatch: a wrong
 reason/status, a `None` where v0.2 requires a value, a recorded hook call, a
@@ -106,6 +109,7 @@ defect.
 | C04 | FAIL | seam received `snapshot_at=0`, `valid_until=2**63` |
 | Z01 | FAIL | TIME_REGRESSION and NOT_CURRENT not reached (wrong seam arguments); mapping absent |
 | P02, P03 | FAIL | wrong mapping; `valid_until` not the chain minimum |
+| Z03 reachable (50/75/100, now 60) | FAIL | COMMITTED; seam received `valid_until=2**63`, not 50 |
 | X01, X02 | ERROR | seam exception escapes |
 | X03 | FAIL + ERROR | malformed returns accepted or raise |
 | T04 seam row | ERROR | `KeyError` from keyed access on the colliding dict |
@@ -113,6 +117,7 @@ defect.
 | V01, V03 | FAIL | no-op request committed / authentication reported first |
 | O02, O03 | ok | expected: these are non-claim tests (undetectable O1 violations commit) |
 | U02, U03, U04, V02, Z02, X04 | ok | behavior already coincides on these paths |
+| Z03 intermediate earlier than leaf | ok | #92 attenuation already returns AUTHORITY_SCOPE_VIOLATION before the seam |
 | O01, O05, figures, reference rejections | ok | fixture-only |
 
 ## 4. Coverage against interface §9
@@ -120,7 +125,7 @@ defect.
 | File | P§8 IDs present |
 |---|---|
 | hhn v0.2 | C01, C02, C05; A03, A04; B01–B10; T01, T02, T03, T04 (6 rows), T05; S01–S05; V01–V03; U04 |
-| protected-use v0.1 | C03, C04; A01, A02; U01–U04; Z01, Z02, Z03 (skipped, §5); P01–P03; X01–X04; O01–O05; T04 seam-return row; V01–V03 |
+| protected-use v0.1 | C03, C04; A01, A02; U01–U04; Z01, Z02, Z03 (two cases, §5); P01–P03; X01–X04; O01–O05; T04 seam-return row; V01–V03 |
 
 All 18 #92 tests carry forward. Their reason/status/effect expectations are
 unchanged. Mechanical edits required by the frozen interface, applied
@@ -132,33 +137,44 @@ calls are logged separately so #92 call-sequence assertions stay identical.
 V01–V03 follow the per-entry table in interface §9 (inspection V02 =
 AUTHORIZED; use-time V02 = COMMITTED).
 
-## 5. Raised for review (not adjusted)
+## 5. Z03 correction (review decision, 2026-10-09)
 
-**SPEC_DEFECT_Z03.** P§8 Z03 requires an intermediate grant that expires
-before both leaf and root. #92 attenuation, unchanged in v0.2, requires
-`child.expires_at <= parent.expires_at`, so the leaf's expiry is always the
-chain minimum. A fixture with an intermediate expiring before the leaf fails
-resolution with AUTHORITY_SCOPE_VIOLATION and never reaches the commit seam.
-Z03 is implemented as written and marked `skip` with this reason; its
-expectation is not changed. Consequence: no reachable test can distinguish
-"minimum over the chain" from "leaf's `expires_at`". C04 and P03 still pin
-`valid_until` to the leaf value. Reviewer decision needed: remove Z03, or
-restate it as "`valid_until` equals the leaf's `expires_at`, which is the
-chain minimum under attenuation".
+Defect, as raised in revision 1: P§8 Z03 required an intermediate grant that
+expires before both leaf and root. #92 attenuation, unchanged in v0.2,
+requires `child.expires_at <= parent.expires_at`, so on any chain that
+resolves, the leaf expires first. The case as written was unreachable.
+
+Decision: Z03 is corrected, not removed. `valid_until = min(chain expires_at)`
+and the attenuation rule are unchanged. Z03 is now two cases:
+
+| Case | Chain expiry (leaf / middle / root) | Expected |
+|---|---|---|
+| `test_P8_Z03_chain_minimum_reachable` | 50 / 75 / 100; snapshot `at = 10`; pre-commit sets `now = 60` | resolution succeeds; seam receives `snapshot_at = 10`, `valid_until = 50`; NOT_COMMITTED / AUTHORITY_NOT_CURRENT; zero writes, epoch unchanged |
+| `test_P8_Z03_intermediate_earlier_than_leaf_is_scope_violation` | 100 / 50 / 100 | NOT_COMMITTED / AUTHORITY_SCOPE_VIOLATION from resolution; `commit_if_epoch` calls 0; zero writes |
+
+The `skip` is removed. The P§8 text of Z03 is superseded by these two cases
+through a separate docs-only errata record; #96 and the interface are not
+edited by this PR.
 
 **Interface status line.** The merged interface still reads
-`FREEZE CANDIDATE rev 2, NOT FROZEN`. The document states it becomes frozen on
-approval and merge, which #97 completed. Updating the line is a separate
-docs-only change; not touched here.
+`FREEZE CANDIDATE rev 2, NOT FROZEN`. Decision: corrected by the same separate
+docs-only errata record, stating freeze by approval and merge of #97
+(`a853f35`). Not touched in this PR.
 
 ## 6. CI decision
 
-No workflow is added. Adding these tests to CI now would turn main red until
-the implementation PR. Recommended: the implementation PR adds a workflow
-running both test files, with `ReferenceSourceModel` expected to pass from
-the first commit.
+Accepted by review. No workflow in this RED PR. The implementation PR must add
+CI running both test files and must keep its own semantic RED → GREEN record
+(semantic RED against its own stub, then GREEN), independent of the baseline
+runs in §3.
 
-## 7. Non-claims
+## 7. Revision 1 figures (superseded)
+
+Before the Z03 correction, protected-use had 29 tests: surface 24 failures,
+4 passes, 1 skip (Z03); baseline 12 ok, 13 FAIL methods (28 failures),
+4 ERROR methods (6 errors), 1 skip. Inspection figures are unchanged.
+
+## 8. Non-claims
 
 The baseline stubs are diagnostic devices, not candidate implementations, and
 are not in the repository. Their pass results carry no weight beyond showing

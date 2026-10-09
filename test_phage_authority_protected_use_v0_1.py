@@ -235,17 +235,30 @@ class SeamRejections(Harness):
                 src.pre_commit_hooks.append(lambda s, c=clock: setattr(s, 'clock', c))
                 self.assertEqual(self.run_entry(src), committed(self.request, 1))
 
-    @unittest.skip('SPEC_DEFECT_Z03: unreachable under #92 attenuation '
-                   '(child.expires_at <= parent.expires_at), so the leaf is always the '
-                   'chain minimum; raised for review, expectation not changed')
-    def test_P8_Z03_chain_minimum_intermediate(self):
-        src = ReferenceSource(max_grants=3, grants=[
-            grant('leaf', 'alice', 'middle-subject', 'middle', expires_at=100),
-            grant('middle', 'middle-subject', 'root-subject', 'root', expires_at=50),
-            grant('root', 'root-subject', 'external', None, expires_at=100),
+    # Z03 corrected per review 2026-10-09 (RED record §5): the original case
+    # required an intermediate expiring before the leaf, which #92 attenuation
+    # (child.expires_at <= parent.expires_at) makes unreachable. Semantics of
+    # valid_until = min(chain expires_at) and of attenuation are unchanged.
+    @staticmethod
+    def three_link_source(leaf_expires, middle_expires, root_expires):
+        return ReferenceSource(max_grants=3, grants=[
+            grant('leaf', 'alice', 'middle-subject', 'middle', expires_at=leaf_expires),
+            grant('middle', 'middle-subject', 'root-subject', 'root', expires_at=middle_expires),
+            grant('root', 'root-subject', 'external', None, expires_at=root_expires),
             grant('other', 'bob', 'external', None)])
-        src.pre_commit_hooks.append(lambda s: setattr(s, 'clock', 60))
-        self.assertEqual(self.run_entry(src), not_committed('AUTHORITY_NOT_CURRENT'))
+
+    def test_P8_Z03_chain_minimum_reachable(self):
+        src = self.three_link_source(50, 75, 100)
+        self.rejected(src, lambda s: setattr(s, 'clock', 60),
+                      not_committed('AUTHORITY_NOT_CURRENT'))
+        self.assertEqual(self.commit_calls(src)[0][1]['snapshot_at'], 10)
+        self.assertEqual(self.commit_calls(src)[0][1]['valid_until'], 50)
+
+    def test_P8_Z03_intermediate_earlier_than_leaf_is_scope_violation(self):
+        src = self.three_link_source(100, 50, 100)
+        self.assertEqual(self.run_entry(src), not_committed('AUTHORITY_SCOPE_VIOLATION'))
+        self.assertEqual(self.commit_calls(src), [])
+        self.assertEqual(src.writes, 0)
 
     def test_P8_P01_epoch_mismatch_and_expired(self):
         def prepare(s):
