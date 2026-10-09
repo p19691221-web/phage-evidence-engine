@@ -80,11 +80,12 @@ Consequences, unchanged by E4:
 | Dict with a non-`str` key and an oversized container value | INVALID_AUTHORITY_INPUT (container unreachable; B09, B10) |
 | Non-exact object of any size | INVALID_AUTHORITY_INPUT (not measured; T02) |
 
-Not covered by an existing acceptance case: rows 1–3 (oversize scalar value
-under an extra field, and oversize scalar value in a key-gate-failed dict).
-All five rows were checked against the merged implementation at `95b397d`
-before this record was written. E4 does not add a test; a future test
-revision may.
+Coverage: when E4 was submitted, rows 1–3 (oversize scalar value under an
+extra field, and oversize scalar value in a key-gate-failed dict) had no
+acceptance case; E4 itself added no test. They were later covered at both
+entries by #102 (`SUPP_E4_1`, `SUPP_E4_2`, `SUPP_E4_3`), merge commit
+`6e04b4d532c9c22e0febee0acc2779edc816a582`. All five rows were checked
+against the merged implementation at `95b397d` before E4 was written.
 
 ## Non-claims
 
