@@ -13,7 +13,7 @@ import unittest
 
 import fixture_phage_authority_reference_source_v0_1 as fx
 from fixture_phage_authority_reference_source_v0_1 import (
-    FIELDS, Collider, RECORDER, ReferenceSource, base_request, grant,
+    FIELDS, Collider, OpaqueKey, RECORDER, ReferenceSource, base_request, grant,
     snapshot_containers)
 
 MODULE = 'phage_authority_protected_use_v0_1'
@@ -430,6 +430,80 @@ class NoOpRequest(Harness):
                 self.assertEqual(self.run_entry(src, authentication=outcome),
                                  not_committed('INVALID_AUTHORITY_INPUT'))
                 self.assertEqual((self.auth_calls, self.verify_calls, src.calls), ([], [], []))
+
+
+# ---------------------------------------------------------------------------
+# Supplementary cases, outside P§8 (test revision 2026-10-09).
+# TR01: source changes after D2 has read the bound epoch E and before the
+#       resolver receives E (fixture `epoch_read_then`). The consumer must
+#       still pass E to the commit seam.
+# E4:   errata E4 rows 1-3 at the use-time entry.
+# ---------------------------------------------------------------------------
+
+class SupplementaryTOCTOU(Harness):
+    def run_after_d2(self, change):
+        src = ReferenceSource()
+        seam = src.epoch_read_then(change)
+        result = self.run_entry(src, epoch=seam)
+        return src, seam, result
+
+    def assert_rejected_after_d2(self, change):
+        src, seam, result = self.run_after_d2(change)
+        # Result first: a consumer that re-reads the epoch commits here.
+        self.assertEqual(result, not_committed('AUTHORITY_STATE_CHANGED'),
+                         'hook fired=%d observed=%r' % (seam.fired, seam.observed))
+        self.assertEqual((seam.fired, seam.observed[0]), (1, 0),
+                         'fixture defect: hook did not run once after D2 read E=0')
+        calls = self.commit_calls(src)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(calls[0][1]['expected_epoch'], 0)
+        self.assertEqual((src.writes, src.epoch), (0, 1))
+        self.assertEqual(src.dump()['policy']['revision'], 'p1')
+        self.assertEqual([c[0] for c in src.calls].count('current_epoch'), 1)
+        return src
+
+    def test_SUPP_TR01a_leaf_revoked_after_d2(self):
+        src = self.assert_rejected_after_d2(lambda s: s.revoke('leaf'))
+        self.assertTrue(src.find('leaf')['revoked'])
+
+    def test_SUPP_TR01b_unrelated_change_after_d2(self):
+        self.assert_rejected_after_d2(lambda s: s.touch('other'))
+
+    def test_SUPP_TR01c_hook_without_change_commits(self):
+        src, seam, result = self.run_after_d2(lambda s: None)
+        self.assertEqual(result, committed(self.request, 1))
+        self.assertEqual((seam.fired, seam.observed), (1, [0]))
+        self.assertEqual((src.writes, src.epoch), (1, 1))
+
+
+class SupplementaryE4ScalarScope(Harness):
+    def check(self, mutate, at_limit, over_limit, opaque=False):
+        for value, expected in [(at_limit, 'INVALID_AUTHORITY_INPUT'),
+                                (over_limit, 'SNAPSHOT_LIMIT_EXCEEDED')]:
+            with self.subTest(value=repr(value)[:24], expected=expected):
+                src = ReferenceSource()
+                snapshot = src.snapshot_provider()
+                mutate(snapshot['grants'][0], value)
+                src.calls.clear()
+                self.auth_calls = []; self.verify_calls = []
+                RECORDER.clear()
+                result = self.run_entry(src, provider=lambda: snapshot)
+                self.assertEqual(result, not_committed(expected))
+                self.assertEqual(self.commit_calls(src), [])
+                self.assertEqual(self.verify_calls, [])
+                self.assertEqual((src.writes, src.epoch), (0, 0))
+                if opaque:
+                    self.assertEqual(RECORDER, [])
+
+    def test_SUPP_E4_1_extra_field_overlong_str(self):
+        self.check(lambda g, v: g.__setitem__('extra', v), 'x' * 256, 'x' * 257)
+
+    def test_SUPP_E4_2_extra_field_65_bit_int(self):
+        self.check(lambda g, v: g.__setitem__('extra', v), 2 ** 64 - 1, 2 ** 64)
+
+    def test_SUPP_E4_3_key_gate_failed_dict_overlong_scalar(self):
+        self.check(lambda g, v: g.__setitem__(OpaqueKey(), v), 'x' * 256, 'x' * 257,
+                   opaque=True)
 
 
 if __name__ == '__main__':
