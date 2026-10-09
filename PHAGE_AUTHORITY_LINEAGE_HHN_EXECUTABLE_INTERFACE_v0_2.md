@@ -1,6 +1,13 @@
 # H/H′/N executable interface v0.2 — freeze candidate
 
-Status: FREEZE CANDIDATE, NOT FROZEN. Prepared 2026-10-09 (Asia/Taipei).
+Status: FREEZE CANDIDATE rev 2, NOT FROZEN. Prepared 2026-10-09 (Asia/Taipei).
+
+Revision log:
+
+| Rev | Change |
+|---|---|
+| 2 | §7.2 S-5 lists all eight container positions with expected types, including `snapshot`, `snapshot.grants` and `snapshot.roots`, which rev 1 omitted. §7.3 `inner` no longer requires a dict parent, so grant dicts inside the `grants` list are counted; a failed parent key gate blocks only that dict's container values. §9 V01–V03 expectations stated per entry (inspection V02 = AUTHORIZED; use-time V02 = COMMITTED). |
+| 2 | Review accepted two author arrangements: constants defined in the resolver module and imported by protected-use (§1); `snapshot_provider` returns classified as `None` → AUTHORITY_UNRESOLVED, non-dict → stage 4, exception → AUTHORITY_VERIFICATION_ERROR (§2). |
 Becomes frozen only on explicit review approval and merge.
 Baseline: main `cb425810b57d73a83d714a06e0509550157f9af5`.
 Supersedes for new work: PHAGE_AUTHORITY_LINEAGE_HHN_EXECUTABLE_INTERFACE_v0_1.md
@@ -320,10 +327,27 @@ Applies to the request scan, snapshot preflight and seam-return validation.
      field-name set. `==` on `d` itself is never used;
   5. on gate failure: `d` is malformed; accessed only by `dict.items(d)`;
      scalar values still size-checked; container values not entered.
-- **S-5** Fixed schema walk, max depth 4; descend only at:
-  `snapshot.policy`, `snapshot.grants[*]`, `grant.operations`,
-  `grant.targets`, `snapshot.roots[*]`. A container elsewhere is malformed
-  and not entered.
+- **S-5** Fixed schema walk, four container levels at most. These are the
+  only container positions, each with its one expected exact type:
+
+  | Position | Expected type |
+  |---|---|
+  | `snapshot` | `dict` |
+  | `snapshot.policy` | `dict` |
+  | `snapshot.grants` | `list` |
+  | `snapshot.grants[*]` | `dict` |
+  | `snapshot.grants[*].operations` | `list` |
+  | `snapshot.grants[*].targets` | `list` |
+  | `snapshot.roots` | `dict` |
+  | `snapshot.roots[*]` | `dict` |
+
+  An object at a listed position is entered only if it is an exact instance
+  of that position's expected type and, when its parent is a dict, that
+  parent passed its key gate (S-4). A list parent (`snapshot.grants`) has no
+  key gate; each element at `snapshot.grants[*]` is considered on its own.
+  Every entered dict then runs its own key gate before any of its values is
+  considered. A container at an unlisted position, or of the wrong type at a
+  listed position, is malformed and not entered.
 - **S-6** No seam call from the start of stage 4 to the end of stage 5. With
   O1a, the copy is bounded by the stage-4 count.
 - **S-7** The private copy contains only exact-typed values, no aliasing.
@@ -333,10 +357,18 @@ Applies to the request scan, snapshot preflight and seam-return validation.
 ```
 visits(dict d) = 1 + Σ_{(k,v) in d} (1 + inner(v))
 visits(list l) = 1 + Σ_{e in l}      (1 + inner(e))
-inner(x) = visits(x)  if x is an exact container at an S-5 position
-                      in a dict that passed its key gate
+inner(x) = visits(x)  if x is entered under S-5
          = 0          otherwise
 ```
+
+Under S-5, `x` is entered when it is an exact instance of the expected type
+at one of the eight listed positions and, if its parent is a dict, that
+parent passed its key gate. List elements at `snapshot.grants[*]` are entered
+on their own merits; each entered dict applies its own key gate. If a dict
+fails its key gate, its container values contribute `inner = 0`; its pairs
+are still charged `1` each. Snapshot cost is `visits(snapshot)` when the
+snapshot itself is an exact `dict`. This matches #96 P§5.3 and reproduces
+55 / 65536 / 65537.
 
 Charged per expansion; no identity memoization. Counter checked before each
 unit; the unit that would exceed `SNAPSHOT_MAX_VISITS` is not performed.
@@ -397,8 +429,18 @@ Acceptance IDs are those of P§8. Allocation:
 
 | File | IDs |
 |---|---|
-| hhn v0.2 | all #92 tests carried forward with `state_epoch` and `current_epoch` added; C01, C02, C05; A03, A04; B01–B10; T01–T05 (T04 seam-return row in protected-use); S01–S05; V01–V03; U04 (inspection entry) |
-| protected-use v0.1 | C03, C04; A01, A02; U01–U04; Z01–Z03; P01–P03; X01–X04; O01–O05; T04 seam-return row; V01 (use-time entry, all five seams 0) |
+| hhn v0.2 | all #92 tests carried forward with `state_epoch` and `current_epoch` added; C01, C02, C05; A03, A04; B01–B10; T01–T05 (T04 seam-return row in protected-use); S01–S05; V01–V03 (inspection entry); U04 (inspection entry) |
+| protected-use v0.1 | C03, C04; A01, A02; U01–U04; Z01–Z03; P01–P03; X01–X04; O01–O05; T04 seam-return row; V01–V03 (use-time entry) |
+
+V01–V03 run against both entries with entry-specific expectations. The
+expectations below are normative; a RED author must not change them to fit
+the allocation.
+
+| ID | Inspection entry (`resolve_policy_change`) | Use-time entry (`commit_policy_change`) |
+|---|---|---|
+| V01 both unchanged | UNVERIFIED / INVALID_AUTHORITY_INPUT; `authenticate`, `snapshot_provider`, `verify_grant`, `current_epoch` calls 0 | NOT_COMMITTED / INVALID_AUTHORITY_INPUT; those four plus `commit_if_epoch` calls 0 |
+| V02 only one of revision / digest unchanged (positive control, each variant) | AUTHORIZED / POLICY_CHANGE_AUTHORIZED | COMMITTED / POLICY_CHANGE_COMMITTED |
+| V03 V01 request with authentication set to fail | INVALID_AUTHORITY_INPUT; zero seam calls | NOT_COMMITTED / INVALID_AUTHORITY_INPUT; zero seam calls |
 
 Carried-forward #92 tests keep their expected results. A v0.1 test that cannot
 carry forward without a changed expectation is a freeze defect, to be raised
