@@ -1,0 +1,46 @@
+name: Principle 0 authority-status type boundary
+
+on:
+  push:
+    paths:
+      - "phage_principle0_emergency_override_v0_1.py"
+      - "phage_principle0_schedule_v0_1.py"
+      - "phage_authority_engine_v0_1.py"
+      - "test_phage_principle0_authority_status_type_v0_1.py"
+      - "test_phage_principle0_emergency_override_v0_1.py"
+      - "test_phage_principle0_schedule_v0_1.py"
+      - ".github/workflows/principle0-authority-status-type.yml"
+  pull_request:
+    paths:
+      - "phage_principle0_emergency_override_v0_1.py"
+      - "phage_principle0_schedule_v0_1.py"
+      - "phage_authority_engine_v0_1.py"
+      - "test_phage_principle0_authority_status_type_v0_1.py"
+      - "test_phage_principle0_emergency_override_v0_1.py"
+      - "test_phage_principle0_schedule_v0_1.py"
+      - ".github/workflows/principle0-authority-status-type.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  principle0-authority-status-type:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Authority-status type boundary (K1-K3, R1-R7, M1-M5)
+        run: python -m unittest -v test_phage_principle0_authority_status_type_v0_1
+
+      - name: Emergency Override regression A-F (unchanged)
+        run: python test_phage_principle0_emergency_override_v0_1.py
+
+      - name: Schedule regression A-F (unchanged)
+        run: python test_phage_principle0_schedule_v0_1.py
