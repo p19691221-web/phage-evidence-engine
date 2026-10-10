@@ -20,14 +20,25 @@ BLOCKED = "BLOCKED"
 NOT_DETERMINED = "NOT_DETERMINED"
 
 
-def _status_name(value) -> str:
-    if value is None:
-        return "NONE"
+_MISSING = object()
+_STATUS_BY_NAME = {member.name: member for member in AuthorityStatus}
 
-    if hasattr(value, "name"):
-        return value.name
 
-    return str(value)
+def _normalize_authority_status(value, field: str) -> AuthorityStatus:
+    """Authority-status type boundary (decision record v0.1 rev 2, D1-D3).
+
+    Accepts an exact AuthorityStatus member or an exact str naming one.
+    Everything else raises ValueError without reading, formatting, hashing or
+    comparing the value. Only an unknown exact str is echoed (the #53 message).
+    """
+    if type(value) is AuthorityStatus:
+        return value
+    if type(value) is str:
+        member = _STATUS_BY_NAME.get(value)
+        if member is not None:
+            return member
+        raise ValueError(f"unknown {field}: {value}")
+    raise ValueError(f"invalid {field}")
 
 
 def _result(
@@ -48,21 +59,13 @@ def evaluate_override(
     request: dict,
     override_grant: dict | None,
 ) -> dict:
+    # D4: normalize before any schedule-status branch, so no result can carry
+    # a raw input object. D3: missing and None are both rejected.
+    ordinary_authority_status = _normalize_authority_status(
+        request.get("ordinary_authority_status", _MISSING),
+        "ordinary_authority_status",
+    )
     schedule_status = request.get("schedule_status")
-    ordinary_authority_status = request.get(
-    "ordinary_authority_status"
-)
-
-    if isinstance(ordinary_authority_status, str):
-        try:
-            ordinary_authority_status = AuthorityStatus[
-            ordinary_authority_status
-        ]
-        except KeyError:
-            raise ValueError(
-            "unknown ordinary_authority_status: "
-            f"{ordinary_authority_status}"
-        ) from None
     at = request.get("at")
 
     if schedule_status == "SCHEDULE_UNRESOLVED":
@@ -99,11 +102,7 @@ def evaluate_override(
             authority_status=AuthorityStatus.AUTHORITY_UNRESOLVED,
             effect_path=BLOCKED,
         )
-    ordinary_authority_name = _status_name(
-        ordinary_authority_status
-        )            
-
-    if ordinary_authority_name != "CLEAN":
+    if ordinary_authority_status is not AuthorityStatus.CLEAN:
         return _result(
             schedule_status=schedule_status,
             override_status=OVERRIDE_NOT_APPLICABLE,

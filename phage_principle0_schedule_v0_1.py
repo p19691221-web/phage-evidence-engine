@@ -11,20 +11,32 @@ from copy import deepcopy
 from datetime import datetime, time
 from typing import Any
 
+from phage_authority_engine_v0_1 import AuthorityStatus
+
 
 SCHEDULE_MATCH = "SCHEDULE_MATCH"
 SCHEDULE_NO_MATCH = "SCHEDULE_NO_MATCH"
 SCHEDULE_UNRESOLVED = "SCHEDULE_UNRESOLVED"
 
 
-def _status_name(value: Any) -> str:
-    if value is None:
-        return "NONE"
+_STATUS_BY_NAME = {member.name: member for member in AuthorityStatus}
 
-    if hasattr(value, "name"):
-        return value.name
 
-    return str(value)
+def _normalize_authority_status(value: Any, field: str) -> AuthorityStatus:
+    """Authority-status type boundary (decision record v0.1 rev 2, D1, D2, D5).
+
+    Same rule as the Emergency Override module: exact AuthorityStatus member or
+    exact canonical str; everything else raises ValueError without touching the
+    value. Only an unknown exact str is echoed in the message.
+    """
+    if type(value) is AuthorityStatus:
+        return value
+    if type(value) is str:
+        member = _STATUS_BY_NAME.get(value)
+        if member is not None:
+            return member
+        raise ValueError(f"unknown {field}: {value}")
+    raise ValueError(f"invalid {field}")
 
 
 def _parse_hhmm(value: str) -> time:
@@ -143,10 +155,11 @@ def mutate_schedule(
     and leave the ScheduleDefinition unchanged.
     """
 
+    # D5: validate before deepcopy and before the authorized branch.
+    authority_status = _normalize_authority_status(authority_status, "authority_status")
     schedule_before = deepcopy(schedule)
-    authority_name = _status_name(authority_status)
 
-    if authority_name != "CLEAN":
+    if authority_status is not AuthorityStatus.CLEAN:
         return {
             "mutation_status": "BLOCKED",
             "schedule_after": schedule_before,
