@@ -4,6 +4,9 @@ Date: 2026-10-10 (Asia/Taipei). Baseline: main
 `6eb0ee2` (merge of #103).
 Origin: follow-up recorded after #53 ("None/non-str passthrough and str-subclass
 hook risk, severity pending repro").
+Revision 2 (same day): reachability wording limited to what was checked;
+P0-T3 restated as caller-hook `RuntimeError` leakage. Decisions on §4 are in
+PHAGE_PRINCIPLE0_AUTHORITY_STATUS_TYPE_DECISION_v0_1.md.
 Scope: reproduction and assessment only. No Principle 0 implementation,
 test, workflow, CLAIMS_STATUS or maturity change.
 
@@ -61,27 +64,36 @@ values also pass through there; those branches do not grant.
 
 Severity has two axes. **Fixture severity**: effect on the module's own
 fail-closed contract, judged from reproduced results. **Runtime
-reachability**: whether any product path reaches the entry. Static check
-(in the repro file): no non-test module imports either entry; both module
-docstrings exclude Gateway, Tool Adapter and production execution; the
-"permit" outcome is `effect_path = NOT_DETERMINED`, not an effect.
+reachability**: whether a product path reaches the entry.
+
+What was checked for reachability, and its limit: the repro file scans the
+repository-root `*.py` files for the two module names and finds no reference
+outside `test_*` / `repro_*` files. It does not scan subdirectories,
+non-Python callers, dynamic imports or deployments outside this repository.
+Both module docstrings exclude Gateway, Tool Adapter and production
+execution, and the "permit" outcome is `effect_path = NOT_DETERMINED`, not an
+effect. Runtime reachability is therefore **not established** either way;
+this report does not claim it is unreachable.
 
 | ID | Finding | Fixture severity | Runtime reachability |
 |---|---|---|---|
-| P0-T1 | **Status laundering**: a `str` subclass carrying `AUTHORITY_REVOKED`, or a non-`str` object spoofing `__class__`, resolves to the genuine `AuthorityStatus.CLEAN` through hook-driven enum lookup. Result is APPLICABLE and indistinguishable from a real CLEAN downstream. | High | None today |
-| P0-T2 | **Forged CLEAN accepted**: any non-`AuthorityStatus` object with `.name == "CLEAN"` or `__str__() == "CLEAN"` yields APPLICABLE; the forged object is returned as `authority_status`. | High (detectable downstream only by type check) | None today |
-| P0-T3 | **Exception leakage**: a raising `.name` property or `__hash__` escapes as `RuntimeError`, not the contract's `ValueError`. Fails closed by accident. | Medium | None today |
-| P0-T4 | **Hooks execute in normalization**: `__hash__` / `__eq__` / `__str__` of caller objects run, including side effects. | Medium | None today |
-| P0-T5 | **Raw passthrough and None/missing conflation**: non-canonical values that block are returned as-is (result-shape contract expects `AuthorityStatus`); missing key and explicit `None` are indistinguishable. Outcome is BLOCKED. | Low | None today |
-| P0-T6 | **`mutate_schedule` classifies forged CLEAN as authorized**. Today the authorized branch is unimplemented and raises, so no mutation occurs. | Low now; High once authorized mutation exists | None today |
+| P0-T1 | **Status laundering**: a `str` subclass carrying `AUTHORITY_REVOKED`, or a non-`str` object spoofing `__class__`, resolves to the genuine `AuthorityStatus.CLEAN` through hook-driven enum lookup. Result is APPLICABLE and indistinguishable from a real CLEAN downstream. | High | Not established |
+| P0-T2 | **Forged CLEAN accepted**: any non-`AuthorityStatus` object with `.name == "CLEAN"` or `__str__() == "CLEAN"` yields APPLICABLE; the forged object is returned as `authority_status`. | High (detectable downstream only by type check) | Not established |
+| P0-T3 | **Caller-hook `RuntimeError` leakage**: an exception raised by the caller's own `.name` property or `__hash__` escapes from the entry as `RuntimeError`. No result is returned, so nothing is granted, but the failure mode is determined by the caller object. (The rejection mechanism for non-canonical types was not yet decided at `6eb0ee2`; this is not stated as a violation of a `ValueError` contract for those types.) | Medium | Not established |
+| P0-T4 | **Hooks execute in normalization**: `__hash__` / `__eq__` / `__str__` of caller objects run, including side effects. | Medium | Not established |
+| P0-T5 | **Raw passthrough and None/missing conflation**: non-canonical values that block are returned as-is (result-shape contract expects `AuthorityStatus`); missing key and explicit `None` are indistinguishable. Outcome is BLOCKED. | Low | Not established |
+| P0-T6 | **`mutate_schedule` classifies forged CLEAN as authorized**. Today the authorized branch is unimplemented and raises, so no mutation occurs. | Low now; High once authorized mutation exists | Not established |
 
-Not a finding: exact unknown `str` → `ValueError` is the #53 contract.
+Not a finding: exact unknown `str` → `ValueError` is the #53 contract. #53
+settled only that case; rejection of other types was undecided at
+`6eb0ee2`.
 
 Conclusion: the defects are real and reproducible at fixture level, including
-two fail-open paths (P0-T1, P0-T2). They are not reachable from any product
-path at `6eb0ee2`. They would become reachable as soon as either entry is wired
-into a Gateway, tool-effect or authorized-mutation path, so they should be closed
-before any such integration.
+two fail-open paths (P0-T1, P0-T2). Among the repository-root Python modules
+checked, no non-test reference to either entry was found; runtime reachability
+is not established. Any wiring of either entry into a Gateway, tool-effect or
+authorized-mutation path would expose these paths, so they should be closed
+before such integration.
 
 ## 4. Proposed direction: exact-type acceptance
 
@@ -101,8 +113,8 @@ current fixtures use; the exact-enum branch is required.
 
 Decisions needed before RED (spec questions, not settled here):
 
-1. **Rejection mechanism**: raise `ValueError` (consistent with #53's unknown
-   string) or return BLOCKED with `AUTHORITY_UNRESOLVED`.
+1. **Rejection mechanism** for types other than exact unknown `str` (#53):
+   raise `ValueError`, or return BLOCKED with `AUTHORITY_UNRESOLVED`.
 2. **`None` and missing**: same as other rejected values, or a distinct
    classification (e.g. `AUTHORITY_UNRESOLVED`), and whether missing stays
    indistinguishable from `None`.
@@ -120,7 +132,7 @@ Decisions needed before RED (spec questions, not settled here):
 | #53 normalization test | exact `"AUTHORITY_REVOKED"` | None |
 | #53 unknown-string test | exact `"NOT_A_REAL_AUTHORITY_STATUS"` → `ValueError` | None if decision 1 keeps `ValueError`; must change if decision 1 returns BLOCKED |
 | Schedule fixtures A–F (fixture E) | `AuthorityStatus.AUTHORITY_SCOPE_VIOLATION` | None |
-| Non-test callers | none exist | None |
+| Non-test callers | none found in repository-root Python modules | None found |
 | Behavior for `None`, missing, non-`str`, `str` subclasses, foreign enums | — | Changes by design (decisions 1–3); none is covered by an existing test |
 | Result shape | — | `authority_status` becomes always `AuthorityStatus`, matching the existing `assert_result_shape` expectation |
 
@@ -134,7 +146,8 @@ picks those answers implicitly.
 
 ## 7. Non-claims
 
-No implementation change. No claim of runtime exploitability: no product path
-reaches either entry at `6eb0ee2`. The hostile objects are in-process Python
-objects; this does not assess any serialization boundary. CLAIMS_STATUS and
-maturity unchanged.
+No implementation change. No claim about runtime exploitability in either
+direction: the static check covers repository-root Python modules only, and
+runtime reachability is not established. The hostile objects are in-process
+Python objects; this does not assess any serialization boundary. CLAIMS_STATUS
+and maturity unchanged.

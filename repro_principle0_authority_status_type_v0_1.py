@@ -236,9 +236,11 @@ class MutateScheduleTyping(unittest.TestCase):
 
 
 class RuntimeReachability(unittest.TestCase):
-    """Static evidence: which repository modules import the two entries."""
+    """Limited static evidence: repository-root *.py files only, by module name.
+    Does not cover subdirectories, non-Python callers, dynamic imports or
+    external deployments; it does not establish runtime unreachability."""
 
-    def test_no_non_test_importer(self):
+    def test_no_non_test_reference_in_root_python_modules(self):
         pattern = re.compile(r'phage_principle0_(emergency_override|schedule)_v0_1')
         importers = sorted(
             path.name for path in HERE.glob('*.py')
