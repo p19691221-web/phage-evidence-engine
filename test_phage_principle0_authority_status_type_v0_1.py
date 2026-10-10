@@ -99,6 +99,9 @@ class NamedClean:
 class ClassSpoof:
     @property
     def __class__(self):
+        # isinstance() falls back to reading __class__; record that access so an
+        # implementation that probes with isinstance and then rejects still fails.
+        RECORDER.append(('ClassSpoof', '__class__'))
         return str
 
     def __hash__(self):
@@ -240,15 +243,15 @@ class OverrideRejected(Assertions):
         self.check_rejected(r5_values())
 
     def test_R6_normalization_precedes_schedule_branches(self):
-        invalid = [None, MISSING, 1, types.SimpleNamespace(name='CLEAN'), StrSaysClean(),
-                   LyingStr('AUTHORITY_REVOKED'), ClassSpoof()]
         for status in ['SCHEDULE_UNRESOLVED', 'SCHEDULE_MATCH']:
-            for value in invalid:
+            for value in [None, MISSING] + r3_values() + r4_values() + r5_values():
                 with self.subTest(schedule_status=status, value=label(value)):
+                    SideEffectStr.touched.clear()
                     outcome = call_override(value, schedule_status=status)
                     recorded = list(RECORDER)
                     self.assert_value_error(outcome, INVALID_OVERRIDE)
                     self.assertEqual(recorded, [])
+                    self.assertEqual(SideEffectStr.touched, [])
         controls = {'SCHEDULE_UNRESOLVED': ('OVERRIDE_UNRESOLVED', 'BLOCKED'),
                     'SCHEDULE_MATCH': ('OVERRIDE_NOT_APPLICABLE', 'NOT_DETERMINED')}
         for status, expected in controls.items():

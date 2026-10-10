@@ -6,6 +6,11 @@ cases K1–K3, R1–R7, M1–M5.
 Scope: tests only. No Principle 0 implementation change, no workflow
 (decision §5: CI is enabled by the fix PR).
 
+Revision 2 (same day, review): R6 now runs the full rejected-input list on
+both early-return branches; `ClassSpoof.__class__` access is recorded and must
+be zero in R5, R6 and M3. Figures below are revision 2. Revision 1 figures are
+kept in §6.
+
 ## 1. File
 
 `test_phage_principle0_authority_status_type_v0_1.py`: 15 test methods, one
@@ -31,7 +36,7 @@ Identical on CPython 3.12.3 and 3.13.16:
 |---|---|
 | Test methods | 15 |
 | ok | 5 |
-| FAIL | 10 (91 failing subtests) |
+| FAIL | 10 (111 failing subtests) |
 | ERROR | 0 |
 
 | Case | Result | First failing assertion (representative) |
@@ -44,7 +49,7 @@ Identical on CPython 3.12.3 and 3.13.16:
 | R3 non-`str` values | FAIL (10) | result returned; `RuntimeError` instead of `ValueError` (raising `.name`) |
 | R4 `str` subclasses | FAIL (4) | result returned; `RuntimeError` instead of `ValueError` (raising `__hash__`) |
 | R5 `__class__` spoof | FAIL (1) | result returned (laundered CLEAN) |
-| R6 normalization before schedule branches | FAIL (14) | result returned on `SCHEDULE_UNRESOLVED` / `SCHEDULE_MATCH` for every invalid input; valid-input controls on those branches pass |
+| R6 normalization before schedule branches | FAIL (34) | full rejected list (`None`, missing, R3, R4, R5 inputs: 17) on each of `SCHEDULE_UNRESOLVED` and `SCHEDULE_MATCH`; result returned or `RuntimeError` for every one; valid-input controls on those branches pass |
 | R7 raise `ValueError` or return genuine member | FAIL (39) | raw `None`, `int`, `bytes`, `list`, `dict`, forged objects in `authority_status`; `RuntimeError` escapes |
 | M1 non-CLEAN member and exact name | FAIL (4) | exact-name inputs return the raw `str`, not the genuine member; enum inputs pass |
 | M2 CLEAN keeps `NotImplementedError` | ok (control) | — |
@@ -57,6 +62,12 @@ Notes:
 - In R3–R5 and M3 the first failing assertion is usually the result or
   exception type, so the zero-hook assertion is not reached at baseline. It
   takes effect once rejection is implemented.
+- R6 asserts rejection, zero hooks and zero side effect for every rejected
+  input on both early-return branches. R7 checks only the result type and is
+  not a substitute.
+- `ClassSpoof.__class__` is recorded because `isinstance()` falls back to
+  reading it, while `type()` does not. An implementation that probes with
+  `isinstance` and then rejects correctly still fails R5, R6 and M3.
 - R7 passes for inputs that the baseline launders to a genuine member
   (`HookStr`, `LyingStr`, `SideEffectStr`, `ClassSpoof`); those are caught by
   R4 and R5, not by R7.
@@ -65,7 +76,19 @@ Existing regressions at the same baseline, unchanged: Emergency Override 6/6
 (including the #53 cases), Schedule 6/6. The repro module still passes 18/18
 (it characterizes the baseline).
 
-## 4. Expectations for the fix PR
+## 4. Test validation (scratch, not committed)
+
+To check that the tests are satisfiable and that the `__class__` recorder
+discriminates, two scratch module pairs were run against this test module
+(CPython 3.12.3). Neither is part of this PR; the fix PR delivers and records
+its own implementation.
+
+| Scratch variant | Result |
+|---|---|
+| Reference normalization per decision §3 (`type()` checks, `_BY_NAME` lookup, normalization before schedule branches and before `deepcopy`) | 15/15 pass; Emergency Override 6/6; Schedule 6/6 |
+| Same, plus an `isinstance(value, str)` probe before the checks | 4 failures, all `[('ClassSpoof', '__class__')] != []`: R5, R6 (both branches), M3 |
+
+## 5. Expectations for the fix PR
 
 - All 15 methods pass; existing regressions stay 6/6 and 6/6.
 - CI added for this module (decision §5).
@@ -76,7 +99,12 @@ Existing regressions at the same baseline, unchanged: Emergency Override 6/6
 - `repro_principle0_authority_status_type_v0_1.py` removed (its gap
   assertions will fail).
 
-## 5. Non-claims
+## 6. Revision 1 figures (superseded)
+
+15 methods; 5 ok; 10 FAIL with 91 failing subtests (R6: 14, seven inputs per
+branch); 0 errors. `ClassSpoof.__class__` access was not recorded.
+
+## 7. Non-claims
 
 No gap is closed by this PR. Fixture level only; runtime reachability remains
 not established (report rev 2). No CLAIMS_STATUS or maturity change.
