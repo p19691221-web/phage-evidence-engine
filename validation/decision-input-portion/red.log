@@ -1,0 +1,190 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_________________ test_v2_exact_findings[content_replacement] __________________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/content_replacement.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...assessable'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'mismatch', 'S': 'matched', 'V': 'mismatch', 'P': 'mismatch', ...}} != {'relationships': {'A': 'mismatch', 'P': 'mismatch', 'L': 'matched', 'C': 'not_assessable'}}
+E         Right contains 1 more item:
+E         {'output_support': {'P1': {'citation': 'matched', 'verification': 'mismatch'},
+E                             'P2': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+_______________________ test_v2_exact_findings[control] ________________________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/control.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...: 'matched'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'matched', 'S': 'matched', 'V': 'matched', 'P': 'matched', ...}} != {'relationships': {'A': 'matched', 'P': 'matched', 'L': 'matched', 'C': 'matched'}}
+E         Right contains 1 more item:
+E         {'output_support': {'P1': {'citation': 'matched', 'verification': 'matched'},
+E                             'P2': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+_________________ test_v2_exact_findings[missing_presentation] _________________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/missing_presentation.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...: 'matched'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'matched', 'S': 'matched', 'V': 'matched', 'P': 'missing', ...}} != {'relationships': {'A': 'matched', 'P': 'missing', 'L': 'missing', 'C': 'missing'}}
+E         Right contains 1 more item:
+E         {'output_support': {'P1': {'citation': 'matched', 'verification': 'matched'},
+E                             'P2': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+____________________ test_v2_exact_findings[missing_source] ____________________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/missing_source.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...: 'missing'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'matched', 'S': 'missing', 'V': 'missing', 'P': 'matched', ...}} != {'relationships': {'A': 'matched', 'P': 'matched', 'L': 'matched', 'C': 'matched'}}
+E         Right contains 1 more item:
+E         {'output_support': {'P1': {'citation': 'missing', 'verification': 'missing'},
+E                             'P2': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+_________________ test_v2_exact_findings[missing_verification] _________________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/missing_verification.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...: 'missing'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'matched', 'S': 'matched', 'V': 'missing', 'P': 'matched', ...}} != {'relationships': {'A': 'matched', 'P': 'matched', 'L': 'matched', 'C': 'matched'}}
+E         Right contains 1 more item:
+E         {'output_support': {'P1': {'citation': 'matched', 'verification': 'missing'},
+E                             'P2': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+___________________ test_v2_exact_findings[renamed_control] ____________________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/renamed_control.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...: 'matched'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'matched', 'S': 'not_asserted', 'V': 'not_asserted', 'P': 'matched', ...}} != {'relationships': {'A': 'matched', 'P': 'matched', 'L': 'matched', 'C': 'matched'}}
+E         Right contains 1 more item:
+E         {'output_support': {'Q7': {'citation': 'matched', 'verification': 'matched'},
+E                             'R9': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+_____________ test_v2_exact_findings[unpresented_adopted_portion] ______________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/unpresented_adopted_portion.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...t_asserted'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'matched', 'S': 'matched', 'V': 'matched', 'P': 'matched', ...}} != {'relationships': {'A': 'matched', 'P': 'matched', 'L': 'matched', 'C': 'mismatch'}}
+E         Right contains 1 more item:
+E         {'output_support': {'P1': {'citation': 'matched', 'verification': 'matched'},
+E                             'P2': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+___________________ test_v2_exact_findings[version_mismatch] ___________________
+
+path = PosixPath('/workspaces/phage-evidence-engine/fixtures/decision-input-v2/version_mismatch.json')
+
+    @pytest.mark.parametrize("path", CASES, ids=lambda p: p.stem)
+    def test_v2_exact_findings(path):
+        fixture = json.loads(path.read_text())
+>       assert inspect(fixture["input"]) == fixture["expected"]
+E       AssertionError: assert {'adoption_id...assessable'}}} == {'adoption_id...t_asserted'}}}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'relationships': {'A': 'mismatch', 'S': 'matched', 'V': 'matched', 'P': 'matched', ...}} != {'relationships': {'A': 'mismatch', 'P': 'matched', 'L': 'mismatch', 'C': 'not_assessable'}}
+E         Right contains 1 more item:
+E         {'output_support': {'P1': {'citation': 'matched', 'verification': 'matched'},
+E                             'P2': {'citation': 'not_asserted',
+E                                    'verification': 'not_asserted'}}}
+E         Use -v to get more diff
+
+test_decision_input_portions.py:29: AssertionError
+____________ test_renamed_control_concrete_support_and_equivalence _____________
+
+    def test_renamed_control_concrete_support_and_equivalence():
+        control = inspect(load("control")["input"])
+        renamed = inspect(load("renamed_control")["input"])
+>       assert renamed.get("output_support") == {
+            "Q7": {"citation": "matched", "verification": "matched"},
+            "R9": {
+                "citation": "not_asserted",
+                "verification": "not_asserted",
+            },
+        }
+E       AssertionError: assert None == {'Q7': {'citation': 'matched', 'verification': 'matched'}, 'R9': {'citation': 'not_asserted', 'verification': 'not_asserted'}}
+E        +  where None = <built-in method get of dict object at 0x7c2982ef1b00>('output_support')
+E        +    where <built-in method get of dict object at 0x7c2982ef1b00> = {'adoption_id': 'ADOPT-01', 'relationships': {'A': 'matched', 'S': 'not_asserted', 'V': 'not_asserted', 'P': 'matched', ...}, 'adopted_support': {'Q7': {'citation': 'matched', 'verification': 'matched'}}}.get
+
+test_decision_input_portions.py:35: AssertionError
+=========================== short test summary info ============================
+FAILED test_decision_input_portions.py::test_v2_exact_findings[content_replacement]
+FAILED test_decision_input_portions.py::test_v2_exact_findings[control] - Ass...
+FAILED test_decision_input_portions.py::test_v2_exact_findings[missing_presentation]
+FAILED test_decision_input_portions.py::test_v2_exact_findings[missing_source]
+FAILED test_decision_input_portions.py::test_v2_exact_findings[missing_verification]
+FAILED test_decision_input_portions.py::test_v2_exact_findings[renamed_control]
+FAILED test_decision_input_portions.py::test_v2_exact_findings[unpresented_adopted_portion]
+FAILED test_decision_input_portions.py::test_v2_exact_findings[version_mismatch]
+FAILED test_decision_input_portions.py::test_renamed_control_concrete_support_and_equivalence
+9 failed in 0.10s

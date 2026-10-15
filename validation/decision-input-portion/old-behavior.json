@@ -1,0 +1,40 @@
+{
+  "code_revision": "7050bda700c438d336c54226bc6df12c8fcdf1c9",
+  "command": "inspect_adoption(**fixture['input'])",
+  "results": {
+    "control": {
+      "adoption_id": "ADOPT-01",
+      "relationships": {
+        "A": "matched",
+        "S": "matched",
+        "V": "matched",
+        "P": "matched",
+        "L": "matched",
+        "C": "matched"
+      },
+      "adopted_support": {
+        "P1": {
+          "citation": "matched",
+          "verification": "matched"
+        }
+      }
+    },
+    "renamed_control": {
+      "adoption_id": "ADOPT-01",
+      "relationships": {
+        "A": "matched",
+        "S": "not_asserted",
+        "V": "not_asserted",
+        "P": "matched",
+        "L": "matched",
+        "C": "matched"
+      },
+      "adopted_support": {
+        "Q7": {
+          "citation": "matched",
+          "verification": "matched"
+        }
+      }
+    }
+  }
+}
