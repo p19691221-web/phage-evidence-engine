@@ -102,9 +102,6 @@ def inspect_adoption(*, adoption_id, registry, canonical_identities):
             and output["producer"] in identities
             and _same(binding, _output_binding(output))
             and all(p in portions for p in adopted)),
-        "S": _source_support(citations.get("P1"), registry),
-        "V": _verification_support(
-            citations.get("P1"), output, registry, identities),
     }
     presentation = _record(
         registry, adoption["presentation_ref"], "presentation")
@@ -131,6 +128,14 @@ def inspect_adoption(*, adoption_id, registry, canonical_identities):
                     for p in adopted))
         else:
             relationships["C"] = "not_assessable"
+    output_support = {}
+    for portion in portions:
+        citation = citations.get(portion)
+        output_support[portion] = {
+            "citation": _source_support(citation, registry),
+            "verification": _verification_support(
+                citation, output, registry, identities),
+        }
     adopted_support = {}
     for portion in adopted:
         if relationships["A"] != "matched":
@@ -147,5 +152,6 @@ def inspect_adoption(*, adoption_id, registry, canonical_identities):
     return {
         "adoption_id": adoption_id,
         "relationships": relationships,
+        "output_support": output_support,
         "adopted_support": adopted_support,
     }
