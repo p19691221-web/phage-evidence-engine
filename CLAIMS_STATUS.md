@@ -12,7 +12,7 @@ Maturity labels:
 | L/M artifact origin boundary | FIXTURE_SUPPORTED | Decision and audit-receipt origin behavior supported only for tested fixture cases; no runtime closure, operational authorization, or pilot claim |
 | Authority lineage H/H′/N v0.2 inspection and protected-use commit (use-time consistency) | FIXTURE_SUPPORTED | Behavior supported only in the single-threaded in-memory reference source model; no runtime enforcement closure, production CAS, real concurrency, trusted time source, or request-level replay protection; source obligations E1, O1, O1a, O2, O3 are not verifiable by the resolver |
 | PHAGE as foundational AI trust infrastructure | PRODUCT THESIS / NOT VALIDATED | May be described only as an ambition or design direction |
-| Expectation provenance gate | HYPOTHESIZED | Awaiting DF-011 differential execution |
+| Expectation provenance gate | FIXTURE_SUPPORTED | 4 synthetic DF-011 fixtures; 11 passing tests. Unsupported provenance stops before run_gate and evaluator; supported control invokes each once. Single-process, in-memory synthetic policy model; identity, source authenticity and independence are assumptions. Test evaluator sentinel only; no E/O delta engine, real-world authority legitimacy, production or pilot claim. Evidence: [validation record](validation/df011/VALIDATION_RECORD.md); implementation merged in PR #111 (112cc73). |
 | Expectation Capture resistance | HYPOTHESIZED | DF-017 independent validation: UNRESOLVED; do not infer substantive support from workflow PASS |
 | Correctness of Expected Observation (E) | OPEN / OUT OF CURRENT CAPABILITY | PHAGE does not determine correct E |
 | Authority Source / Scope / Freshness / Legitimacy | OPEN | No Authority Engine claim |
