@@ -1,0 +1,191 @@
+self_proposed {"evaluator_calls": 1, "outputs": ["DF011_EVALUATOR_REACHED_V1"], "run_gate_calls": 1, "state": "CLEAN"}
+Fthird_party_unsupported {"evaluator_calls": 1, "outputs": ["DF011_EVALUATOR_REACHED_V1"], "run_gate_calls": 1, "state": "CLEAN"}
+Fself_approved {"evaluator_calls": 1, "outputs": ["DF011_EVALUATOR_REACHED_V1"], "run_gate_calls": 1, "state": "CLEAN"}
+Fsupported_control {"evaluator_calls": 1, "outputs": ["DF011_EVALUATOR_REACHED_V1"], "run_gate_calls": 1, "state": "CLEAN"}
+.
+=================================== FAILURES ===================================
+_________________ test_df011_required_boundary[self_proposed] __________________
+
+name = 'self_proposed'
+
+    @pytest.mark.parametrize("name", CASES)
+    def test_df011_required_boundary(name):
+        case = load_case(name)
+        inputs = gate_inputs(case)
+    
+        # Independently establish the fixed CLEAN lineage prerequisite.
+        prerequisite = gate.run_gate(**inputs)
+        assert prerequisite.state is gate.GateState.CLEAN
+    
+        evaluator = RecordingEvaluator()
+        run_gate_spy = Mock(wraps=gate.run_gate)
+        result = execute_baseline(case, run_gate_spy, evaluator)
+        expected = case["expected"]
+        actual = {
+            "state": result.state.value,
+            "run_gate_calls": run_gate_spy.call_count,
+            "evaluator_calls": evaluator.evaluate.call_count,
+            "outputs": evaluator.outputs,
+        }
+        print(name, json.dumps(actual, sort_keys=True))
+    
+        errors = []
+        for field in ("state", "run_gate_calls", "evaluator_calls"):
+            if actual[field] != expected[field]:
+                errors.append(
+                    f"{field}: {actual[field]!r} != {expected[field]!r}")
+        if expected["dependency"] is not None:
+            dependencies = repr(result.open_dependencies)
+            for token in (expected["dependency"], "ES-PUBLIC-001"):
+                if token not in dependencies:
+                    errors.append(f"missing dependency token: {token}")
+            if result.evaluation_started:
+                errors.append("evaluation_started must be False")
+            if evaluator.outputs:
+                errors.append("unresolved case produced evaluator output")
+        else:
+            assert result.evaluation_started is True
+            run_gate_spy.assert_called_once_with(
+                **inputs, downstream_evaluator=evaluator)
+            evaluator.evaluate.assert_called_once()
+            received = evaluator.evaluate.call_args.kwargs
+            assert set(received) == {"evidence_id", "lineage_result"}
+            assert received["evidence_id"] == inputs["evidence_id"]
+            assert received["lineage_result"].state.value == "CLEAN"
+            assert evaluator.outputs == [expected["sentinel"]]
+>       assert not errors, "\n".join(errors)
+E       AssertionError: state: 'CLEAN' != 'UNRESOLVED'
+E         run_gate_calls: 1 != 0
+E         evaluator_calls: 1 != 0
+E         missing dependency token: EXPECTATION_AUTHORITY_UNRESOLVED
+E         missing dependency token: ES-PUBLIC-001
+E         evaluation_started must be False
+E         unresolved case produced evaluator output
+E       assert not ["state: 'CLEAN' != 'UNRESOLVED'", 'run_gate_calls: 1 != 0', 'evaluator_calls: 1 != 0', 'missing dependency token: EXPECTATION_AUTHORITY_UNRESOLVED', 'missing dependency token: ES-PUBLIC-001', 'evaluation_started must be False', ...]
+
+test_df011_provenance.py:116: AssertionError
+____________ test_df011_required_boundary[third_party_unsupported] _____________
+
+name = 'third_party_unsupported'
+
+    @pytest.mark.parametrize("name", CASES)
+    def test_df011_required_boundary(name):
+        case = load_case(name)
+        inputs = gate_inputs(case)
+    
+        # Independently establish the fixed CLEAN lineage prerequisite.
+        prerequisite = gate.run_gate(**inputs)
+        assert prerequisite.state is gate.GateState.CLEAN
+    
+        evaluator = RecordingEvaluator()
+        run_gate_spy = Mock(wraps=gate.run_gate)
+        result = execute_baseline(case, run_gate_spy, evaluator)
+        expected = case["expected"]
+        actual = {
+            "state": result.state.value,
+            "run_gate_calls": run_gate_spy.call_count,
+            "evaluator_calls": evaluator.evaluate.call_count,
+            "outputs": evaluator.outputs,
+        }
+        print(name, json.dumps(actual, sort_keys=True))
+    
+        errors = []
+        for field in ("state", "run_gate_calls", "evaluator_calls"):
+            if actual[field] != expected[field]:
+                errors.append(
+                    f"{field}: {actual[field]!r} != {expected[field]!r}")
+        if expected["dependency"] is not None:
+            dependencies = repr(result.open_dependencies)
+            for token in (expected["dependency"], "ES-PUBLIC-001"):
+                if token not in dependencies:
+                    errors.append(f"missing dependency token: {token}")
+            if result.evaluation_started:
+                errors.append("evaluation_started must be False")
+            if evaluator.outputs:
+                errors.append("unresolved case produced evaluator output")
+        else:
+            assert result.evaluation_started is True
+            run_gate_spy.assert_called_once_with(
+                **inputs, downstream_evaluator=evaluator)
+            evaluator.evaluate.assert_called_once()
+            received = evaluator.evaluate.call_args.kwargs
+            assert set(received) == {"evidence_id", "lineage_result"}
+            assert received["evidence_id"] == inputs["evidence_id"]
+            assert received["lineage_result"].state.value == "CLEAN"
+            assert evaluator.outputs == [expected["sentinel"]]
+>       assert not errors, "\n".join(errors)
+E       AssertionError: state: 'CLEAN' != 'UNRESOLVED'
+E         run_gate_calls: 1 != 0
+E         evaluator_calls: 1 != 0
+E         missing dependency token: EXPECTATION_AUTHORITY_UNRESOLVED
+E         missing dependency token: ES-PUBLIC-001
+E         evaluation_started must be False
+E         unresolved case produced evaluator output
+E       assert not ["state: 'CLEAN' != 'UNRESOLVED'", 'run_gate_calls: 1 != 0', 'evaluator_calls: 1 != 0', 'missing dependency token: EXPECTATION_AUTHORITY_UNRESOLVED', 'missing dependency token: ES-PUBLIC-001', 'evaluation_started must be False', ...]
+
+test_df011_provenance.py:116: AssertionError
+_________________ test_df011_required_boundary[self_approved] __________________
+
+name = 'self_approved'
+
+    @pytest.mark.parametrize("name", CASES)
+    def test_df011_required_boundary(name):
+        case = load_case(name)
+        inputs = gate_inputs(case)
+    
+        # Independently establish the fixed CLEAN lineage prerequisite.
+        prerequisite = gate.run_gate(**inputs)
+        assert prerequisite.state is gate.GateState.CLEAN
+    
+        evaluator = RecordingEvaluator()
+        run_gate_spy = Mock(wraps=gate.run_gate)
+        result = execute_baseline(case, run_gate_spy, evaluator)
+        expected = case["expected"]
+        actual = {
+            "state": result.state.value,
+            "run_gate_calls": run_gate_spy.call_count,
+            "evaluator_calls": evaluator.evaluate.call_count,
+            "outputs": evaluator.outputs,
+        }
+        print(name, json.dumps(actual, sort_keys=True))
+    
+        errors = []
+        for field in ("state", "run_gate_calls", "evaluator_calls"):
+            if actual[field] != expected[field]:
+                errors.append(
+                    f"{field}: {actual[field]!r} != {expected[field]!r}")
+        if expected["dependency"] is not None:
+            dependencies = repr(result.open_dependencies)
+            for token in (expected["dependency"], "ES-PUBLIC-001"):
+                if token not in dependencies:
+                    errors.append(f"missing dependency token: {token}")
+            if result.evaluation_started:
+                errors.append("evaluation_started must be False")
+            if evaluator.outputs:
+                errors.append("unresolved case produced evaluator output")
+        else:
+            assert result.evaluation_started is True
+            run_gate_spy.assert_called_once_with(
+                **inputs, downstream_evaluator=evaluator)
+            evaluator.evaluate.assert_called_once()
+            received = evaluator.evaluate.call_args.kwargs
+            assert set(received) == {"evidence_id", "lineage_result"}
+            assert received["evidence_id"] == inputs["evidence_id"]
+            assert received["lineage_result"].state.value == "CLEAN"
+            assert evaluator.outputs == [expected["sentinel"]]
+>       assert not errors, "\n".join(errors)
+E       AssertionError: state: 'CLEAN' != 'UNRESOLVED'
+E         run_gate_calls: 1 != 0
+E         evaluator_calls: 1 != 0
+E         missing dependency token: EXPECTATION_AUTHORITY_UNRESOLVED
+E         missing dependency token: ES-PUBLIC-001
+E         evaluation_started must be False
+E         unresolved case produced evaluator output
+E       assert not ["state: 'CLEAN' != 'UNRESOLVED'", 'run_gate_calls: 1 != 0', 'evaluator_calls: 1 != 0', 'missing dependency token: EXPECTATION_AUTHORITY_UNRESOLVED', 'missing dependency token: ES-PUBLIC-001', 'evaluation_started must be False', ...]
+
+test_df011_provenance.py:116: AssertionError
+=========================== short test summary info ============================
+FAILED test_df011_provenance.py::test_df011_required_boundary[self_proposed]
+FAILED test_df011_provenance.py::test_df011_required_boundary[third_party_unsupported]
+FAILED test_df011_provenance.py::test_df011_required_boundary[self_approved]
+3 failed, 1 passed in 0.14s
