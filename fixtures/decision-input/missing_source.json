@@ -1,0 +1,129 @@
+{
+  "fixture_id": "missing_source",
+  "spec_revision": "80e1a27",
+  "input": {
+    "adoption_id": "ADOPT-01",
+    "registry": {
+      "OUT-01": {
+        "id": "OUT-01",
+        "kind": "output",
+        "version": 1,
+        "producer": "AGENT-01",
+        "content": [
+          [
+            "P1",
+            "Option A has lower upfront cost."
+          ],
+          [
+            "P2",
+            "Option B requires further review."
+          ]
+        ],
+        "citations": [
+          {
+            "portion_id": "P1",
+            "source_id": "SOURCE-01",
+            "source_version": 1,
+            "source_content": "Synthetic cost comparison: A=10, B=20.",
+            "verification_ref": "VERIFY-01"
+          }
+        ]
+      },
+      "ADOPT-01": {
+        "id": "ADOPT-01",
+        "kind": "adoption",
+        "decision_maker": "HUMAN-01",
+        "decision_context": "DECISION-01",
+        "output_binding": {
+          "output_id": "OUT-01",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "adopted_portions": [
+          "P1"
+        ],
+        "presentation_ref": "PRESENT-01"
+      },
+      "PRESENT-01": {
+        "id": "PRESENT-01",
+        "kind": "presentation",
+        "recorder": "PRESENTER-01",
+        "recipient": "HUMAN-01",
+        "decision_context": "DECISION-01",
+        "output_binding": {
+          "output_id": "OUT-01",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "presented_portions": [
+          "P1"
+        ]
+      },
+      "VERIFY-01": {
+        "id": "VERIFY-01",
+        "kind": "verification",
+        "recorder": "VERIFIER-01",
+        "output_binding": {
+          "output_id": "OUT-01",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "portion_id": "P1",
+        "portion_text": "Option A has lower upfront cost.",
+        "source_id": "SOURCE-01",
+        "source_version": 1,
+        "source_content": "Synthetic cost comparison: A=10, B=20."
+      }
+    },
+    "canonical_identities": [
+      "HUMAN-01",
+      "AGENT-01",
+      "PRESENTER-01",
+      "VERIFIER-01"
+    ]
+  },
+  "expected": {
+    "adoption_id": "ADOPT-01",
+    "relationships": {
+      "A": "matched",
+      "S": "missing",
+      "V": "missing",
+      "P": "matched",
+      "L": "matched",
+      "C": "matched"
+    },
+    "adopted_support": {
+      "P1": {
+        "citation": "missing",
+        "verification": "missing"
+      }
+    }
+  }
+}
