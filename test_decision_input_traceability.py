@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pytest
 
-ROOT = Path(__file__).parent / "fixtures" / "decision-input"
+ROOT = Path(__file__).parent / "fixtures" / "decision-input-v2"
 CASES = sorted(ROOT.glob("*.json"))
 
 
