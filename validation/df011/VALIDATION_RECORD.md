@@ -35,4 +35,6 @@ Evidence/Gap structural assessment is a separate claim.
 No CLAIMS_STATUS promotion is made in this change.
 
 CI workflow added: df011-provenance.yml.
-Remote CI execution remains to be confirmed.
+Remote DF-011 CI: SUCCESS.
+Evidence: https://github.com/p19691221-web/phage-evidence-engine/actions/runs/38705112576/job/116322493245
+This records the observed run, not any subsequent revision.
