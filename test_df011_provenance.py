@@ -1,4 +1,4 @@
-"""DF-011 boundary tests; baseline execution is not a provenance gate."""
+"""DF-011 production provenance boundary tests."""
 import json
 from datetime import datetime
 from pathlib import Path
@@ -62,10 +62,21 @@ CASES = [
 ]
 
 
-def execute_baseline(case, run_gate_spy, evaluator):
-    """Baseline only: existing API has no provenance input."""
-    return run_gate_spy(
-        **gate_inputs(case), downstream_evaluator=evaluator)
+def execute_production(case, run_gate_spy, evaluator):
+    from unittest.mock import patch
+    from expectation_provenance_gate import run_expectation_gate
+    with patch("expectation_provenance_gate.gate.run_gate",
+               run_gate_spy):
+        return run_expectation_gate(
+            binding=case["binding"],
+            provenance=case["expectation_provenance"],
+            authority_registry=case["policy_source_registry"],
+            canonical_identities=frozenset({
+                "AGENT-ENG-01", "REVIEWER-01", "ADVISOR-01",
+            }),
+            **gate_inputs(case),
+            downstream_evaluator=evaluator,
+        )
 
 
 @pytest.mark.parametrize("name", CASES)
@@ -79,7 +90,7 @@ def test_df011_required_boundary(name):
 
     evaluator = RecordingEvaluator()
     run_gate_spy = Mock(wraps=gate.run_gate)
-    result = execute_baseline(case, run_gate_spy, evaluator)
+    result = execute_production(case, run_gate_spy, evaluator)
     expected = case["expected"]
     actual = {
         "state": result.state.value,
@@ -114,3 +125,36 @@ def test_df011_required_boundary(name):
         assert received["lineage_result"].state.value == "CLEAN"
         assert evaluator.outputs == [expected["sentinel"]]
     assert not errors, "\n".join(errors)
+
+
+@pytest.mark.parametrize("mutation", [
+    "missing_source", "wrong_grantee", "wrong_permission",
+    "approval_scope", "authority_version", "authority_content",
+    "unknown_identity",
+])
+def test_supported_control_requires_bound_support(mutation):
+    case = load_case("supported_control")
+    provenance = case["expectation_provenance"]
+    registry = case["policy_source_registry"]
+    source = registry["AUTH-DF011-001"]
+    if mutation == "missing_source":
+        registry.clear()
+    elif mutation == "wrong_grantee":
+        source["grantee"] = "ADVISOR-01"
+    elif mutation == "wrong_permission":
+        source["permission"] = "VIEW_ONLY"
+    elif mutation == "approval_scope":
+        provenance["approval"]["binding"]["object"] = "OTHER"
+    elif mutation == "authority_version":
+        source["binding"]["expectation_version"] = 2
+    elif mutation == "authority_content":
+        source["binding"]["expectation_content"][0][1] = "OTHER"
+    elif mutation == "unknown_identity":
+        provenance["proposed_by"] = "agent-eng-01"
+    evaluator = RecordingEvaluator()
+    spy = Mock(wraps=gate.run_gate)
+    result = execute_production(case, spy, evaluator)
+    assert result.state is gate.GateState.UNRESOLVED
+    assert result.evaluation_started is False
+    assert spy.call_count == 0
+    assert evaluator.evaluate.call_count == 0
