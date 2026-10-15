@@ -72,3 +72,15 @@ Any rule change requires explicit review and renewed affected RED evidence.
 
 Claim support is limited to the executed cases, declared support rules,
 and tested execution model. No production or pilot maturity follows.
+
+## Pre-RED specification checkpoint
+
+Before RED, a docs-only change must specify and undergo review and merge:
+- Canonical actor identity and alias-handling rules.
+- Synthetic authority records, their trust assumptions, and approval bindings.
+- Exact expectation content/version and assessment scope matching rules.
+- The fixed control delta and its derivation.
+
+These are prerequisites for RED, not choices to be inferred from test
+success or implementation behavior. They may be included in this PR or
+a follow-up docs PR, but must be frozen before executable RED cases.
