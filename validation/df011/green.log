@@ -1,0 +1,6 @@
+self_proposed {"evaluator_calls": 0, "outputs": [], "run_gate_calls": 0, "state": "UNRESOLVED"}
+.third_party_unsupported {"evaluator_calls": 0, "outputs": [], "run_gate_calls": 0, "state": "UNRESOLVED"}
+.self_approved {"evaluator_calls": 0, "outputs": [], "run_gate_calls": 0, "state": "UNRESOLVED"}
+.supported_control {"evaluator_calls": 1, "outputs": ["DF011_EVALUATOR_REACHED_V1"], "run_gate_calls": 1, "state": "CLEAN"}
+........
+11 passed in 0.05s
