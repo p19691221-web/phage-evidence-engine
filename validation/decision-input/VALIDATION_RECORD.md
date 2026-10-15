@@ -32,5 +32,7 @@ Source truth, verification independence, attention, comprehension,
 decision quality and institutional authority are not established.
 Malformed-input coverage is not established by these seven cases.
 
-Dedicated remote CI is added but not yet confirmed.
+Dedicated decision-input CI: SUCCESS.
+Evidence: https://github.com/p19691221-web/phage-evidence-engine/actions/runs/38730627309/job/116407216966
+This records the observed run, not subsequent revisions.
 Decision input traceability remains OPEN pending separate claim review.
