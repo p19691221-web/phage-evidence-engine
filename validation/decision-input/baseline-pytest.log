@@ -1,0 +1,15 @@
+Fsssssss                                                                 [100%]
+=================================== FAILURES ===================================
+______________________ test_production_entry_point_exists ______________________
+
+    def test_production_entry_point_exists():
+>       assert callable(entry_point()), "Production inspect_adoption is absent"
+E       AssertionError: Production inspect_adoption is absent
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = entry_point()
+
+test_decision_input_traceability.py:23: AssertionError
+=========================== short test summary info ============================
+SKIPPED [7] test_decision_input_traceability.py:30: Entry point absent; differential case NOT EXECUTED
+1 failed, 7 skipped in 0.05s
