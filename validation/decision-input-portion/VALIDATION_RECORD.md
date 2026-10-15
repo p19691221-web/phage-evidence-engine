@@ -28,5 +28,7 @@ Historical fixtures and execution records retain their original scope.
 No existing PHAGE executable component reuse is established.
 No actual presentation, source truth or independent human judgment follows.
 
-Remote CI remains to be confirmed.
+Remote decision-input CI: SUCCESS.
+Evidence: https://github.com/p19691221-web/phage-evidence-engine/actions/runs/38748411045/job/116468039458
+This records the observed run, not subsequent revisions.
 CLAIMS_STATUS is unchanged in this implementation change.
