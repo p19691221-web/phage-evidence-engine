@@ -1,0 +1,111 @@
+{
+  "spec_revision": "8212797",
+  "fixture_basis": "SYNTHETIC",
+  "current_status": "NOT_YET_EXECUTED",
+  "binding": {
+    "governed_actor": "AGENT-ENG-01",
+    "action": "CONSTRUCTION_ACCEPTANCE",
+    "object": "PIPELINE_CULVERT_INTERSECTION",
+    "expectation_set_id": "ES-PUBLIC-001",
+    "expectation_version": 1,
+    "expectation_content": [
+      [
+        "E1",
+        "ACCEPTANCE_FORM_EXISTS",
+        "REVIEW_RECORD"
+      ]
+    ]
+  },
+  "observations": [
+    {
+      "evidence_id": "O1",
+      "satisfies": "E1",
+      "source": "INTERNAL_EXECUTION_LOG"
+    }
+  ],
+  "policy_source_registry": {
+    "AUTH-DF011-001": {
+      "id": "AUTH-DF011-001",
+      "grantee": "REVIEWER-01",
+      "permission": "APPROVE_EXPECTATION_SET",
+      "binding": {
+        "governed_actor": "AGENT-ENG-01",
+        "action": "CONSTRUCTION_ACCEPTANCE",
+        "object": "PIPELINE_CULVERT_INTERSECTION",
+        "expectation_set_id": "ES-PUBLIC-001",
+        "expectation_version": 1,
+        "expectation_content": [
+          [
+            "E1",
+            "ACCEPTANCE_FORM_EXISTS",
+            "REVIEW_RECORD"
+          ]
+        ]
+      }
+    }
+  },
+  "lineage_bundle": {
+    "evidence_id": "DF011-SYNTHETIC-ROOT",
+    "epistemic_cutoff": "2026-08-18T12:00:00+00:00",
+    "evidence_store": {
+      "DF011-SYNTHETIC-ROOT": {
+        "evidence_id": "DF011-SYNTHETIC-ROOT",
+        "observed_at": "2026-08-18T11:00:00+00:00",
+        "available_at": "2026-08-18T11:00:00+00:00",
+        "derived_from": [],
+        "source_refs": [
+          "fixture:DF-011"
+        ]
+      }
+    },
+    "availability_view": {
+      "DF011-SYNTHETIC-ROOT": {
+        "evidence_id": "DF011-SYNTHETIC-ROOT",
+        "status": "RESOLVED",
+        "resolved_available_at": "2026-08-18T11:00:00+00:00",
+        "supporting_claim_refs": [
+          "availability-DF011-SYNTHETIC-ROOT"
+        ]
+      }
+    },
+    "checker": "DEFAULT"
+  },
+  "fixture_id": "DF011-supported_control",
+  "expectation_provenance": {
+    "proposed_by": "AGENT-ENG-01",
+    "governed_actor": "AGENT-ENG-01",
+    "expectation_set_id": "ES-PUBLIC-001",
+    "approved_by": "REVIEWER-01",
+    "authority_source_refs": [
+      "AUTH-DF011-001"
+    ],
+    "approval": {
+      "id": "APPROVAL-DF011-001",
+      "approved_by": "REVIEWER-01",
+      "binding": {
+        "governed_actor": "AGENT-ENG-01",
+        "action": "CONSTRUCTION_ACCEPTANCE",
+        "object": "PIPELINE_CULVERT_INTERSECTION",
+        "expectation_set_id": "ES-PUBLIC-001",
+        "expectation_version": 1,
+        "expectation_content": [
+          [
+            "E1",
+            "ACCEPTANCE_FORM_EXISTS",
+            "REVIEW_RECORD"
+          ]
+        ]
+      },
+      "authority_source_refs": [
+        "AUTH-DF011-001"
+      ]
+    }
+  },
+  "expected": {
+    "state": "CLEAN",
+    "dependency": null,
+    "run_gate_calls": 1,
+    "evaluator_calls": 1,
+    "sentinel": "DF011_EVALUATOR_REACHED_V1"
+  }
+}
