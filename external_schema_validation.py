@@ -503,6 +503,27 @@ def _checker_input(entry, subjects, schema, payload, registry):
             source = _read(payload, source_path)
             _require(source is not MISSING, "Mapped record root unavailable")
             inputs["registry"][identifier] = copy.deepcopy(source)
+    for rule in sorted(schema["rules"], key=lambda item: (
+        len(_segments(item["target_template"], template=True)),
+        item["rule_id"],
+    )):
+        if rule["mapping_status"] != "MAPPABLE":
+            continue
+        parts = _segments(rule["target_template"], template=True)
+        if len(parts) == 2:
+            continue
+        for identifier in subjects[rule["kind"]]:
+            if identifier not in inputs["registry"]:
+                continue
+            value = _read(payload, _bind(rule["source_template"], identifier))
+            if value is MISSING:
+                continue
+            target = inputs["registry"][identifier]
+            for token in parts[2:-1]:
+                _require(isinstance(target, dict), "Invalid mapped target parent")
+                target = target.setdefault(token, {})
+            _require(isinstance(target, dict), "Invalid mapped target object")
+            target[parts[-1]] = copy.deepcopy(value)
     _validate_input(inputs)
     return inputs
 

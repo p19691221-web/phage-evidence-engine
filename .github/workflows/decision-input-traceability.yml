@@ -17,4 +17,4 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install pytest==9.1.1
-      - run: python -m pytest -q -rs test_decision_input_traceability.py test_decision_input_portions.py test_df011_provenance.py test_external_validation.py
+      - run: python -m pytest -q -rs test_decision_input_traceability.py test_decision_input_portions.py test_df011_provenance.py test_external_validation.py test_external_schema.py
