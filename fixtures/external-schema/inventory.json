@@ -1,0 +1,26 @@
+{
+  "inventory_revision": "SYNTHETIC-INVENTORY-01",
+  "source_snapshot_id": "SYNTHETIC-BATCH-01",
+  "entries": [
+    {
+      "decision_id": "DECISION-01",
+      "adoption_id": "ADOPT-01-A",
+      "source_path": "/decisions/0/adoption_id"
+    },
+    {
+      "decision_id": "DECISION-02",
+      "adoption_id": "ADOPT-01-B/~",
+      "source_path": "/decisions/1/adoption_id"
+    },
+    {
+      "decision_id": "DECISION-03",
+      "adoption_id": "ADOPT-01-C",
+      "source_path": "/decisions/2/adoption_id"
+    }
+  ],
+  "coverage": "export_only",
+  "exclusions": [
+    "Decisions omitted from the supplied export"
+  ],
+  "evidence_refs": []
+}

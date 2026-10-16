@@ -1,0 +1,315 @@
+{
+  "snapshot_id": "SYNTHETIC-BATCH-01",
+  "payload": {
+    "decisions": [
+      {
+        "decision_id": "DECISION-01",
+        "adoption_id": "ADOPT-01-A",
+        "source_path": "/decisions/0/adoption_id"
+      },
+      {
+        "decision_id": "DECISION-02",
+        "adoption_id": "ADOPT-01-B/~",
+        "source_path": "/decisions/1/adoption_id"
+      },
+      {
+        "decision_id": "DECISION-03",
+        "adoption_id": "ADOPT-01-C",
+        "source_path": "/decisions/2/adoption_id"
+      }
+    ],
+    "registry": {
+      "OUT-01-A": {
+        "id": "OUT-01-A",
+        "kind": "output",
+        "version": 1,
+        "producer": "AGENT-01",
+        "content": [
+          [
+            "P1",
+            "Option A has lower upfront cost."
+          ],
+          [
+            "P2",
+            "Option B requires further review."
+          ]
+        ],
+        "citations": [
+          {
+            "portion_id": "P1",
+            "source_id": "SOURCE-01-A",
+            "source_version": 1,
+            "source_content": "Synthetic cost comparison: A=10, B=20.",
+            "verification_ref": "VERIFY-01-A"
+          }
+        ]
+      },
+      "SOURCE-01-A": {
+        "id": "SOURCE-01-A",
+        "kind": "source",
+        "version": 1,
+        "content": "Synthetic cost comparison: A=10, B=20."
+      },
+      "ADOPT-01-A": {
+        "id": "ADOPT-01-A",
+        "kind": "adoption",
+        "decision_maker": "HUMAN-01",
+        "decision_context": "DECISION-01",
+        "output_binding": {
+          "output_id": "OUT-01-A",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "adopted_portions": [
+          "P1"
+        ],
+        "presentation_ref": "PRESENT-01-A"
+      },
+      "PRESENT-01-A": {
+        "id": "PRESENT-01-A",
+        "kind": "presentation",
+        "recorder": "PRESENTER-01",
+        "recipient": "HUMAN-01",
+        "decision_context": "DECISION-01",
+        "output_binding": {
+          "output_id": "OUT-01-A",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "presented_portions": [
+          "P1"
+        ]
+      },
+      "VERIFY-01-A": {
+        "id": "VERIFY-01-A",
+        "kind": "verification",
+        "recorder": "VERIFIER-01",
+        "output_binding": {
+          "output_id": "OUT-01-A",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "portion_id": "P1",
+        "portion_text": "Option A has lower upfront cost.",
+        "source_id": "SOURCE-01-A",
+        "source_version": 1,
+        "source_content": "Synthetic cost comparison: A=10, B=20."
+      },
+      "OUT-01-B/~": {
+        "id": "OUT-01-B/~",
+        "kind": "output",
+        "version": 1,
+        "producer": "AGENT-01",
+        "content": [
+          [
+            "P1",
+            "Option A has lower upfront cost."
+          ],
+          [
+            "P2",
+            "Option B requires further review."
+          ]
+        ],
+        "citations": [
+          {
+            "portion_id": "P1",
+            "source_id": "SOURCE-01-B/~",
+            "source_version": 1,
+            "source_content": "Synthetic cost comparison: A=10, B=20.",
+            "verification_ref": "VERIFY-01-B/~"
+          }
+        ]
+      },
+      "SOURCE-01-B/~": {
+        "id": "SOURCE-01-B/~",
+        "kind": "source",
+        "version": 1,
+        "content": "Synthetic cost comparison: A=10, B=20."
+      },
+      "ADOPT-01-B/~": {
+        "id": "ADOPT-01-B/~",
+        "kind": "adoption",
+        "decision_maker": "HUMAN-01",
+        "decision_context": "DECISION-02",
+        "output_binding": {
+          "output_id": "OUT-01-B/~",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "adopted_portions": [
+          "P1"
+        ],
+        "presentation_ref": "PRESENT-01-B/~"
+      },
+      "PRESENT-01-B/~": {
+        "id": "PRESENT-01-B/~",
+        "kind": "presentation",
+        "recorder": "PRESENTER-01",
+        "recipient": "HUMAN-01",
+        "decision_context": "DECISION-02",
+        "output_binding": {
+          "output_id": "OUT-01-B/~",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "presented_portions": [
+          "P1"
+        ]
+      },
+      "VERIFY-01-B/~": {
+        "id": "VERIFY-01-B/~",
+        "kind": "verification",
+        "recorder": "VERIFIER-01",
+        "output_binding": {
+          "output_id": "OUT-01-B/~",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "portion_id": "P1",
+        "portion_text": "Option A has lower upfront cost.",
+        "source_id": "SOURCE-01-B/~",
+        "source_version": 1,
+        "source_content": "Synthetic cost comparison: A=10, B=20."
+      },
+      "OUT-01-C": {
+        "id": "OUT-01-C",
+        "kind": "output",
+        "version": 1,
+        "producer": "AGENT-01",
+        "content": [
+          [
+            "P1",
+            "Option A has lower upfront cost."
+          ],
+          [
+            "P2",
+            "Option B requires further review."
+          ]
+        ],
+        "citations": [
+          {
+            "portion_id": "P1",
+            "source_id": "SOURCE-01-C",
+            "source_version": 1,
+            "source_content": "Synthetic cost comparison: A=10, B=20.",
+            "verification_ref": "VERIFY-01-C"
+          }
+        ]
+      },
+      "SOURCE-01-C": {
+        "id": "SOURCE-01-C",
+        "kind": "source",
+        "version": 1,
+        "content": "Synthetic cost comparison: A=10, B=20."
+      },
+      "PRESENT-01-C": {
+        "id": "PRESENT-01-C",
+        "kind": "presentation",
+        "recorder": "PRESENTER-01",
+        "recipient": "HUMAN-01",
+        "decision_context": "DECISION-03",
+        "output_binding": {
+          "output_id": "OUT-01-C",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "presented_portions": [
+          "P1"
+        ]
+      },
+      "VERIFY-01-C": {
+        "id": "VERIFY-01-C",
+        "kind": "verification",
+        "recorder": "VERIFIER-01",
+        "output_binding": {
+          "output_id": "OUT-01-C",
+          "output_version": 1,
+          "content": [
+            [
+              "P1",
+              "Option A has lower upfront cost."
+            ],
+            [
+              "P2",
+              "Option B requires further review."
+            ]
+          ]
+        },
+        "portion_id": "P1",
+        "portion_text": "Option A has lower upfront cost.",
+        "source_id": "SOURCE-01-C",
+        "source_version": 1,
+        "source_content": "Synthetic cost comparison: A=10, B=20."
+      }
+    },
+    "canonical_identities": [
+      "HUMAN-01",
+      "AGENT-01",
+      "PRESENTER-01",
+      "VERIFIER-01"
+    ]
+  }
+}

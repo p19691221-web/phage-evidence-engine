@@ -1,0 +1,15 @@
+Fss.sssssssssssssss                                                      [100%]
+=================================== FAILURES ===================================
+________________________ test_schema_entry_point_exists ________________________
+
+    def test_schema_entry_point_exists():
+>       assert callable(entry_point()), "Schema validation entry point absent"
+E       AssertionError: Schema validation entry point absent
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = entry_point()
+
+test_external_schema.py:31: AssertionError
+=========================== short test summary info ============================
+SKIPPED [17] test_external_schema.py:27: Schema entry absent; behavioral case NOT EXECUTED
+1 failed, 1 passed, 17 skipped in 0.15s

@@ -1,0 +1,70 @@
+{
+  "checker_results": {
+    "DECISION-01": {
+      "adoption_id": "ADOPT-01-A",
+      "relationships": {
+        "A": "matched",
+        "P": "matched",
+        "L": "matched",
+        "C": "matched"
+      },
+      "adopted_support": {
+        "P1": {
+          "citation": "matched",
+          "verification": "matched"
+        }
+      },
+      "output_support": {
+        "P1": {
+          "citation": "matched",
+          "verification": "matched"
+        },
+        "P2": {
+          "citation": "not_asserted",
+          "verification": "not_asserted"
+        }
+      }
+    },
+    "DECISION-02": {
+      "adoption_id": "ADOPT-01-B/~",
+      "relationships": {
+        "A": "matched",
+        "P": "matched",
+        "L": "matched",
+        "C": "matched"
+      },
+      "adopted_support": {
+        "P1": {
+          "citation": "matched",
+          "verification": "matched"
+        }
+      },
+      "output_support": {
+        "P1": {
+          "citation": "matched",
+          "verification": "matched"
+        },
+        "P2": {
+          "citation": "not_asserted",
+          "verification": "not_asserted"
+        }
+      }
+    }
+  },
+  "checker_calls_by_decision": {
+    "DECISION-01": 1,
+    "DECISION-02": 1,
+    "DECISION-03": 0
+  },
+  "blocked_decisions": [
+    "DECISION-03"
+  ],
+  "missing_root": {
+    "decision_id": "DECISION-03",
+    "rule_id": "adoption.root",
+    "target_path": "/registry/ADOPT-01-C",
+    "code": "SOURCE_COVERAGE_UNKNOWN",
+    "evidence_refs": []
+  },
+  "aggregate_pass_field_permitted": false
+}

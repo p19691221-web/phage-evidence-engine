@@ -1,0 +1,107 @@
+[
+  {
+    "decision_id": "DECISION-01",
+    "selector": "adoption",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-01",
+    "selector": "output",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-01",
+    "selector": "presentation",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-01",
+    "selector": "source",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-01",
+    "selector": "verification",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-02",
+    "selector": "adoption",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-02",
+    "selector": "output",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-02",
+    "selector": "presentation",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-02",
+    "selector": "source",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-02",
+    "selector": "verification",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-03",
+    "selector": "adoption",
+    "selection_count": 1,
+    "status": "resolved",
+    "blocked_by": null
+  },
+  {
+    "decision_id": "DECISION-03",
+    "selector": "output",
+    "selection_count": 0,
+    "status": "blocked_by_ancestor",
+    "blocked_by": "/registry/ADOPT-01-C"
+  },
+  {
+    "decision_id": "DECISION-03",
+    "selector": "presentation",
+    "selection_count": 0,
+    "status": "blocked_by_ancestor",
+    "blocked_by": "/registry/ADOPT-01-C"
+  },
+  {
+    "decision_id": "DECISION-03",
+    "selector": "source",
+    "selection_count": 0,
+    "status": "blocked_by_ancestor",
+    "blocked_by": "/registry/ADOPT-01-C"
+  },
+  {
+    "decision_id": "DECISION-03",
+    "selector": "verification",
+    "selection_count": 0,
+    "status": "blocked_by_ancestor",
+    "blocked_by": "/registry/ADOPT-01-C"
+  }
+]
