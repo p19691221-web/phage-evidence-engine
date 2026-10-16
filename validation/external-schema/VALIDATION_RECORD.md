@@ -30,4 +30,7 @@ validation is established. Coverage assertions remain supplied
 evidence. Existing historical fixtures and claims are unchanged.
 
 CI now includes test_external_schema.py.
-Remote CI remains to be confirmed.
+Remote decision-input CI: SUCCESS.
+PR #131 head: e19830abea58e99bf58bf7512bfb760ffdae71e5.
+Evidence: https://github.com/p19691221-web/phage-evidence-engine/actions/runs/38858240032/job/116834415112
+All 12 PR checks were successful at this head.
