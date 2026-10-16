@@ -1,0 +1,682 @@
+{
+  "schema_revision": "SYNTHETIC-SCHEMA-01",
+  "inventory": {
+    "source_path": "/decisions",
+    "decision_id_field": "decision_id",
+    "adoption_ref_field": "adoption_id"
+  },
+  "registry_path": "/registry",
+  "canonical_identities_path": "/canonical_identities",
+  "selectors": {
+    "adoption": {
+      "from": "inventory",
+      "reference": "adoption_id"
+    },
+    "output": {
+      "from": "adoption",
+      "reference": "/output_binding/output_id"
+    },
+    "presentation": {
+      "from": "adoption",
+      "reference": "/presentation_ref"
+    },
+    "source": {
+      "from": "output",
+      "reference": "/citations",
+      "member_reference": "source_id"
+    },
+    "verification": {
+      "from": "output",
+      "reference": "/citations",
+      "member_reference": "verification_ref"
+    }
+  },
+  "rules": [
+    {
+      "rule_id": "adoption.root",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}",
+      "target_template": "/registry/{record_id}",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "adoption.id",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}/id",
+      "target_template": "/registry/{record_id}/id",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "adoption.kind",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}/kind",
+      "target_template": "/registry/{record_id}/kind",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "adoption.decision_maker",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}/decision_maker",
+      "target_template": "/registry/{record_id}/decision_maker",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "adoption.decision_context",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}/decision_context",
+      "target_template": "/registry/{record_id}/decision_context",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "adoption.output_binding",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}/output_binding",
+      "target_template": "/registry/{record_id}/output_binding",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "adoption.adopted_portions",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}/adopted_portions",
+      "target_template": "/registry/{record_id}/adopted_portions",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "array",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "adoption.presentation_ref",
+      "kind": "adoption",
+      "selector": "adoption",
+      "source_template": "/registry/{record_id}/presentation_ref",
+      "target_template": "/registry/{record_id}/presentation_ref",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": true,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "value",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "output.root",
+      "kind": "output",
+      "selector": "output",
+      "source_template": "/registry/{record_id}",
+      "target_template": "/registry/{record_id}",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "output.id",
+      "kind": "output",
+      "selector": "output",
+      "source_template": "/registry/{record_id}/id",
+      "target_template": "/registry/{record_id}/id",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "output.kind",
+      "kind": "output",
+      "selector": "output",
+      "source_template": "/registry/{record_id}/kind",
+      "target_template": "/registry/{record_id}/kind",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "output.version",
+      "kind": "output",
+      "selector": "output",
+      "source_template": "/registry/{record_id}/version",
+      "target_template": "/registry/{record_id}/version",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "version",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "output.producer",
+      "kind": "output",
+      "selector": "output",
+      "source_template": "/registry/{record_id}/producer",
+      "target_template": "/registry/{record_id}/producer",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "output.content",
+      "kind": "output",
+      "selector": "output",
+      "source_template": "/registry/{record_id}/content",
+      "target_template": "/registry/{record_id}/content",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "array",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "output.citations",
+      "kind": "output",
+      "selector": "output",
+      "source_template": "/registry/{record_id}/citations",
+      "target_template": "/registry/{record_id}/citations",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "array",
+      "nullable": false,
+      "required_for_checker": true,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.root",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}",
+      "target_template": "/registry/{record_id}",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.id",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}/id",
+      "target_template": "/registry/{record_id}/id",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.kind",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}/kind",
+      "target_template": "/registry/{record_id}/kind",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.recorder",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}/recorder",
+      "target_template": "/registry/{record_id}/recorder",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.recipient",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}/recipient",
+      "target_template": "/registry/{record_id}/recipient",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.decision_context",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}/decision_context",
+      "target_template": "/registry/{record_id}/decision_context",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.output_binding",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}/output_binding",
+      "target_template": "/registry/{record_id}/output_binding",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "presentation.presented_portions",
+      "kind": "presentation",
+      "selector": "presentation",
+      "source_template": "/registry/{record_id}/presented_portions",
+      "target_template": "/registry/{record_id}/presented_portions",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "array",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "source.root",
+      "kind": "source",
+      "selector": "source",
+      "source_template": "/registry/{record_id}",
+      "target_template": "/registry/{record_id}",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "source.id",
+      "kind": "source",
+      "selector": "source",
+      "source_template": "/registry/{record_id}/id",
+      "target_template": "/registry/{record_id}/id",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "source.kind",
+      "kind": "source",
+      "selector": "source",
+      "source_template": "/registry/{record_id}/kind",
+      "target_template": "/registry/{record_id}/kind",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "source.version",
+      "kind": "source",
+      "selector": "source",
+      "source_template": "/registry/{record_id}/version",
+      "target_template": "/registry/{record_id}/version",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "version",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "source.content",
+      "kind": "source",
+      "selector": "source",
+      "source_template": "/registry/{record_id}/content",
+      "target_template": "/registry/{record_id}/content",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.root",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}",
+      "target_template": "/registry/{record_id}",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.id",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/id",
+      "target_template": "/registry/{record_id}/id",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.kind",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/kind",
+      "target_template": "/registry/{record_id}/kind",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.recorder",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/recorder",
+      "target_template": "/registry/{record_id}/recorder",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.output_binding",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/output_binding",
+      "target_template": "/registry/{record_id}/output_binding",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "object",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.portion_id",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/portion_id",
+      "target_template": "/registry/{record_id}/portion_id",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.portion_text",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/portion_text",
+      "target_template": "/registry/{record_id}/portion_text",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.source_id",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/source_id",
+      "target_template": "/registry/{record_id}/source_id",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.source_version",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/source_version",
+      "target_template": "/registry/{record_id}/source_version",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "version",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    },
+    {
+      "rule_id": "verification.source_content",
+      "kind": "verification",
+      "selector": "verification",
+      "source_template": "/registry/{record_id}/source_content",
+      "target_template": "/registry/{record_id}/source_content",
+      "mapping_status": "MAPPABLE",
+      "transformation": "identity",
+      "target_type": "string",
+      "nullable": false,
+      "required_for_checker": false,
+      "absence_semantics": {
+        "missing": "scoped_evidence",
+        "null": "scoped_evidence",
+        "empty": "value"
+      }
+    }
+  ]
+}

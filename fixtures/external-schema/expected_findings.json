@@ -1,0 +1,50 @@
+[
+  {
+    "code": "SOURCE_COVERAGE_UNKNOWN",
+    "decision_id": "DECISION-03",
+    "rule_id": "adoption.root",
+    "target_path": "/registry/ADOPT-01-C",
+    "source_snapshot_id": "SYNTHETIC-BATCH-01",
+    "schema_revision": "SYNTHETIC-SCHEMA-01",
+    "inventory_revision": "SYNTHETIC-INVENTORY-01",
+    "evidence_refs": [],
+    "explanation": "Source absence is not established.",
+    "affected_targets": [
+      {
+        "rule_id": "adoption.adopted_portions",
+        "target_path": "/registry/ADOPT-01-C/adopted_portions",
+        "required_for_checker": true
+      },
+      {
+        "rule_id": "adoption.decision_context",
+        "target_path": "/registry/ADOPT-01-C/decision_context",
+        "required_for_checker": true
+      },
+      {
+        "rule_id": "adoption.decision_maker",
+        "target_path": "/registry/ADOPT-01-C/decision_maker",
+        "required_for_checker": true
+      },
+      {
+        "rule_id": "adoption.id",
+        "target_path": "/registry/ADOPT-01-C/id",
+        "required_for_checker": true
+      },
+      {
+        "rule_id": "adoption.kind",
+        "target_path": "/registry/ADOPT-01-C/kind",
+        "required_for_checker": true
+      },
+      {
+        "rule_id": "adoption.output_binding",
+        "target_path": "/registry/ADOPT-01-C/output_binding",
+        "required_for_checker": true
+      },
+      {
+        "rule_id": "adoption.presentation_ref",
+        "target_path": "/registry/ADOPT-01-C/presentation_ref",
+        "required_for_checker": false
+      }
+    ]
+  }
+]
