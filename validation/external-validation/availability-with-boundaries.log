@@ -1,0 +1,19 @@
+Fsssssssss.sssss                                                         [100%]
+=================================== FAILURES ===================================
+_______________________ test_wrapper_entry_point_exists ________________________
+
+    def test_wrapper_entry_point_exists():
+>       assert callable(entry_point()), "External wrapper entry point absent"
+E       AssertionError: External wrapper entry point absent
+E       assert False
+E        +  where False = callable(None)
+E        +    where None = entry_point()
+
+test_external_validation.py:22: AssertionError
+=========================== short test summary info ============================
+SKIPPED [9] test_external_validation.py:41: Wrapper absent; differential case NOT EXECUTED
+SKIPPED [2] test_external_validation.py:103: Wrapper absent; boundary case NOT EXECUTED
+SKIPPED [1] test_external_validation.py:137: Wrapper absent; boundary case NOT EXECUTED
+SKIPPED [1] test_external_validation.py:165: Wrapper absent; boundary case NOT EXECUTED
+SKIPPED [1] test_external_validation.py:197: Wrapper absent; boundary case NOT EXECUTED
+1 failed, 1 passed, 14 skipped in 0.11s
