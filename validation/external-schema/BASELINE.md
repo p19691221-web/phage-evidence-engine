@@ -21,3 +21,16 @@ Test-owned expectations contain 84 expansion rows,
 Expected outputs are not production inputs.
 No schema implementation or institutional data is included.
 Further contract coverage must be checked before implementation.
+
+## Additional frozen cases
+
+After checkpoint d8c6ffa, add complete record-renaming
+equivalence and schema-level unmappable-version tests.
+
+availability-complete.log:
+1 failed, 1 passed, 19 skipped.
+The nineteen behavioral cases did not execute because
+the schema entry point remains absent.
+This is availability evidence, not differential RED.
+
+The original availability.log is retained unchanged.

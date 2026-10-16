@@ -442,3 +442,80 @@ def test_missing_output_groups_descendants():
     assert result["decisions"] == expected
     assert checker.call_count == 1
     assert checker.call_args.kwargs["adoption_id"] == "ADOPT-01-B/~"
+
+def test_record_renaming_preserves_complete_batch():
+    run = require_entry()
+    kwargs = arguments()
+    frozen_schema = copy.deepcopy(kwargs["schema"])
+    identifiers = set(kwargs["source_snapshot"]["payload"]["registry"])
+    identifiers.add("ADOPT-01-C")
+    replacements = {
+        identifier: "RENAMED/~/" + identifier
+        for identifier in identifiers
+    }
+    kwargs["source_snapshot"] = replace_exact(
+        kwargs["source_snapshot"], replacements
+    )
+    kwargs["inventory"] = replace_exact(kwargs["inventory"], replacements)
+    expected = expected_batch()
+    expected_replacements = dict(replacements)
+    def escaped(value):
+        return value.replace("~", "~0").replace("/", "~1")
+    for identifier, replacement in replacements.items():
+        old_root = "/registry/" + escaped(identifier)
+        new_root = "/registry/" + escaped(replacement)
+        expected_replacements[old_root] = new_root
+        for rule in frozen_schema["rules"]:
+            for field in ("source_template", "target_template"):
+                template = rule[field]
+                expected_replacements[
+                    template.replace("{record_id}", escaped(identifier))
+                ] = template.replace("{record_id}", escaped(replacement))
+    expected = replace_exact(expected, expected_replacements)
+    result, checker = execute(run, kwargs)
+    assert result == expected
+    assert kwargs["schema"] == frozen_schema
+    assert checker.call_count == 2
+    assert [
+        call.kwargs["adoption_id"] for call in checker.call_args_list
+    ] == [replacements["ADOPT-01-A"], replacements["ADOPT-01-B/~"]]
+
+def test_unmappable_version_blocks_affected_decisions():
+    run = require_entry()
+    kwargs = arguments()
+    rule = next(
+        item for item in kwargs["schema"]["rules"]
+        if item["rule_id"] == "output.version"
+    )
+    rule.update({
+        "mapping_status": "UNMAPPABLE",
+        "source_template": None,
+        "transformation": None,
+        "reason": "Synthetic representation has no version identity",
+    })
+    result, checker = execute(run, kwargs)
+    assert checker.call_count == 0
+    assert all(
+        row["status"] == "blocked" and not row["checker_invoked"]
+        and row["checker_result"] is None
+        for row in result["decisions"]
+    )
+    expected_findings = copy.deepcopy(load("expected_findings.json"))
+    for decision_id, record_id in [
+        ("DECISION-01", "OUT-01-A"),
+        ("DECISION-02", "OUT-01-B~1~0"),
+    ]:
+        expected_findings.append({
+            "code": "ADAPTER_UNMAPPABLE",
+            "decision_id": decision_id, "rule_id": "output.version",
+            "target_path": "/registry/" + record_id + "/version",
+            "source_snapshot_id": "SYNTHETIC-BATCH-01",
+            "schema_revision": "SYNTHETIC-SCHEMA-01",
+            "inventory_revision": "SYNTHETIC-INVENTORY-01",
+            "evidence_refs": [],
+            "explanation": "Frozen mapping declares no faithful representation.",
+            "affected_targets": [],
+        })
+    assert sorted(result["findings"], key=lambda row: row["decision_id"]) == sorted(
+        expected_findings, key=lambda row: row["decision_id"]
+    )
