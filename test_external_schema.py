@@ -519,3 +519,25 @@ def test_unmappable_version_blocks_affected_decisions():
     assert sorted(result["findings"], key=lambda row: row["decision_id"]) == sorted(
         expected_findings, key=lambda row: row["decision_id"]
     )
+
+def test_field_source_template_is_applied():
+    run = require_entry()
+    kwargs = arguments()
+    registry = kwargs["source_snapshot"]["payload"]["registry"]
+    for record in registry.values():
+        if record["kind"] == "output":
+            record["author"] = record.pop("producer")
+    rule = next(
+        item for item in kwargs["schema"]["rules"]
+        if item["rule_id"] == "output.producer"
+    )
+    rule["source_template"] = "/registry/{record_id}/author"
+    expected = expected_batch()
+    for row in expected["expansion"]:
+        if row["rule_id"] == "output.producer":
+            row["source_path"] = row["source_path"].removesuffix(
+                "/producer"
+            ) + "/author"
+    result, checker = execute(run, kwargs)
+    assert result == expected
+    assert_decision_calls(checker, kwargs["inventory"])

@@ -1,0 +1,147 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________________ test_field_source_template_is_applied _____________________
+
+source_snapshot = {'snapshot_id': 'SYNTHETIC-BATCH-01', 'payload': {'decisions': [{'decision_id': 'DECISION-01', 'adoption_id': 'ADOPT-0... 'recipient': 'HUMAN-01', ...}, ...}, 'canonical_identities': ['HUMAN-01', 'AGENT-01', 'PRESENTER-01', 'VERIFIER-01']}}
+schema = {'schema_revision': 'SYNTHETIC-SCHEMA-01', 'inventory': {'source_path': '/decisions', 'decision_id_field': 'decision_i...on_ref_field': 'adoption_id'}, 'registry_path': '/registry', 'canonical_identities_path': '/canonical_identities', ...}
+inventory = {'inventory_revision': 'SYNTHETIC-INVENTORY-01', 'source_snapshot_id': 'SYNTHETIC-BATCH-01', 'entries': [{'decision_id...DECISION-03', 'adoption_id': 'ADOPT-01-C', 'source_path': '/decisions/2/adoption_id'}], 'coverage': 'export_only', ...}
+coverage_evidence = [], checker = <Mock id='140434395054496'>
+failure_sink = <built-in method append of list object at 0x7fb96e3c4940>
+
+    def run_schema_validation(*, source_snapshot, schema, inventory,
+                              coverage_evidence, checker, failure_sink):
+        record = _new_record(source_snapshot, schema, inventory)
+        try:
+            schema = copy.deepcopy(schema)
+            _validate_schema(schema)
+        except Exception as cause:
+            _fail(record, "schema_validation", "SCHEMA_INVALID",
+                  cause, failure_sink)
+        try:
+            snapshot = copy.deepcopy(source_snapshot)
+            inventory = copy.deepcopy(inventory)
+            evidence = copy.deepcopy(coverage_evidence)
+            entries = _validate_inventory(snapshot, schema, inventory)
+            _validate_evidence(evidence, snapshot["snapshot_id"])
+        except Exception as cause:
+            _fail(record, "input_validation", "ADAPTED_INPUT_INVALID",
+                  cause, failure_sink)
+        if entries is None:
+            path = schema["inventory"]["source_path"]
+            rule = {
+                "rule_id": "inventory",
+                "mapping_status": "MAPPABLE",
+            }
+            record["findings"].append(_finding(
+                record, None, rule, path, evidence
+            ))
+            return record
+        record["decisions"] = [
+            {
+                "decision_id": entry["decision_id"],
+                "status": "not_executed",
+                "checker_invoked": False,
+                "checker_result": None,
+            }
+            for entry in entries
+        ]
+        try:
+            payload = snapshot["payload"]
+            registry = _read(payload, schema["registry_path"])
+            _require(isinstance(registry, dict), "Invalid source registry")
+        except Exception as cause:
+            _fail(record, "input_validation", "ADAPTED_INPUT_INVALID",
+                  cause, failure_sink)
+        for entry, decision in zip(entries, record["decisions"]):
+            identifier = entry["decision_id"]
+            try:
+                subjects, blocked = _expand_decision(
+                    record, entry, schema, payload, registry, evidence
+                )
+                if blocked:
+                    decision["status"] = "blocked"
+                    continue
+>               inputs = _checker_input(
+                    entry, subjects, schema, payload, registry
+                )
+
+external_schema_validation.py:611: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+external_schema_validation.py:506: in _checker_input
+    _validate_input(inputs)
+external_validation.py:205: in _validate_input
+    _validate_record(record)
+external_validation.py:254: in _validate_record
+    _validate_text_fields(record, ("producer",))
+external_validation.py:231: in _validate_text_fields
+    _require(_text(record.get(field)), f"Invalid field: {field}")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Invalid field: producer'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: Invalid field: producer
+
+external_validation.py:38: ValueError
+
+The above exception was the direct cause of the following exception:
+
+    def test_field_source_template_is_applied():
+        run = require_entry()
+        kwargs = arguments()
+        registry = kwargs["source_snapshot"]["payload"]["registry"]
+        for record in registry.values():
+            if record["kind"] == "output":
+                record["author"] = record.pop("producer")
+        rule = next(
+            item for item in kwargs["schema"]["rules"]
+            if item["rule_id"] == "output.producer"
+        )
+        rule["source_template"] = "/registry/{record_id}/author"
+        expected = expected_batch()
+        for row in expected["expansion"]:
+            if row["rule_id"] == "output.producer":
+                row["source_path"] = row["source_path"].removesuffix(
+                    "/producer"
+                ) + "/author"
+>       result, checker = execute(run, kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^
+
+test_external_schema.py:541: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_external_schema.py:73: in execute
+    result = run(**kwargs, checker=checker,
+external_schema_validation.py:616: in run_schema_validation
+    _fail(record, "input_validation", "ADAPTED_INPUT_INVALID",
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+record = {'schema_revision': 'SYNTHETIC-SCHEMA-01', 'source_snapshot_id': 'SYNTHETIC-BATCH-01', 'inventory_revision': 'SYNTHETI...': {'coverage': 'export_only', 'exclusions': ['Decisions omitted from the supplied export'], 'evidence_refs': []}, ...}
+stage = 'input_validation', code = 'ADAPTED_INPUT_INVALID'
+cause = ValueError('Invalid field: producer')
+failure_sink = <built-in method append of list object at 0x7fb96e3c4940>
+decision_id = 'DECISION-01'
+
+    def _fail(record, stage, code, cause, failure_sink, decision_id=None):
+        _sort_record(record)
+        failure = copy.deepcopy(record)
+        failure.update({
+            "stage": stage,
+            "code": code,
+            "failed_decision_id": decision_id,
+            "cause_type": type(cause).__name__,
+            "cause_message": str(cause),
+        })
+        error = SchemaValidationError(stage, code, failure)
+        try:
+            failure_sink(failure)
+        except Exception as persistence_error:
+            error.persistence_error = persistence_error
+>       raise error from cause
+E       external_schema_validation.SchemaValidationError: input_validation: ADAPTED_INPUT_INVALID
+
+external_schema_validation.py:535: SchemaValidationError
+=========================== short test summary info ============================
+FAILED test_external_schema.py::test_field_source_template_is_applied - exter...
+1 failed, 21 deselected in 0.23s
