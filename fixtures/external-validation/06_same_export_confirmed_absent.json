@@ -1,0 +1,1040 @@
+{
+  "name": "06_same_export_confirmed_absent",
+  "source_snapshot": {
+    "snapshot_id": "SYNTHETIC-EXPORT-01",
+    "payload": {
+      "export": {
+        "adoption_id": "ADOPT-01",
+        "registry": {
+          "OUT-01": {
+            "id": "OUT-01",
+            "kind": "output",
+            "version": 1,
+            "producer": "AGENT-01",
+            "content": [
+              [
+                "P1",
+                "Option A has lower upfront cost."
+              ],
+              [
+                "P2",
+                "Option B requires further review."
+              ]
+            ],
+            "citations": [
+              {
+                "portion_id": "P1",
+                "source_id": "SOURCE-01",
+                "source_version": 1,
+                "source_content": "Synthetic cost comparison: A=10, B=20.",
+                "verification_ref": "VERIFY-01"
+              }
+            ]
+          },
+          "SOURCE-01": {
+            "id": "SOURCE-01",
+            "kind": "source",
+            "version": 1,
+            "content": "Synthetic cost comparison: A=10, B=20."
+          },
+          "PRESENT-01": {
+            "id": "PRESENT-01",
+            "kind": "presentation",
+            "recorder": "PRESENTER-01",
+            "recipient": "HUMAN-01",
+            "decision_context": "DECISION-01",
+            "output_binding": {
+              "output_id": "OUT-01",
+              "output_version": 1,
+              "content": [
+                [
+                  "P1",
+                  "Option A has lower upfront cost."
+                ],
+                [
+                  "P2",
+                  "Option B requires further review."
+                ]
+              ]
+            },
+            "presented_portions": [
+              "P1"
+            ]
+          },
+          "VERIFY-01": {
+            "id": "VERIFY-01",
+            "kind": "verification",
+            "recorder": "VERIFIER-01",
+            "output_binding": {
+              "output_id": "OUT-01",
+              "output_version": 1,
+              "content": [
+                [
+                  "P1",
+                  "Option A has lower upfront cost."
+                ],
+                [
+                  "P2",
+                  "Option B requires further review."
+                ]
+              ]
+            },
+            "portion_id": "P1",
+            "portion_text": "Option A has lower upfront cost.",
+            "source_id": "SOURCE-01",
+            "source_version": 1,
+            "source_content": "Synthetic cost comparison: A=10, B=20."
+          }
+        },
+        "canonical_identities": [
+          "HUMAN-01",
+          "AGENT-01",
+          "PRESENTER-01",
+          "VERIFIER-01"
+        ]
+      }
+    }
+  },
+  "manifest": {
+    "manifest_revision": "SYNTHETIC-MANIFEST-01",
+    "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+    "reviewed_by": "synthetic-test-author",
+    "reviewed_at": "2026-10-16T00:00:00Z",
+    "evidence": [
+      {
+        "evidence_id": "SYNTHETIC-ABSENCE-0",
+        "reference": "synthetic://scoped-source-observation",
+        "asserted_by": "synthetic-source-custodian",
+        "asserted_at": "2026-10-16T00:00:00Z",
+        "coverage_scope": "/registry/ADOPT-01",
+        "includes_descendants": true,
+        "assertion": "source_record_absent",
+        "synthetic": true
+      }
+    ],
+    "mappings": [
+      {
+        "target_path": "/adoption_id",
+        "required_for_checker": true,
+        "source_path": "/export/adoption_id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/adoption_id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/OUT-01",
+        "required_for_checker": true,
+        "source_path": "/export/registry/OUT-01",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "object",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/OUT-01",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/OUT-01/id",
+        "required_for_checker": true,
+        "source_path": "/export/registry/OUT-01/id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/OUT-01/id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/OUT-01/kind",
+        "required_for_checker": true,
+        "source_path": "/export/registry/OUT-01/kind",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/OUT-01/kind",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/OUT-01/version",
+        "required_for_checker": true,
+        "source_path": "/export/registry/OUT-01/version",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "integer",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/OUT-01/version",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/OUT-01/producer",
+        "required_for_checker": true,
+        "source_path": "/export/registry/OUT-01/producer",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/OUT-01/producer",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/OUT-01/content",
+        "required_for_checker": true,
+        "source_path": "/export/registry/OUT-01/content",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/OUT-01/content",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/OUT-01/citations",
+        "required_for_checker": true,
+        "source_path": "/export/registry/OUT-01/citations",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/OUT-01/citations",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/SOURCE-01/id",
+        "required_for_checker": false,
+        "source_path": "/export/registry/SOURCE-01/id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/SOURCE-01/id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/SOURCE-01/kind",
+        "required_for_checker": false,
+        "source_path": "/export/registry/SOURCE-01/kind",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/SOURCE-01/kind",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/SOURCE-01/version",
+        "required_for_checker": false,
+        "source_path": "/export/registry/SOURCE-01/version",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "integer",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/SOURCE-01/version",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/SOURCE-01/content",
+        "required_for_checker": false,
+        "source_path": "/export/registry/SOURCE-01/content",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/SOURCE-01/content",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/ADOPT-01",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "object",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/id",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/id",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/kind",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/kind",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/kind",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/decision_maker",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/decision_maker",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/decision_maker",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/decision_context",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/decision_context",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/decision_context",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/output_binding/output_id",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/output_binding/output_id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/output_binding/output_id",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/output_binding/output_version",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/output_binding/output_version",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "integer",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/output_binding/output_version",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/output_binding/content",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/output_binding/content",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/output_binding/content",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/adopted_portions",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/adopted_portions",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/adopted_portions",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/ADOPT-01/presentation_ref",
+        "required_for_checker": true,
+        "source_path": "/export/registry/ADOPT-01/presentation_ref",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "source_absent",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/ADOPT-01/presentation_ref",
+        "exclusions": [],
+        "coverage_evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ]
+      },
+      {
+        "target_path": "/registry/PRESENT-01/id",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/kind",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/kind",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/kind",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/recorder",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/recorder",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/recorder",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/recipient",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/recipient",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/recipient",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/decision_context",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/decision_context",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/decision_context",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/output_binding/output_id",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/output_binding/output_id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/output_binding/output_id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/output_binding/output_version",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/output_binding/output_version",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "integer",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/output_binding/output_version",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/output_binding/content",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/output_binding/content",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/output_binding/content",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/PRESENT-01/presented_portions",
+        "required_for_checker": false,
+        "source_path": "/export/registry/PRESENT-01/presented_portions",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/PRESENT-01/presented_portions",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/id",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/kind",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/kind",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/kind",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/recorder",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/recorder",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/recorder",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/output_binding/output_id",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/output_binding/output_id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/output_binding/output_id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/output_binding/output_version",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/output_binding/output_version",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "integer",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/output_binding/output_version",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/output_binding/content",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/output_binding/content",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/output_binding/content",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/portion_id",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/portion_id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/portion_id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/portion_text",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/portion_text",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/portion_text",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/source_id",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/source_id",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/source_id",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/source_version",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/source_version",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "integer",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/source_version",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/registry/VERIFY-01/source_content",
+        "required_for_checker": false,
+        "source_path": "/export/registry/VERIFY-01/source_content",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "string",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/registry/VERIFY-01/source_content",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      },
+      {
+        "target_path": "/canonical_identities",
+        "required_for_checker": true,
+        "source_path": "/export/canonical_identities",
+        "mapping_status": "MAPPABLE",
+        "transformation": "identity",
+        "target_type": "array",
+        "absence_semantics": {
+          "missing": "unknown",
+          "null": "unknown",
+          "empty": "value"
+        },
+        "coverage_scope": "/canonical_identities",
+        "exclusions": [],
+        "coverage_evidence_refs": []
+      }
+    ]
+  },
+  "adapter_mode": "identity",
+  "checker_mode": "real",
+  "expected_findings": [
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/adopted_portions",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/decision_context",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/decision_maker",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/id",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/kind",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/output_binding/content",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/output_binding/output_id",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/output_binding/output_version",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    },
+    {
+      "code": "EXTERNAL_RECORD_ABSENT",
+      "target_path": "/registry/ADOPT-01/presentation_ref",
+      "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+      "manifest_revision": "SYNTHETIC-MANIFEST-01",
+      "evidence_refs": [
+        "SYNTHETIC-ABSENCE-0"
+      ],
+      "explanation": "Scoped evidence establishes source absence."
+    }
+  ],
+  "expected_adapter_calls": 0,
+  "expected_checker_calls": 0,
+  "expected_record": {
+    "manifest_revision": "SYNTHETIC-MANIFEST-01",
+    "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+    "findings": [
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/adopted_portions",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/decision_context",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/decision_maker",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/id",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/kind",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/output_binding/content",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/output_binding/output_id",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/output_binding/output_version",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      },
+      {
+        "code": "EXTERNAL_RECORD_ABSENT",
+        "target_path": "/registry/ADOPT-01/presentation_ref",
+        "source_snapshot_id": "SYNTHETIC-EXPORT-01",
+        "manifest_revision": "SYNTHETIC-MANIFEST-01",
+        "evidence_refs": [
+          "SYNTHETIC-ABSENCE-0"
+        ],
+        "explanation": "Scoped evidence establishes source absence."
+      }
+    ],
+    "checker_invoked": false,
+    "checker_result": null
+  }
+}
