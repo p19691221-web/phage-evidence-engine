@@ -31,4 +31,7 @@ General malformed-input and arbitrary-adapter coverage are not
 established by these tests. CLAIMS_STATUS is unchanged.
 
 CI now includes test_external_validation.py.
-Remote CI remains to be confirmed.
+Remote decision-input CI: SUCCESS.
+PR #128 head: 35395eaa746b1c23bb715a4539dc59890e6ced53.
+Evidence: https://github.com/p19691221-web/phage-evidence-engine/actions/runs/38844024028/job/116790318350
+All 12 PR checks were successful at this head.
