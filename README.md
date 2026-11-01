@@ -65,3 +65,18 @@ Initial distribution target:
 > **Ambition may lead evidence; claims may not.**
 
 > **Maturity follows demonstrated capability, not threat coverage by association.**
+
+## Research pause and naming
+
+As recorded on 2026-11-01, new features, fixtures and DF identifiers
+are paused. Current work is limited to evidence and documentation.
+This does not promote any claim in CLAIMS_STATUS.md.
+
+See [the evidence review](docs/evidence-review-2026-11-01/README.md).
+
+PHAGE Evidence Engine is this repository's research project.
+It is distinct from Ridge IT Cyber's Phage agent in Kairos AI SOC,
+and is not affiliated with or endorsed by Ridge IT Cyber.
+
+The name remains provisional. This distinction is not trademark clearance.
+See [the preliminary name check](docs/evidence-review-2026-11-01/NAME_CHECK.md).
