@@ -34,3 +34,11 @@ https://www.aiposthub.com/edge-ai-agent-hackathon-2026-nvidia/
 實際成本與後果是什麼？既有流程何時已經足夠？
 
 不因本表新增功能、fixture、DF 或提升 CLAIMS_STATUS。
+
+### CrowdStrike Falcon Guardian / Falcon Observe (2026-11-03)
+
+CrowdStrike announced the AI Kill Switch in Falcon Guardian. The announcement describes authorized administrators triggering termination and the system recording each action in an audit trail. Termination was available at the AI gateway at announcement time, with endpoint termination described as forthcoming. Track Falcon Observe separately as a planned capability.
+
+**Open comparison question.** Can a reviewer outside the original team use retained records to verify a specific pre-termination AI finding against the source material and versions available at the time, the applicable criterion, and any human intervention? The announcement establishes the scope of the advertised controls but does not establish what an independent reviewer can reconstruct in practice.
+
+Sources: [AI Kill Switch announcement](https://crowdstrike.gcs-web.com/news-releases/news-release-details/crowdstrike-introduces-ai-kill-switch-ai-safety) and [enterprise AI security announcement](https://www.crowdstrike.com/en-us/press-releases/crowdstrike-delivers-ai-security-safety-for-the-enterprise/).
