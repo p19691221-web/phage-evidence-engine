@@ -42,3 +42,13 @@ CrowdStrike announced the AI Kill Switch in Falcon Guardian. The announcement de
 **Open comparison question.** Can a reviewer outside the original team use retained records to verify a specific pre-termination AI finding against the source material and versions available at the time, the applicable criterion, and any human intervention? The announcement establishes the scope of the advertised controls but does not establish what an independent reviewer can reconstruct in practice.
 
 Sources: [AI Kill Switch announcement](https://crowdstrike.gcs-web.com/news-releases/news-release-details/crowdstrike-introduces-ai-kill-switch-ai-safety) and [enterprise AI security announcement](https://www.crowdstrike.com/en-us/press-releases/crowdstrike-delivers-ai-security-safety-for-the-enterprise/).
+
+### Industry context: vulnerability remediation (2026-11-05)
+
+The 2026 Verizon DBIR reports that the median time to fully remediate known exploited vulnerabilities in its reporting dataset increased from 32 to 43 days. The comparison does not establish that AI caused the increase.
+
+SinoPac Bank's November 4 statement attributes the unauthorized transfers to an external attacker exploiting a supplier security setting in its new online banking transaction system. The statement does not identify AI use.
+
+This is background on remediation and validation. The sources do not describe a reviewer independently reconstructing an AI-assisted decision from retained records.
+
+Sources: [Verizon 2026 DBIR](https://www.verizon.com/business/resources/T343/reports/2026-dbir-data-breach-investigations-report.pdf) and [SinoPac Bank statement](https://bank.sinopac.com/sinopacBT/about/news-center/news/content/20261104.html).
