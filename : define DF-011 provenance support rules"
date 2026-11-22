@@ -1,0 +1,80 @@
+[1mdiff --git a/DF011_PROVENANCE_SUPPORT_RULES.md b/DF011_PROVENANCE_SUPPORT_RULES.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b64b356[m
+[1m--- /dev/null[m
+[1m+++ b/DF011_PROVENANCE_SUPPORT_RULES.md[m
+[36m@@ -0,0 +1,74 @@[m
+[32m+[m[32m# DF-011 expectation provenance support rules[m
+[32m+[m
+[32m+[m[32mStatus: PROPOSED — docs only.[m
+[32m+[m[32mFreeze these rules through review and merge before writing RED tests.[m
+[32m+[m[32mNo implementation or CLAIMS_STATUS promotion is established here.[m
+[32m+[m
+[32m+[m[32m## Boundary[m
+[32m+[m
+[32m+[m[32mThis gate determines whether supplied provenance supports using an[m
+[32m+[m[32mexpectation set in the specified assessment.[m
+[32m+[m[32mIt does not determine whether the expectations are substantively correct,[m
+[32m+[m[32msufficient, lawful, safe, or legitimate in the real world.[m
+[32m+[m[32mPassing this gate does not authorize execution.[m
+[32m+[m
+[32m+[m[32m## Support requirements[m
+[32m+[m
+[32m+[m[32mAll requirements below must hold:[m
+[32m+[m
+[32m+[m[32m1. Actor identifiers must resolve unambiguously under an explicitly[m
+[32m+[m[32m   declared identity model. Display names alone do not establish identity.[m
+[32m+[m[32m2. Approval must bind the approver to the exact expectation set and its[m
+[32m+[m[32m   content/version, governed actor, assessment action, and object.[m
+[32m+[m[32m3. The approver must be distinct from the governed actor.[m
+[32m+[m[32m4. Authority references must resolve to inspectable source records[m
+[32m+[m[32m   supporting that approver's permission to approve this expectation set[m
+[32m+[m[32m   for this assessment scope.[m
+[32m+[m[32m5. Approval and authority records must agree on their bindings and scope.[m
+[32m+[m[32m   Missing, ambiguous, conflicting, or unsupported bindings remain unresolved.[m
+[32m+[m
+[32m+[m[32mThe source records and identity model used by the synthetic control must[m
+[32m+[m[32mbe specified before RED. Their trust anchors are explicit fixture[m
+[32m+[m[32massumptions, not proof of institutional authority.[m
+[32m+[m
+[32m+[m[32mNonempty approved_by or authority_source_refs fields are insufficient.[m
+[32m+[m[32mThird-party proposal does not establish authority.[m
+[32m+[m[32mSelf-proposal alone does not establish invalidity or malicious capture.[m
+[32m+[m[32mDeclared authority_status, scope_status, and proposal_relationship are[m
+[32m+[m[32mnot substitutes for checking the supporting records and actor identities.[m
+[32m+[m[32mApproval must not be inferred from observations satisfying E.[m
+[32m+[m
+[32m+[m[32m## Required differential cases[m
+[32m+[m
+[32m+[m[32mKeep expectations, observations, action, object, and governed actor fixed.[m
+[32m+[m[32mChange only provenance-related inputs and supporting records.[m
+[32m+[m
+[32m+[m[32m- Self-proposed without supported approval: UNRESOLVED.[m
+[32m+[m[32m- Third-party proposed without authority support: UNRESOLVED.[m
+[32m+[m[32m- Self-proposed and self-approved: UNRESOLVED.[m
+[32m+[m[32m- Control satisfying every support requirement: pass this provenance gate.[m
+[32m+[m
+[32m+[m[32mFor each unresolved case:[m
+[32m+[m[32m- Include EXPECTATION_AUTHORITY_UNRESOLVED and expectation_set_id.[m
+[32m+[m[32m- Skip delta computation.[m
+[32m+[m[32m- Assert evaluator call count equals zero.[m
+[32m+[m
+[32m+[m[32mFor the control:[m
+[32m+[m[32m- With all other gate prerequisites satisfied, assert evaluator call count[m
+[32m+[m[32m  equals one and the computed delta equals the independently fixed value.[m
+[32m+[m[32m- Do not assume the existing gate result carries evaluator output.[m
+[32m+[m
+[32m+[m[32mUse a counting spy through the evaluator injection boundary.[m
+[32m+[m[32mA called boolean or a SKIPPED output label alone is insufficient evidence.[m
+[32m+[m
+[32m+[m[32m## Delivery and claims[m
+[32m+[m
+[32m+[m[32mSequence: merged rules -> four-case RED record -> minimal implementation[m
+[32m+[m[32m-> GREEN -> validation record -> separate CLAIMS_STATUS PR.[m
+[32m+[m
+[32m+[m[32mRED must record actual baseline behavior and reproducible commands.[m
+[32m+[m[32mGREEN must cite the frozen rules revision and executed code revision.[m
+[32m+[m[32mAny rule change requires explicit review and renewed affected RED evidence.[m
+[32m+[m
+[32m+[m[32mClaim support is limited to the executed cases, declared support rules,[m
+[32m+[m[32mand tested execution model. No production or pilot maturity follows.[m
