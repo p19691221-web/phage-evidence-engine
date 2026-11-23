@@ -1,0 +1,7 @@
+__pycache__/
+*.credential.json
+config.json
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
