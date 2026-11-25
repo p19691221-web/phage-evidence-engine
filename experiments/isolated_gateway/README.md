@@ -6,7 +6,7 @@
 
 ```
 python3 -m unittest discover -s experiments/isolated_gateway -p 'test_*.py' -v
-sudo python3 -B experiments/isolated_gateway/run_isolated.py --self-test
+sudo /usr/bin/python3 -B experiments/isolated_gateway/run_isolated.py --self-test
 ```
 
 第二個指令必須最後出現 PASS，才能宣稱該環境的 UID 隔離檢查成功。self-test 核准為腳本模擬。要自己確認後核准，去掉 `--self-test`，檢查輸出的內容、路徑及 SHA 後輸入 APPROVE；其他輸入取消。整個環境是一次性整合練習，結束會刪除暫存資料，不是長駐防護服務。
@@ -17,7 +17,7 @@ sudo python3 -B experiments/isolated_gateway/run_isolated.py --self-test
 
 ## 驗證界線
 
-開發環境無 root，僅驗證無特權協定測試與原閘道測試；完整 UID 檢查須在 Codespaces 執行，未事先宣稱已通過。
+2026-11-25 已在 Codespaces 完成一次 Linux UID 隔離自我測試，最後輸出 PASS。該次測試包含直接存取受保護檔案、管理員憑證、稽核庫與程式的拒絕檢查，以及閘道檔案操作與核准重複使用檢查。核准由腳本模擬，並非真人審核；結果僅適用於該次測試環境，不代表已部署持續防護服務。
 
 只保護專屬目錄，不限制其他原本可存取的檔案與網路。沒有容器、seccomp、資源配額、網路封鎖或一般惡意程式隔離。root、主機管理者、核心漏洞、共享代理 UID 的其他程序不在防護範圍。不要把代理以原本可 sudo 的開發帳號啟動，並以為已受子程序隔離保護。
 
